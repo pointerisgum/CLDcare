@@ -1,0 +1,181 @@
+/* 
+  Localizable.strings
+  CLDcare
+
+  Created by 김영민 on 2022/03/28.
+  
+*/
+
+//공통
+"Invalid ID or password" = "아이디 또는 비밀번호가 잘못되었습니다.";
+"confirm" = "확인";
+"Confirm" = "확인";
+"next" = "다음";
+"Communication is not smooth or data is not correct." = "통신 상태가 원활하지 않거나\n데이터가 잘못되었습니다.";
+"It's time to take medicine." = "약 먹을 시간이예요.";
+"Done" = "완료";
+
+//로그인
+"E-mail address" = "이메일 주소";
+"Password" = "비밀번호";
+"Enter the password" = "비밀번호";
+"Re enter the password" = "비밀번호 확인";
+"8 digits password including upper and lowercase, number, special characters" = "대소문자, 숫자, 특수문자 조합 8자리 이상";
+"Log In" = "로그인";
+"Register" = "회원가입";
+"Enter the email" = "메일 주소를 입력하세요";
+"Verification" = "인증번호전송";
+"This is not an e-mail format" = "이메일 형식이 아닙니다";
+"Invalid password format" = "비밀번호 형식이 올바르지 않습니다";
+"The passwords don't match" = "비밀번호가 일치하지 않습니다";
+"Name" = "이름";
+"Date of Birth" = "생년월일";
+"Sex" = "성별";
+"First Name" = "성을 입력하세요";
+"Last Name" = "이름을 입력하세요";
+"ex) 19910123" = "예) 19910123";
+"Male" = "남성";
+"Female" = "여성";
+"Completed" = "가입완료";
+"The subscription information is incorrect.\nPlease try again." = "가입 정보가 올바르지 않습니다.\n다시 시도하여 주세요.";
+"I have sent the authentication code.\nPlease check your authentication email and log in." = "인증코드를 발송하였습니다.\n인증메일 확인 후 로그인 해주세요";
+"This account is already registered" = "이미 가입된 계정 입니다";
+
+//약관
+"Accept Terms of Service" = "서비스 약관 동의";
+"Please agree to the terms of service and conditions" = "이용 약관 내용에 동의해주세요.";
+
+"Accept all" = "모두 동의합니다";
+"Terms of Use" = "이용약관 (필수)";
+"Privacy policy" = "개인정보 처리 방침 (필수)";
+"terms of use" = "이용약관";
+"privacy policy" = "개인정보처리방침";
+
+
+//홈
+"Med Info" = "복약 정보";
+"Next Med Time" = "남은 시간";
+"Drug info" = "약품정보 확인";
+"Med Status" = "복약 여부";
+"Med Tracer" = "복약 일정";
+"Minute(s) later" = "분 전";
+"Hour(s) later" = "시간 전";
+"Day(s) later" = "일 전";
+"Taken" = "복용함";
+"Not taken" = "복용전";
+"Sensor Device" = "복약기";
+"Pair your device" = "복약기를 연결해주세요";
+"Pairing" = "연동 상태";
+"Battery" = "배터리";
+"Pills Taken" = "복약 개수";
+"Device connect" = "연결 여부";
+"Setting" = "설정하기";
+"Connect" = "연동 완료";
+
+"Med taken" = "약을 복용했습니다";
+"Please take your med" = "복약 시간입니다";
+"This is the first med time" = "첫번째 복약 시간 입니다";
+"This is the second med time" = "두번째 복약 시간 입니다";
+"This is the third med time" = "세번째 복약 시간 입니다";
+"Completed the survey" = "설문을 완료 했습니다";
+"Checked the alarm" = "알람을 확인 했습니다";
+"Postponed the alarm" = "알람을 미루었습니다";
+"Not paired" = "미연결";
+"Disconnect" = "해제하기";
+"Scan Device" = "기기 찾기";
+"Place sensor device close to\nyour mobile phone with Bluetooth on" = "모바일의 블루투스를 켠 상태에서\n기기와 가까이 하세요";
+"Scanned Device" = "개의 기기를 찾았습니다";
+"Device Pair" = "디바이스 연동";
+"Scanned Device" = "기기 검색 결과";
+"Pair Now" = "연결하기";
+"Pairing your device. Pleasewait." = "기기 연결 중...";
+"It's not a connected device.\nPlease connect the device first." = "연결 된 기기가 아닙니다.\n기기 연결을 먼저 진행해 주세요.";
+"Setting the time..." = "시간 설정 중...";
+"Synchronizing data..." = "데이터 동기화 중...";
+"Initializing data..." = "데이터 초기화 중...";
+"ea" = "개";
+"Disconnect Device" = "기기연결 해제";
+"Do you want to disconnect the device?\nYou can reconnect the device at any time." = "기기연결을 해제 하시겠습니까?\n언제든 다시 기기를 연결할 수 있습니다.";
+"Cancel" = "취소";
+"cancel" = "취소";
+
+//복약 캘린더
+"Medication Calendar" = "복약 캘린더";
+"Selection Month" = "월 선택";
+"Taken" = "정상복용";
+"Un-taken" = "미복용";
+"Overdose" = "초과복용";
+
+"Subject" = "제목";
+"Enter subject" = "제목을 입력하세요";
+"Message" = "내용";
+"Enter your message" = "내용을 입력하세요";
+"Send" = "보내기";
+"Write a report" = "리포트 작성하기";
+"Send feedback" = "의견 보내기";
+
+
+"If you cancel, the contents you are creating will disappear.\nWould you like to cancel?"; = "취소시 작성중인 내용이 사라집니다.\n취소 하시겠습니까?";
+"Thank you for your feedback." = "소중한 의견 감사합니다.";
+"The push is off.\nDo you want to change the settings?" = "푸시가 꺼져 있습니다.\n설정을 변경 하시겠습니까?";
+
+"Would you like to log out?" = "로그아웃 하시겠습니까?";
+"Settings" = "설정";
+"LogOut" = "로그아웃";
+"User Account" = "계정";
+"Reminder Setting" = "알람 설정";
+"Reminder Times" = "알람 시간";
+"Policy and Terms of Service" = "정책 및 약관";
+"Privacy Policy" = "개인정보 처리 방침";
+"Terms of Service" = "회원가입 약관";
+"App Infomation" = "앱 정보";
+"Send Feedback" = "사용자 의견 보내기";
+"Reminder Troubleshooting" = "복약 알림 리포트";
+"Version" = "버전 정보";
+"Update" = "업데이트";
+"Setting for additional information" = "추가정보 설정";
+"morning" = "아침";
+"afternoon" = "점심";
+"evening" = "저녁";
+"AM" = "오전";
+"PM" = "오후";
+
+
+"took one medicine" = "약 한 알을 복용 했습니다.";
+
+
+"Feedback after taking medication" = "복약 후 맞춤 피드백";
+"Start survey after\ntaking medication ✍️" = "약품 복용 후\n피드백에 참여해주세요. ✍️";
+"This is a survey and medication report to check the basic status after taking medication and to guide the medication use." = "본 화면은 복약 후 기본적인 상태를 확인하고 복약 여부를 지도하기 위한 설문조사 및 복약 리포트 화면 입니다.";
+"Writing time" = "작성 기준 시간";
+
+"Start survey after taking medication" = "복약 후 설문 시작하기";
+"Write a report after taking medication" = "복약 후 리포트 작성하기";
+
+"Survey" = "설문";
+"Please check the symptoms you\nhave, after taking medication" = "복약 후 해당하는 증세를 체크해 주세요";
+
+"dizziness" = "어지러움";
+"stomach upset" = "미식거림";
+"swelling of hands and feet" = "손발부음";
+"vomit" = "구토";
+"shortness of breath" = "호흡곤란";
+"Previous" = "이전";
+"Next" = "다음";
+
+
+
+"Additional user information" = "추가 회원정보 가입";
+"Please fill out following" = "다음 내용을 작성해 주세요";
+"Daily mobile phone usage" = "스마트폰 사용시간 (하루평균)";
+
+"Within 30 minutes" = "30분 이내";
+"Within 1 hour" = "1시간 이내";
+"Within 2 hours" = "2시간 이내";
+"More than 2 hours" = "2시간 이상";
+
+"Daily medication" = "복약 종류 - 복약 갯수 (하루평균)";
+"Medication name" = "복약 종류";
+"Number of pills (Daily)" = "복약 갯수";
+"Complete" = "작성완료";
+

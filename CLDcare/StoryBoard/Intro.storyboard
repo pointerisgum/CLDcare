@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QHO-vK-t3e">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="9ms-5s-0c8">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="QHO-vK-t3e" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ko8-hI-BvG">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="LLr-Fx-lYO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gcg-D5-jHL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-580" y="82"/>
+        </scene>
+        <!--Intro View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="IntroViewController" id="Y6W-OH-hqX" customClass="IntroViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_title_logo_white" translatesAutoresizingMaskIntoConstraints="NO" id="r7G-Rb-hAh">
+                                <rect key="frame" x="69.5" y="404.5" width="275" height="87"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright(C)2021 COLEDY CRED All rights reserved." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pY-ES-w4w">
+                                <rect key="frame" x="58" y="817.5" width="298" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="linkColor"/>
+                        <constraints>
+                            <constraint firstItem="r7G-Rb-hAh" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="7yX-rU-j4o"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="r7G-Rb-hAh" secondAttribute="trailing" constant="69.5" id="8Xn-U7-n7Y"/>
+                            <constraint firstItem="r7G-Rb-hAh" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="69.5" id="S05-zt-E3E"/>
+                            <constraint firstItem="r7G-Rb-hAh" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="lAU-na-wbw"/>
+                            <constraint firstItem="2pY-ES-w4w" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="m5C-zZ-ghx"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="2pY-ES-w4w" secondAttribute="bottom" constant="30" id="yPc-Fp-oZs"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="0iV-ut-TSn"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="82"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="app_title_logo_white" width="274.66665649414062" height="86.666664123535156"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
