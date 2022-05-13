@@ -129,7 +129,7 @@ static Util *shared = nil;
     [UIAlertController showAlertInViewController:vc
                                        withTitle:@""
                                          message:aMsg
-                               cancelButtonTitle:NSLocalizedString(@"confirm", nil)
+                               cancelButtonTitle:@"확인"
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
@@ -148,7 +148,7 @@ static Util *shared = nil;
     [UIAlertController showAlertInViewController:topController
                                        withTitle:@""
                                          message:aMsg
-                               cancelButtonTitle:NSLocalizedString(@"confirm", nil)
+                               cancelButtonTitle:@"확인"
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
@@ -166,8 +166,8 @@ static Util *shared = nil;
 
     [UIAlertController showAlertInViewController:topController
                                        withTitle:@""
-                                         message:NSLocalizedString(@"Communication is not smooth or data is not correct.", nil)
-                               cancelButtonTitle:NSLocalizedString(@"confirm", nil)
+                                         message:@"통신 상태가 원활하지 않거나\n데이터가 잘못되었습니다."
+                               cancelButtonTitle:@"확인"
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
@@ -179,8 +179,8 @@ static Util *shared = nil;
     if( [Util isOffLine] ) {
         [UIAlertController showAlertInViewController:vc
                                            withTitle:@""
-                                             message:NSLocalizedString(@"Communication is not smooth or data is not correct.", nil)
-                                   cancelButtonTitle:NSLocalizedString(@"confirm", nil)
+                                             message:@"통신 상태가 원활 하지 않습니다.\n네트웍 상태를 확인 하세요."
+                                   cancelButtonTitle:@"확인"
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil
                                             tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
@@ -206,7 +206,7 @@ static Util *shared = nil;
                                          message:msg
                                cancelButtonTitle:nil
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@[NSLocalizedString(@"confirm", nil)]
+                               otherButtonTitles:@[@"확인"]
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
         completion(@"");
     }];
@@ -235,7 +235,7 @@ static Util *shared = nil;
     if( str_Status == nil ) {
 //        ALERT(nil, @"네트워크에 접속할 수 없습니다.\n3G 및 Wifi 연결상태를\n확인해주세요.", nil, @"확인", nil);
         return NO;
-    }    
+    }
     return YES;
 }
 
@@ -332,16 +332,16 @@ static Util *shared = nil;
         BOOL isOn = [dic[@"on"] boolValue];
         if( isOn ) {
             UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
-            content.body = [NSString localizedUserNotificationStringForKey:NSLocalizedString(@"It's time to take medicine.", nil)
+            content.body = [NSString localizedUserNotificationStringForKey:@"약 먹을 시간이예요."
                     arguments:nil];
 //            content.sound = [UNNotificationSound defaultSound];
             content.sound = [UNNotificationSound soundNamed:@"tickle.mp3"];
 //            content.sound = [UNNotificationSound soundNamed:@"bell2.m4a"];
             content.userInfo = @{@"time":[NSString stringWithFormat:@"%02ld:%02ld", nHour, nMin]};
-            content.body = NSLocalizedString(@"It's time to take medicine.", nil);
+            content.body = @"약 먹을 시간이예요.";
 
             
-            NSInteger nAddAlarmCnt = 64 / nAlarmCnt;
+            NSInteger nAddAlarmCnt = 24 / nAlarmCnt;
             NSLog(@"%ld", nAddAlarmCnt);
             for( NSInteger i = 0; i < nAddAlarmCnt; i++ ) {   //64 24 25 26
                 NSCalendar *currentCalendar = [NSCalendar currentCalendar];
@@ -374,6 +374,30 @@ static Util *shared = nil;
                        requestWithIdentifier:str_Ident content:content trigger:trigger];
                 
                 [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+                
+                
+                
+                
+                
+                //10분위 추가등록
+                NSDateComponents* dateComp2 = [[NSDateComponents alloc] init];
+                dateComp2.year = components.year;
+                dateComp2.month = components.month;
+                dateComp2.day = components.day;
+                dateComp2.hour = nHour;
+                dateComp2.minute = nMin+10;
+                UNCalendarNotificationTrigger* trigger2 = [UNCalendarNotificationTrigger
+                       triggerWithDateMatchingComponents:dateComp2 repeats:false];
+
+                NSString *str_Ident2 = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
+                                        dateComp2.year, dateComp2.month, dateComp2.day, dateComp2.hour, dateComp2.minute];
+//                NSLog(@"str_Ident: %@", str_Ident);
+                
+                UNNotificationRequest* request2 = [UNNotificationRequest
+                       requestWithIdentifier:str_Ident2 content:content trigger:trigger2];
+                
+                [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request2 withCompletionHandler:nil];
+
             }
         }
     }
@@ -436,6 +460,10 @@ static Util *shared = nil;
         NSString *str_Ident = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
                                dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute];
         [arM_RemoveAlarm addObject:str_Ident];
+        
+        NSString *str_Ident2 = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
+                               dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute + 10];
+        [arM_RemoveAlarm addObject:str_Ident2];
     }
     
     if( arM_RemoveAlarm.count > 0 ) {
@@ -446,7 +474,10 @@ static Util *shared = nil;
 
 + (NSString *)convertSerialNo {
     NSString *macAddr = [[NSUserDefaults standardUserDefaults] objectForKey:@"mac"];
-    if( macAddr.length <= 0 ) { return  nil; }
+    if( macAddr.length <= 0 ) {
+        [Util makeToastWindow:NSLocalizedString(@"Please connect me to the device", nil)];
+        return nil;
+    }
     
     NSString *serialNoRawVal = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
     NSArray *ar_SerialNo = [serialNoRawVal componentsSeparatedByString:@":"];
@@ -479,11 +510,29 @@ static Util *shared = nil;
         return str_SerialNo;
     } else {
         //A타입
+//        macAddr = [macAddr stringByReplacingOccurrencesOfString:@"-" withString:@""];
+//        return [NSString stringWithFormat:@"KRCCPYNN26E%@0001", macAddr];
+        
         NSArray *ar_MacAddr = [macAddr componentsSeparatedByString:@":"];
         if( ar_MacAddr.count <= 1 ) { return nil; }
-        
+
+        NSString *front = @"";
+        NSString *serialChar = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialChar"];
+        if( serialChar == nil || serialChar.length <= 0 ) {
+//        if( 1 ) {
+            front = @"KRCCPYNN26E";
+        } else {
+            front = serialChar;
+        }
+
+#ifdef DEBUG
+        //처음 이걸로 연동되어 있어서 해제가 안되기 때문에 얘네는 이걸 사용
+        if( [macAddr hasSuffix:@"07:c6"] || [macAddr hasSuffix:@"28:6a"] ) {
+            front = @"KRCCPYNN26E";
+        }
+#endif
         NSString *str_MacCode = [NSString stringWithFormat:@"%@%@", ar_MacAddr[ar_MacAddr.count - 2], ar_MacAddr[ar_MacAddr.count - 1]];
-        NSString *str_SerialNo = [NSString stringWithFormat:@"KRCCPYNN26E%@0001", [str_MacCode capitalizedString]];
+        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@0001", front, [str_MacCode capitalizedString]];
         NSLog(@"complete serialNo : %@", str_SerialNo);
         return str_SerialNo;
     }
@@ -521,6 +570,11 @@ static Util *shared = nil;
     }
     NSString *dateString = [format stringFromDate:date];
     return dateString;
+}
+
++ (NSString *)makeKey:(NSString *)key {
+    NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+    return [NSString stringWithFormat:@"%@_%@", email, key];
 }
 
 + (void)topRound:(UIView *)view {

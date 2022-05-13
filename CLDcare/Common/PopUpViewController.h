@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^PopUpDismissBlock)(void);
 
 @interface PopUpViewController : UIViewController
+@property (nonatomic, assign) BOOL isReport;
 @property (nonatomic, copy) PopUpDismissBlock popUpDismissBlock;
 - (void)setPopUpDismissBlock:(PopUpDismissBlock)popUpDismissBlock;
 @end

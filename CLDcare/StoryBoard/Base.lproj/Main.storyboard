@@ -1641,12 +1641,9 @@
                                                                     <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F9:E6:2B:1B:F7:74" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xK-yv-XcU">
-                                                                    <rect key="frame" x="24" y="41" width="118" height="17"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="17" id="eST-XB-2z4"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F9:E6:2B:1B:F7:74" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xK-yv-XcU">
+                                                                    <rect key="frame" x="24" y="41" width="301" height="14.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.64313725489999995" green="0.64313725489999995" blue="0.64313725489999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -1682,14 +1679,16 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="bS7-7n-sRs" firstAttribute="top" secondItem="Gg8-LE-VMe" secondAttribute="top" constant="16" id="4Xn-C6-RSg"/>
+                                                                <constraint firstItem="4UN-5Q-k6g" firstAttribute="leading" secondItem="1xK-yv-XcU" secondAttribute="trailing" id="5cc-Ys-7HP"/>
                                                                 <constraint firstItem="4UN-5Q-k6g" firstAttribute="centerY" secondItem="Gg8-LE-VMe" secondAttribute="centerY" id="D34-Sw-gAc"/>
                                                                 <constraint firstAttribute="bottom" secondItem="e7X-jd-5dY" secondAttribute="bottom" id="FrD-06-6um"/>
                                                                 <constraint firstItem="e7X-jd-5dY" firstAttribute="leading" secondItem="Gg8-LE-VMe" secondAttribute="leading" id="Gl6-d1-onl"/>
                                                                 <constraint firstItem="bS7-7n-sRs" firstAttribute="leading" secondItem="Gg8-LE-VMe" secondAttribute="leading" constant="24" id="IOE-Se-jwj"/>
                                                                 <constraint firstAttribute="trailing" secondItem="4UN-5Q-k6g" secondAttribute="trailing" constant="24" id="Ofm-8k-jmM"/>
-                                                                <constraint firstItem="e7X-jd-5dY" firstAttribute="top" secondItem="1xK-yv-XcU" secondAttribute="bottom" constant="16" id="TyA-H4-nnA"/>
                                                                 <constraint firstItem="1xK-yv-XcU" firstAttribute="top" secondItem="bS7-7n-sRs" secondAttribute="bottom" constant="6" id="aQw-Oa-EqL"/>
                                                                 <constraint firstAttribute="trailing" secondItem="e7X-jd-5dY" secondAttribute="trailing" id="bKD-oy-cX7"/>
+                                                                <constraint firstItem="e7X-jd-5dY" firstAttribute="top" secondItem="4UN-5Q-k6g" secondAttribute="bottom" constant="21.5" id="dqM-o5-I9R"/>
+                                                                <constraint firstItem="4UN-5Q-k6g" firstAttribute="top" secondItem="Gg8-LE-VMe" secondAttribute="top" constant="22.5" id="fDG-Xg-Sya"/>
                                                                 <constraint firstItem="1xK-yv-XcU" firstAttribute="leading" secondItem="Gg8-LE-VMe" secondAttribute="leading" constant="24" id="sTC-BW-d1Z"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
@@ -3939,6 +3938,7 @@
                         <outlet property="btn_Medicine1" destination="Rsy-yB-0gz" id="Fgh-Kb-HvT"/>
                         <outlet property="btn_Medicine2" destination="lIR-hX-IOy" id="9vZ-U9-AWa"/>
                         <outlet property="btn_Next" destination="UHD-Je-bDH" id="SNQ-Un-YdI"/>
+                        <outlet property="lb_ChooseMedicationFix" destination="Au9-w1-eYA" id="2k4-1u-bZJ"/>
                         <outlet property="lb_Discrip1" destination="hT2-Dd-6oQ" id="VzK-6E-Y4e"/>
                         <outlet property="lb_PhoneUseTime" destination="KwX-ot-Xyd" id="2ZK-MH-Swa"/>
                         <outlet property="lb_SubTitleFix" destination="kBM-Z1-MqM" id="R5M-vq-1W5"/>

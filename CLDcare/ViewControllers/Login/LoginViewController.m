@@ -45,6 +45,11 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+#ifdef DEBUG
+    _tf_Email.text = @"pointerisgum@gmail.com";
+    _tf_Pw.text = @"!!1010Kk";
+#endif
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

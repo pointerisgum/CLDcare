@@ -33,5 +33,7 @@
 + (NSString *)convertHexToAscii:(NSString *)hex;
 + (NSString *)convertSerialNo;
 + (NSString *)getDateString:(NSDate *)date withTimeZone:(NSTimeZone *)timeZone;
++ (NSString *)makeKey:(NSString *)key;
 + (void)topRound:(UIView *)view;
+
 @end

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^HistoryCompleteBlock)(NSArray *result);
 typedef void (^ResetCountCompleteBlock)(BOOL isSuccess);
-typedef void (^SerialNoCompleteBlock)(NSString *serialNo);
+typedef void (^SerialNoCompleteBlock)(NSString *serialNo, NSString *serialChar, NSString *mac);
 typedef void (^TimeSyncCompleteBlock)(BOOL isSuccess);
 
 @interface DeviceManager : NSObject

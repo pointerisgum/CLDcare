@@ -26,6 +26,10 @@
 @import UserNotifications;
 
 @interface HomeMainViewController () <CBCentralManagerDelegate, ScanPeripheralDelegate> {
+    int tiltCnt;
+    bool isTilt;
+    int count;
+
     NSInteger         current_count;
     NSData*           deviceMac;
     NSString*         deviceName;
@@ -476,8 +480,9 @@
 
         DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:_currentDevice withManager:_centralManager];
         [deviceManager getSerial];
-        [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo) {
+        [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo, NSString *serialChar, NSString *mac) {
             NSLog(@"%@", serialNo);
+            [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"serialChar"];
             [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }];
@@ -632,6 +637,95 @@
     }
 }
 
+- (void)onTiltCheck:(NSData *)manufData {
+    dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
+
+    self->isTilt = false;
+    NSLog(@"%@", @(md_tilt->count));
+    NSLog(@"%d", self->count);
+    if( self->count == md_tilt->count ) {
+        NSLog(@"서버전송");
+        NSLog(@"%u", md_tilt->epochtime1);
+        
+        [self sendTiltData:manufData idx:0];
+//        [self sendTiltData:manufData idx:1];
+//        [self sendTiltData:manufData idx:2];
+
+    }
+    if( self->count > [@(md_tilt->count) intValue] ) {
+        NSLog(@"토출함");
+    }
+}
+
+- (void)sendTiltData:(NSData *)manufData idx:(NSInteger)idx {
+    dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
+
+    NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+    NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
+    NSString *str_NowDate = [Util getDateString:[NSDate date] withTimeZone:nil];
+    NSString *str_DoseDate = @"";
+    int ir = 0;
+    switch (idx) {
+        case 0:
+            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime1)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+            ir = md_tilt->info_ir1;
+            break;
+        case 1:
+            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime2)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+            ir = md_tilt->info_ir2;
+            break;
+        case 2:
+            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+            ir = md_tilt->info_ir3;
+            break;
+        default:
+            break;
+    }
+    
+    NSString *str_StatusInfo = [NSString stringWithFormat:@"%@,%@,%@", @(md_tilt->info_identifier[0]),@(md_tilt->info_identifier[1]),@(md_tilt->info_identifier[2])];
+    NSLog(@"%@", str_StatusInfo);
+//    NSArray *ar_StatusInfo = @[@(md_tilt->info_identifier[0]), @(md_tilt->info_identifier[1]), @(md_tilt->info_identifier[2])];
+    NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+    [dicM_Params setObject:email forKey:@"mem_email"];
+    [dicM_Params setObject:@(md_tilt->info_count) forKey:@"information_idx"];   //디바이스 정보 인덱스
+    [dicM_Params setObject:@(self->count) forKey:@"dose_count"];                //토출갯수
+    [dicM_Params setObject:str_StatusInfo forKey:@"status_info"];                     //커맨드 값
+    [dicM_Params setObject:@(ir) forKey:@"ir_value"];                           //기울기 값
+    [dicM_Params setObject:deviceName forKey:@"device_id"];
+    [dicM_Params setObject:[NSString stringWithFormat:@"%ld", nBattery] forKey:@"device_battery"];
+    [dicM_Params setObject:str_DoseDate forKey:@"datetime"];
+    [dicM_Params setObject:str_NowDate forKey:@"datetime_realtime"];
+
+    [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dispenerinfo" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+        [self.hud hideAnimated:true];
+        self.hud = nil;
+
+        if( error != nil ) {
+            return;
+        }
+
+        NSLog(@"idx : %ld, %@", idx, resulte);
+
+        if( idx == 0 ) {
+            if( [resulte[@"device_error"] isEqualToString:@"Y"] ) {
+                PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
+                vc.isReport = true;
+                [vc setPopUpDismissBlock:^{
+                    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedBackViewController"];
+                    [self.navigationController pushViewController:vc animated:true];
+                }];
+                [self presentViewController:vc animated:true completion:^{
+                    
+                }];
+            }
+            [self sendTiltData:manufData idx:1];
+            [self sendTiltData:manufData idx:2];
+        }
+    }];
+}
+
+
 
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
@@ -651,8 +745,9 @@
             return;
         }
         
-        dispenser_manuf_data_t* md = (dispenser_manuf_data_t*)manufData.bytes;
-        
+        dispenser_manuf_data_t* md = (dispenser_manuf_data_t *)manufData.bytes;
+        dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
+
         if (md->company_identifier != (0x4d<<8 | 0x4f)) { return; }
         
         if( IS_CONNECTED == false ) {
@@ -664,19 +759,64 @@
         NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
         NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
         NSString *macAddr = [[NSUserDefaults standardUserDefaults] objectForKey:@"mac"];
+        NSString *ble_uuid = [[NSUserDefaults standardUserDefaults] objectForKey:@"ble_uuid"];
+        NSString *current_ble_uuid = [peripheral.identifier UUIDString];
 
-        NSInteger macAddrLength = sizeof(md->mac) - 1;
-        NSMutableString *currentMacAddr = [NSMutableString stringWithCapacity:macAddrLength];
-        for (NSInteger i = macAddrLength; i >= 0; i--) {
-            [currentMacAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->mac[i]]];
-            if( i > 0 ) {
-                [currentMacAddr appendString:@":"];
+//        NSInteger macAddrLength = sizeof(md->mac) - 1;
+//        NSMutableString *currentMacAddr = [NSMutableString stringWithCapacity:macAddrLength];
+//        for (NSInteger i = macAddrLength; i >= 0; i--) {
+//            [currentMacAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->mac[i]]];
+//            if( i > 0 ) {
+//                [currentMacAddr appendString:@":"];
+//            }
+//        }
+
+        
+        NSString *currentLastMacAddr = [NSString stringWithFormat:@"%02x", (unsigned int) md->addr[0]];
+        NSArray *ar_MacAddr = [macAddr componentsSeparatedByString:@":"];
+
+        //기울기 감지
+        if( weakSelf.currentDevice != nil && weakSelf.currentDevice.peripheral == peripheral ) {
+            self->count = md->count;
+            if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] == false && self->isTilt == false ) {
+                NSLog(@"b2 : %@", @(md_tilt->bat));
+
+//            if( [currentMacAddr isEqualToString:macAddr] == false && self->isTilt == false ) {
+//            if( [current_ble_uuid isEqualToString:macAddr] == false && self->isTilt == false ) {
+//                NSLog(@"기울기 감지");
+//                NSString *str = [NSString stringWithFormat:@"%02x", (unsigned int) md_tilt->mac_identifier];    //95
+//                //md_tilt->info_identifier : 08 07 07 22
+//                NSLog(@"%@", str);
+//                NSInteger macAddrLength = sizeof(md_tilt->info_identifier) - 1;
+//                NSMutableString *currentMacAddr = [NSMutableString stringWithCapacity:macAddrLength];
+//                for (NSInteger i = macAddrLength; i >= 0; i--) {
+//                    [currentMacAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md_tilt->info_identifier[i]]];
+//                    if( i > 0 ) {
+//                        [currentMacAddr appendString:@":"];
+//                    }
+//                }
+                if( self->tiltCnt < md_tilt->info_count ) {
+                    self->tiltCnt = md_tilt->info_count;
+                    NSLog(@"count1 : %hu", md_tilt->count);
+                    NSLog(@"count2 : %hu", md->count);
+                    NSLog(@"md_tilt->info_count : %d", md_tilt->info_count);
+                    self->isTilt = true;
+                    [self performSelector:@selector(onTiltCheck:) withObject:manufData afterDelay:5.0f];
+                }
+//                NSLog(@"md_tilt->info_count : %d", md_tilt->info_count);
+            } else {
+                NSLog(@"b : %@", @(md->bat));
             }
         }
+        ////////////////////////////
 
+        
+        
 //        NSLog(@"call macAddr : %@", currentMacAddr);
         //d4:06:41:32:3a:85
-        if( macAddr != nil && macAddr.length > 0 && [currentMacAddr isEqualToString:macAddr] ) {
+        if( current_ble_uuid != nil && current_ble_uuid.length > 0 && [ble_uuid isEqualToString:current_ble_uuid] ) {
+//        if( macAddr != nil && macAddr.length > 0 && [currentMacAddr isEqualToString:macAddr] ) {
+//        if( macAddr != nil && macAddr.length > 0 && [[peripheral.identifier UUIDString] isEqualToString:macAddr] ) {
             if( weakSelf.currentDevice == nil || weakSelf.currentDevice.peripheral != peripheral ) {
                 weakSelf.currentDevice = [ScanPeripheral initWithPeripheral:peripheral];
             }
@@ -686,7 +826,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@(md->bat) forKey:@"battery"];
             [[NSUserDefaults standardUserDefaults] setInteger:md->count forKey:@"count"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            
+
 //            [self updateInfo:md];
             [self.btn_MedicationCount setTitle:[NSString stringWithFormat:@"%u%@", md->count, NSLocalizedString(@"ea", nil)] forState:UIControlStateNormal];
 
@@ -766,6 +906,21 @@
                             return;
                         }
                         
+                        //토출 시 다른값이 동일시간에 토출 된 경우 레포트 팝업 띄우기
+                        NSString *deviceErr = resulte[@"device_error"];
+                        if( [deviceErr isEqualToString:@"Y"] ) {
+                            PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
+                            vc.isReport = true;
+                            [vc setPopUpDismissBlock:^{
+                                UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedBackViewController"];
+                                [self.navigationController pushViewController:vc animated:true];
+                            }];
+                            [self presentViewController:vc animated:true completion:^{
+                                
+                            }];
+                            return;
+                        }
+
                         NSInteger nTodayDoseCnt = [resulte[@"today_dose_cnt"] integerValue];
                         if( nTodayDoseCnt > 0 ) {
                             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
@@ -797,6 +952,17 @@
                                 [self timeSync];
                             }
                         }
+                        
+                        dispenser_manuf_data_t* md_tmp = (dispenser_manuf_data_t *)manufData.bytes;
+                        NSString *str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tmp->epochtime2)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                        [dicM_Params setObject:str_DoseDate forKey:@"datetime"];
+                        [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dose" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+                            dispenser_manuf_data_t* md_tmp = (dispenser_manuf_data_t *)manufData.bytes;
+                            NSString *str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tmp->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                            [dicM_Params setObject:str_DoseDate forKey:@"datetime"];
+                            [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dose" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+                            }];
+                        }];
                     }];
 
                     [self addList:md->epochtime1];
@@ -806,15 +972,9 @@
                 }
             }
         }
-
-
-//        uint32_t oldCount = md->count;
-//        ScanPeripheral* obj =  [ScanPeripheral initWithPeripheral:peripheral];
-//        obj.manufData = manufData;
-
-
     });
 }
+
 
 - (void)addList:(NSTimeInterval)time {
     BOOL isHave = false;

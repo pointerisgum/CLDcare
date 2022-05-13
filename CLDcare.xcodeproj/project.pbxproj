@@ -682,10 +682,10 @@
 			isa = PBXGroup;
 			children = (
 				1881E2472704143E005AE92C /* Cells */,
-				1881E24A2704143E005AE92C /* ConnectedDeviceListViewController.m */,
+				1881E24D2704143E005AE92C /* SearchDeviceViewController.h */,
 				1881E24B2704143E005AE92C /* SearchDeviceViewController.m */,
 				1881E24C2704143E005AE92C /* ConnectedDeviceListViewController.h */,
-				1881E24D2704143E005AE92C /* SearchDeviceViewController.h */,
+				1881E24A2704143E005AE92C /* ConnectedDeviceListViewController.m */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -1543,7 +1543,7 @@
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1563,7 +1563,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = CLD_Dev;
@@ -1581,7 +1581,7 @@
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1601,7 +1601,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = CLD_Dis;

@@ -149,12 +149,14 @@
 }
 
 - (NSString *)macAddr {
+//    return [self.peripheral.identifier UUIDString];
+    
     dispenser_manuf_data_t* md = (dispenser_manuf_data_t*)self.manufData.bytes;
     
-    NSInteger macAddrLength = sizeof(md->mac) - 1;
+    NSInteger macAddrLength = sizeof(md->addr) - 1;
     NSMutableString *macAddr = [NSMutableString stringWithCapacity:macAddrLength];
     for (NSInteger i = macAddrLength; i >= 0; i--) {
-        [macAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->mac[i]]];
+        [macAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->addr[i]]];
         if( i > 0 ) {
             [macAddr appendString:@":"];
         }

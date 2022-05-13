@@ -147,7 +147,7 @@
     if( device.macAddr == nil ) { return cell; }
     
     cell.lb_DeviceName.text = device.peripheral.name;
-    cell.lb_MacAddr.text = device.macAddr;
+    cell.lb_MacAddr.text = [device.peripheral.identifier UUIDString];
 
     return cell;
 }
@@ -161,8 +161,8 @@
     if( device.macAddr == nil ) { return; }
 
     if( _isPrescrip ) {
-        NSString *macAddr = [[NSUserDefaults standardUserDefaults] objectForKey:@"mac"];
-        if( macAddr.length <= 0 || [device.macAddr isEqualToString:macAddr] == false ) {
+        NSString *ble_uuid = [[NSUserDefaults standardUserDefaults] objectForKey:@"ble_uuid"];
+        if( ble_uuid.length <= 0 || [[device.peripheral.identifier UUIDString] isEqualToString:ble_uuid] == false ) {
             [self.view makeToast:NSLocalizedString(@"It's not a connected device.\nPlease connect the device first.", nil)];
             return;
         }
@@ -185,14 +185,17 @@
 
         DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:device withManager:_centralManager];
         [deviceManager getSerial];
-        [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo) {
+        [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo, NSString *serialChar, NSString *mac) {
             NSLog(@"%@", serialNo);
 //            serialNo = @"4b:52:43:43:53:41:4e:4e:32:36:56";   //B타입 테스트
-            [[NSUserDefaults standardUserDefaults] setObject:device.macAddr forKey:@"mac"];
+//            [[NSUserDefaults standardUserDefaults] setObject:[self getMacAddr:device.peripheral.name] forKey:@"mac"];
+            [[NSUserDefaults standardUserDefaults] setObject:mac forKey:@"mac"];
+//            [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"mac"];
+            [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"serialChar"];
             [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            [self authDevive:device];
+            [self authDevive:device withMacAddr:mac];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.hud hideAnimated:true];
@@ -201,7 +204,7 @@
     }
 }
 
-- (void)authDevive:(ScanPeripheral *)device {
+- (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr {
     NSString *str_SerialNo = [Util convertSerialNo];
     if( str_SerialNo == nil ) { return; }
 
@@ -216,28 +219,56 @@
         [dicM_Params setObject:email forKey:@"mem_email"];
         [dicM_Params setObject:dateString forKey:@"pairing_datetime"];
         [dicM_Params setObject:device.peripheral.name forKey:@"device_id"];
-        [dicM_Params setObject:device.macAddr forKey:@"mac_address"];
+        [dicM_Params setObject:macAddr forKey:@"mac_address"];
+//        [dicM_Params setObject:[self getMacAddr:device.peripheral.name] forKey:@"mac_address"];
+//        [dicM_Params setObject:[self.currentDevice.peripheral.identifier UUIDString] forKey:@"mac_address"];
         [dicM_Params setObject:[Util convertSerialNo] forKey:@"serial_num"];
         [dicM_Params setObject:@"" forKey:@"fw_num"];
 
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/device" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
-                [self.view makeToastCenter:@"디바이스 등록 중 오류가 발생 하였습니다."];
+                [self.view makeToastCenter:NSLocalizedString(@"An error occurred during device registration", nil)];
                 return;
             }
 
             NSLog(@"%@", resulte);
+            NSLog(@"%u", msgCode);
 
-            [[NSUserDefaults standardUserDefaults] setObject:device.macAddr forKey:@"mac"];
-            [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
-            [[NSUserDefaults standardUserDefaults] setObject:@(device.battery) forKey:@"battery"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+//            if( msgCode == ALREADY_REGIST ) {
+//                [Util makeToastWindow:NSLocalizedString(@"The device is already registered", nil)];
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
+//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//                return;
+//            }
             
-            if( msgCode == ALREADY_REGIST ) {
-                [Util makeToastWindow:@"이미 등록된 디바이스 입니다."];
+            if( self.centralManager != nil && self.currentDevice != nil ) {
+                if (self.hud == nil) {
+                    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                }
+                self.hud.label.text = NSLocalizedString(@"Setting the time...", nil);
+                [self.hud showAnimated:true];
+
+                DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:self.currentDevice withManager:self.centralManager];
+                [deviceManager setTime];
+                [deviceManager setTimeSyncCompleteBlock:^(BOOL isSuccess) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.hud hideAnimated:true];
+                        self.hud = nil;
+                        
+                        [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
+            //            [[NSUserDefaults standardUserDefaults] setObject:[self.currentDevice.peripheral.identifier UUIDString] forKey:@"mac"];
+                        [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
+                        [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
+                        [[NSUserDefaults standardUserDefaults] setObject:@(device.battery) forKey:@"battery"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+
+                        [self.navigationController popViewControllerAnimated:true];
+                    });
+                }];
             }
-            
-            [self.navigationController popViewControllerAnimated:true];
         }];
     }
 }

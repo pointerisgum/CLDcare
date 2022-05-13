@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lb_PhoneUseTime;
 @property (weak, nonatomic) IBOutlet UILabel *lb_Discrip1;
 @property (weak, nonatomic) IBOutlet UIButton *btn_Next;
+@property (weak, nonatomic) IBOutlet UILabel *lb_ChooseMedicationFix;
 
 @end
 
@@ -41,10 +42,13 @@
     [_btn_2HD setTitle:NSLocalizedString(@"Within 2 hours", nil) forState:0];
     [_btn_2HU setTitle:NSLocalizedString(@"More than 2 hours", nil) forState:0];
     _lb_Discrip1.text = NSLocalizedString(@"Daily medication", nil);
-    _tf_MedicineType.placeholder = NSLocalizedString(@"Medication name", nil);
+    _tf_MedicineType.placeholder = NSLocalizedString(@"Number of med you take", nil);
     _tf_MedicineCnt.placeholder = NSLocalizedString(@"Number of pills (Daily)", nil);
     [_btn_Next setTitle:NSLocalizedString(@"Complete", nil) forState:0];
-
+    _lb_ChooseMedicationFix.text = NSLocalizedString(@"Select medication", nil);
+    [_btn_Medicine1 setTitle:NSLocalizedString(@"A medication", nil) forState:0];
+    [_btn_Medicine2 setTitle:NSLocalizedString(@"B medication", nil) forState:0];
+    
     _selectedPhoneUse = -1;
     _btn_Close.hidden = _isHideClose;
 }

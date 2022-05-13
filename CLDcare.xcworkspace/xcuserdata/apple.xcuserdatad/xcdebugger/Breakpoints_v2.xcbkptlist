@@ -126,8 +126,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
+            startingLineNumber = "758"
+            endingLineNumber = "758"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
@@ -151,54 +151,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "68BCA4DC-9FA5-4999-A012-2460D7A6E2CD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "765"
-            endingLineNumber = "765"
-            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6B494330-BCB3-458F-9B93-8FC48530FC45"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "762"
-            endingLineNumber = "762"
-            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DDBE44CC-B7B3-4F89-971A-2747ABD7F28A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "831"
-            endingLineNumber = "831"
-            landmarkName = "-addList:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0FB86D50-D224-4AF2-BDAB-45BBB4133A93"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -206,8 +158,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "-shouldPerformSegueWithIdentifier:sender:"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +174,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "-updateMedicationList"
             landmarkType = "7">
          </BreakpointContent>
@@ -231,32 +183,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "ECB006A2-4AE5-41BF-9CB6-A7BFED32384D"
+            uuid = "40699E4D-4A67-4C55-ACD1-5CA6A8137C6E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
+            filePath = "CLDcare/ViewControllers/Device/SearchDeviceViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
-            landmarkName = "-updateMedicationList"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "-authDevive:withMacAddr:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F61BDF39-8AE8-472A-8CCB-6F90BDF7189E"
+            uuid = "0D4994D3-B8B6-4040-BC79-F9B40EDE8232"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
+            filePath = "CLDcare/ViewControllers/Device/SearchDeviceViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
-            landmarkName = "-updateMedicationList"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "-authDevive:withMacAddr:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

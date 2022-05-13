@@ -193,10 +193,10 @@
     }
 }
 
-- (void)finishSerial:(NSString *)serialNo {
+- (void)finishSerial:(NSString *)serialNo serialChar:(NSString *)serialChar mac:(NSString *)mac {
     _device.delegate = nil;
     if( _serialNoCompleteBlock ) {
-        _serialNoCompleteBlock(serialNo);
+        _serialNoCompleteBlock(serialNo, serialChar, mac);
     }
 }
 
@@ -305,7 +305,22 @@
 
                 NSLog(@"get serialNo : %@", serialNo);
 //                NSLog(@"%s", res->serial);
-                [self finishSerial:serialNo];
+
+                NSMutableString *serialNoChar = [NSMutableString string];
+                for( NSInteger i = 0; i <= 10; i++ ) {
+                    [serialNoChar appendString:[NSString stringWithFormat:@"%c", res->serial[i]]];
+                }
+                NSLog(@"get serialNoChar : %@", serialNoChar);
+
+                NSMutableString *mac = [NSMutableString string];
+                for( NSInteger i = 11; i <= 16; i++ ) {
+                    [mac appendString:[NSString stringWithFormat:@"%02x", (unsigned int) res->serial[i]]];
+                    if( i != 16 ) {
+                        [mac appendString:@":"];
+                    }
+                }
+                NSLog(@"get mac addr : %@", mac);
+                [self finishSerial:serialNo serialChar:serialNoChar mac:mac];
             }
                 break;
         }

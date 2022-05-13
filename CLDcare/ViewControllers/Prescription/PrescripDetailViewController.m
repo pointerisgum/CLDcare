@@ -178,8 +178,12 @@
     }
 
     NSString *macAddr = [[NSUserDefaults standardUserDefaults] objectForKey:@"mac"];
-    if( macAddr.length <= 0 || [device.macAddr isEqualToString:macAddr] == false ) {
-        [self.view makeToast:NSLocalizedString(@"It's not a connected device.\nPlease connect the device first.", nil)];
+//    NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    NSString *ble_uuid = [[NSUserDefaults standardUserDefaults] objectForKey:@"ble_uuid"];
+    if( ble_uuid.length <= 0 || [[device.peripheral.identifier UUIDString] isEqualToString:ble_uuid] == false || macAddr.length <= 0 ) {
+//    if( macAddr.length <= 0 || [[self getMacAddr:device.peripheral.name] isEqualToString:macAddr] == false ) {
+//    if( macAddr.length <= 0 || [[device.peripheral.identifier UUIDString] isEqualToString:macAddr] == false ) {
+        [self.view makeToast:@"It's not a connected device.\nPlease connect the device first."];
         completion();
         return;
     }
@@ -189,7 +193,9 @@
     [dicM_Params setObject:email forKey:@"mem_email"];
     [dicM_Params setObject:@"insert" forKey:@"mapping_action"];
     [dicM_Params setObject:_item.diseNm forKey:@"pill_name"];
-    [dicM_Params setObject:device.macAddr forKey:@"mac_address"];
+//    [dicM_Params setObject:device.macAddr forKey:@"mac_address"];
+    [dicM_Params setObject:macAddr forKey:@"mac_address"];
+//    [dicM_Params setObject:[device.peripheral.identifier UUIDString] forKey:@"mac_address"];
     [dicM_Params setObject:str_SerialNo forKey:@"serial_num"];
     [dicM_Params setObject:device.peripheral.name forKey:@"device_id"];
     [dicM_Params setObject:@([NDPrescrip sharedData].seqNo) forKey:@"seq_no"];
@@ -205,10 +211,13 @@
 
         if( msgCode == SUCCESS ) {
             NSString *str_Key = [NSString stringWithFormat:@"%@_Device", email];
-            [[NSUserDefaults standardUserDefaults] setObject:@{@"mac_address":device.macAddr,
+            [[NSUserDefaults standardUserDefaults] setObject:@{@"mac_address":macAddr,//device.macAddr,
+//            [[NSUserDefaults standardUserDefaults] setObject:@{@"mac_address":[device.peripheral.identifier UUIDString],//device.macAddr,
                                                                @"device_id":device.peripheral.name,
                                                                @"serial_num":str_SerialNo,
-                                                               @"pill_name":self.item.diseNm} forKey:str_Key];
+                                                               @"pill_name":self.item.diseNm,
+                                                               @"params":dicM_Params
+                                                             } forKey:str_Key];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         

@@ -14,6 +14,8 @@
 "Communication is not smooth or data is not correct." = "통신 상태가 원활하지 않거나\n데이터가 잘못되었습니다.";
 "It's time to take medicine." = "약 먹을 시간이예요.";
 "Done" = "완료";
+"close" = "닫기";
+"Close" = "닫기";
 
 //로그인
 "E-mail address" = "이메일 주소";
@@ -88,7 +90,7 @@
 "Device Pair" = "디바이스 연동";
 "Scanned Device" = "기기 검색 결과";
 "Pair Now" = "연결하기";
-"Pairing your device. Pleasewait." = "기기 연결 중...";
+"Pairing your device. Please wait." = "기기 연결 중...";
 "It's not a connected device.\nPlease connect the device first." = "연결 된 기기가 아닙니다.\n기기 연결을 먼저 진행해 주세요.";
 "Setting the time..." = "시간 설정 중...";
 "Synchronizing data..." = "데이터 동기화 중...";
@@ -115,10 +117,11 @@
 "Send feedback" = "의견 보내기";
 
 
-"If you cancel, the contents you are creating will disappear.\nWould you like to cancel?"; = "취소시 작성중인 내용이 사라집니다.\n취소 하시겠습니까?";
+"If you cancel, the contents you are creating will disappear.\nWould you like to cancel?" = "취소시 작성중인 내용이 사라집니다.\n취소 하시겠습니까?";
 "Thank you for your feedback." = "소중한 의견 감사합니다.";
 "The push is off.\nDo you want to change the settings?" = "푸시가 꺼져 있습니다.\n설정을 변경 하시겠습니까?";
 
+"Settings" = "설정";
 "Would you like to log out?" = "로그아웃 하시겠습니까?";
 "Settings" = "설정";
 "LogOut" = "로그아웃";
@@ -153,7 +156,7 @@
 "Write a report after taking medication" = "복약 후 리포트 작성하기";
 
 "Survey" = "설문";
-"Please check the symptoms you\nhave, after taking medication" = "복약 후 해당하는 증세를 체크해 주세요";
+"Please check the symptoms you\nhave after taking medication" = "복약 후 해당하는 증세를 체크해 주세요";
 
 "dizziness" = "어지러움";
 "stomach upset" = "미식거림";
@@ -175,7 +178,18 @@
 "More than 2 hours" = "2시간 이상";
 
 "Daily medication" = "복약 종류 - 복약 갯수 (하루평균)";
-"Medication name" = "복약 종류";
+"Number of med you take" = "복약 종류";
 "Number of pills (Daily)" = "복약 갯수";
 "Complete" = "작성완료";
 
+
+"Detecting drug problems" = "약통 문제 검출";
+"An error has been detected in the medicine bottle sensor.\nDo you want to report?" = "약통 센서의 에러가 검출되었습니다.\n리포트 하시겠습니까?";
+"report" = "리포트";
+"An error occurred during device registration" = "디바이스 등록 중 오류가 발생 하였습니다";
+"The device is already registered" = "이미 등록된 디바이스 입니다";
+"Please connect me to the device" = "기기를 연결해 주세요";
+
+"Select medication" = "약품 선택";
+"A medication" = "아모잘탄엑스큐정 50mg";
+"B medication" = "얼리다정 (Erleada) 전립선암 60mg";
