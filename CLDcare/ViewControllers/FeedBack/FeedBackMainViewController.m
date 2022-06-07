@@ -27,6 +27,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [Util checkReqUpdate:self];
+
     _lb_TitleFix.text = NSLocalizedString(@"Feedback after taking medication", nil);
     
     _lb_SubTitleFix.text = NSLocalizedString(@"Start survey after\ntaking medication ✍️", nil);

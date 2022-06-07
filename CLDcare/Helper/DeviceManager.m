@@ -290,28 +290,28 @@
                 break;
             case ncmd_serial_data: {
                 ble_serial_data_t* res = (ble_serial_data_t*)rcv->buffer;
-                NSString *serialNo = [NSString stringWithFormat:@"%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
-                                                                 res->serial[0],
-                                                                 res->serial[1],
-                                                                 res->serial[2],
-                                                                 res->serial[3],
-                                                                 res->serial[4],
-                                                                 res->serial[5],
-                                                                 res->serial[6],
-                                                                 res->serial[7],
-                                                                 res->serial[8],
-                                                                 res->serial[9],
-                                                                 res->serial[10]];
-
+                NSString *serialNo = [NSString stringWithFormat:@"%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x",
+                                      res->serial[0],
+                                      res->serial[1],
+                                      res->serial[2],
+                                      res->serial[3],
+                                      res->serial[4],
+                                      res->serial[5],
+                                      res->serial[6],
+                                      res->serial[7],
+                                      res->serial[8],
+                                      res->serial[9],
+                                      res->serial[10]];
+                
                 NSLog(@"get serialNo : %@", serialNo);
-//                NSLog(@"%s", res->serial);
-
+                //                NSLog(@"%s", res->serial);
+                
                 NSMutableString *serialNoChar = [NSMutableString string];
                 for( NSInteger i = 0; i <= 10; i++ ) {
                     [serialNoChar appendString:[NSString stringWithFormat:@"%c", res->serial[i]]];
                 }
                 NSLog(@"get serialNoChar : %@", serialNoChar);
-
+                
                 NSMutableString *mac = [NSMutableString string];
                 for( NSInteger i = 11; i <= 16; i++ ) {
                     [mac appendString:[NSString stringWithFormat:@"%02x", (unsigned int) res->serial[i]]];

@@ -27,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_TermsFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_FeedBackFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_VersionInfo;
-@property (assign, nonatomic) BOOL isNeedUpdate;
+@property (assign, nonatomic) UpdateStatus updateStatus;
 @property (weak, nonatomic) IBOutlet UIView *v_Addtion;
 @end
 
@@ -56,6 +56,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [Util checkReqUpdate:self];
+
     NSString *str_Email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     if( str_Email.length > 0 ) {
         _lb_Email.text = str_Email;
@@ -69,13 +71,15 @@
     NSString *str_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     _lb_Version.text = [NSString stringWithFormat:@"v%@", str_Version];
 
-    _isNeedUpdate = [Util needsUpdate];
-    if( _isNeedUpdate ) {
+    _updateStatus = [Util needsUpdate];
+    if( _updateStatus != Latest ) {
+//    _isNeedUpdate = [Util needsUpdate];
+//    if( _isNeedUpdate ) {
         [self enableBtn:_btn_Update];
     } else {
         [self disableBtn:_btn_Update];
     }
-    
+
     [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
         if( settings.alertStyle == UNAlertStyleNone ) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -239,7 +243,7 @@
 }
 
 - (IBAction)goUpdate:(id)sender {
-    if( _isNeedUpdate ) {
+    if( _updateStatus != Latest ) {
         NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str_AppStoreLink] options:@{} completionHandler:nil];
     }

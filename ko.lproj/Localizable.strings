@@ -193,3 +193,7 @@
 "Select medication" = "약품 선택";
 "A medication" = "아모잘탄엑스큐정 50mg";
 "B medication" = "얼리다정 (Erleada) 전립선암 60mg";
+
+
+"There is a new update.\nDo you want to update?" = "새로운 업데이트가 있습니다.\n업데이트 하시겠습니까?";
+"Update is required" = "업데이트가 필요합니다.";

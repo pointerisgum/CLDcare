@@ -31,7 +31,7 @@ _Pragma("clang diagnostic pop") \
 //#define kBaseUrl             @"https://coledycred.com/api/v1/"  //상용
 #define kPushUrl            @"http://54.180.211.74/api/v1/"  //푸시 URL
 
-#define APP_STORE_ID        @"1575875601"
+#define APP_STORE_ID        @"1590633376"
 
 #define SCENE_DELEGATE      (SceneDelegate *)self.parentViewController.view.window.windowScene.delegate
 #define PW_AES_KEY          @"(m/indw#are3work~sppl_usp@bi0z-!"

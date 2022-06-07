@@ -47,6 +47,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [Util checkReqUpdate:self];
+
     NSString *str_DeviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     if( str_DeviceName.length > 0 ) {
         _lb_DeviceName.text = str_DeviceName;

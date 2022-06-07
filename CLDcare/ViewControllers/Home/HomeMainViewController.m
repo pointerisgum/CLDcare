@@ -87,6 +87,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UpdateStatus updateStatus = [Util needsUpdate];
+    if( updateStatus == Optional ) {
+        PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
+        vc.isUpdateMode = true;
+        vc.updateStatus = Optional;
+        [vc setPopUpDismissBlock:^{
+            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str_AppStoreLink] options:@{} completionHandler:nil];
+        }];
+        [self presentViewController:vc animated:true completion:^{
+            
+        }];
+    }
+
     [UIApplication sharedApplication].idleTimerDisabled = true;
 
     _lb_MedicationFix.text = NSLocalizedString(@"Med Info", nil);
@@ -137,6 +151,7 @@
 
 }
 
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [Util topRound:_v_Schedule];
@@ -155,6 +170,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [Util checkReqUpdate:self];
+
     [self updateData];
     [self updateStatus];
     

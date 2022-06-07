@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    Latest,     //최신버전
+    Optional,   //선택 업데이트
+    Require,    //강제 업데이트
+} UpdateStatus;
+
+
 @interface Util : NSObject
 
 + (Util *)sharedData;
@@ -22,7 +29,7 @@
 + (void)showAlertServerError;
 + (BOOL)canNextStep:(UIViewController *)vc;
 + (void)showConfirmAlret:(UIViewController *)vc withMsg:(NSString *)msg completion:(void(^)(id result))completion;
-+ (BOOL)needsUpdate;
++ (UpdateStatus)needsUpdate;
 + (BOOL)isNetworkCheckAlert;
 + (NSString *)contentTypeForImageData:(NSData *)data;
 + (NSString* )sha256:(NSString *)text;
@@ -36,4 +43,7 @@
 + (NSString *)makeKey:(NSString *)key;
 + (void)topRound:(UIView *)view;
 
+
++ (NSString *)getAppStoreVersion;
++ (void)checkReqUpdate:(UIViewController *)vc;
 @end

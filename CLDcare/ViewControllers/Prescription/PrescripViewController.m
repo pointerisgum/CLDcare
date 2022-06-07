@@ -31,6 +31,12 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [Util checkReqUpdate:self];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if( [segue.identifier isEqualToString:@"PrescripDetailSegue"] ) {
         PrescripDetailViewController *vc = (PrescripDetailViewController *)segue.destinationViewController;

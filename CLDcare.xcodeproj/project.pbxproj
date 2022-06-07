@@ -628,15 +628,15 @@
 		1881E22C2704143E005AE92C /* Prescription */ = {
 			isa = PBXGroup;
 			children = (
+				1881E2372704143E005AE92C /* PrescripViewController.h */,
+				1881E2332704143E005AE92C /* PrescripViewController.m */,
 				1881E22D2704143E005AE92C /* PrescripDetailViewController.h */,
 				1881E22E2704143E005AE92C /* PopUpCalendarViewController.m */,
 				1881E22F2704143E005AE92C /* Cells */,
 				1881E2322704143E005AE92C /* PopUpDeviceDetailViewController.h */,
-				1881E2332704143E005AE92C /* PrescripViewController.m */,
 				1881E2342704143E005AE92C /* PopUpCalendarViewController.h */,
 				1881E2352704143E005AE92C /* PrescripDetailViewController.m */,
 				1881E2362704143E005AE92C /* PopUpDeviceDetailViewController.m */,
-				1881E2372704143E005AE92C /* PrescripViewController.h */,
 			);
 			path = Prescription;
 			sourceTree = "<group>";

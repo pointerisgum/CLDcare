@@ -13,6 +13,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "PopUpViewController.h"
 @import UserNotifications;
 
 static Util *shared = nil;
@@ -212,22 +213,48 @@ static Util *shared = nil;
     }];
 }
 
-+ (BOOL)needsUpdate {
++ (NSString *)getAppStoreVersion {
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 
-    if ([lookup[@"resultCount"] integerValue] == 1){
+    if ([lookup[@"resultCount"] integerValue] == 1)
+    {
+        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSLog(@"AppStore Version : %@", appStoreVersion);
+        return appStoreVersion;
+    }
+
+    return @"";
+}
+
++ (UpdateStatus)needsUpdate {
+//+ (BOOL)needsUpdate {
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+
+    if( [lookup[@"resultCount"] integerValue] == 1 ) {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-        if (![appStoreVersion isEqualToString:currentVersion]){
-            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
-            return YES;
+        NSArray *store = [appStoreVersion componentsSeparatedByString:@"."];
+        NSArray *current = [currentVersion componentsSeparatedByString:@"."];
+        if( store.count == 3 && current.count == 3 ) {
+            if( ([store[0] integerValue] > [current[0] intValue]) || ([store[1] intValue] > [current[1] intValue])) {
+                //강제 업데이트
+                return Require;
+            } else if( [store[2] integerValue] > [current[2] intValue] ) {
+                //선택 업데이트
+                return Optional;
+            }
         }
     }
-    return NO;
+    //최신 버전
+    return Latest;
 }
 
 + (BOOL)isNetworkCheckAlert {
@@ -581,6 +608,23 @@ static Util *shared = nil;
     CAShapeLayer * maskLayer = [CAShapeLayer layer];
     maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: view.bounds byRoundingCorners: UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii: (CGSize){10.0, 10.}].CGPath;
     view.layer.mask = maskLayer;
+}
+
+
++ (void)checkReqUpdate:(UIViewController *)vc {
+    UpdateStatus updateStatus = [Util needsUpdate];
+    if( updateStatus == Require ) {
+        PopUpViewController *vc_PopUp = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
+        vc_PopUp.isUpdateMode = true;
+        vc_PopUp.updateStatus = Require;
+        [vc_PopUp setPopUpDismissBlock:^{
+            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str_AppStoreLink] options:@{} completionHandler:nil];
+        }];
+        [vc presentViewController:vc_PopUp animated:true completion:^{
+            
+        }];
+    }
 }
 
 @end
