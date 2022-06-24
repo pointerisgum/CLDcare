@@ -231,15 +231,16 @@ static Util *shared = nil;
 }
 
 + (UpdateStatus)needsUpdate {
-//+ (BOOL)needsUpdate {
+    //+ (BOOL)needsUpdate {
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-
+    
     if( [lookup[@"resultCount"] integerValue] == 1 ) {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+        NSLog(@"appStoreVersion : %@", appStoreVersion);
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
         NSArray *store = [appStoreVersion componentsSeparatedByString:@"."];
         NSArray *current = [currentVersion componentsSeparatedByString:@"."];
@@ -251,6 +252,16 @@ static Util *shared = nil;
                 //선택 업데이트
                 return Optional;
             }
+            /*
+             else {
+             if (([store[0] integerValue] == [current[0] intValue]) && ([store[1] intValue] > [current[1] intValue]) ) {
+             if( [store[2] integerValue] > [current[2] intValue] ) {
+             //선택 업데이트
+             return Optional;
+             }
+             }
+             }
+             */
         }
     }
     //최신 버전
@@ -618,7 +629,8 @@ static Util *shared = nil;
         vc_PopUp.isUpdateMode = true;
         vc_PopUp.updateStatus = Require;
         [vc_PopUp setPopUpDismissBlock:^{
-            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
+//            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
+            NSString *str_AppStoreLink = [NSString stringWithFormat:@"https://itunes.apple.com/kr/app/apple-store/id%@?mt=8", APP_STORE_ID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str_AppStoreLink] options:@{} completionHandler:nil];
         }];
         [vc presentViewController:vc_PopUp animated:true completion:^{
