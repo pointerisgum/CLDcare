@@ -109,10 +109,27 @@
 
 - (void)sendCerdCode {
     NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
-    [dicM_Params setObject:@"E" forKey:@"mem_login_type"];
+    if( _isGoogle ) {
+//        [dicM_Params setObject:_UID forKey:@"mem_token"];
+        [dicM_Params setObject:@"G" forKey:@"mem_login_type"];
+        [dicM_Params setObject:_UID forKey:@"mem_password"];
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+        [dicM_Params setObject:token != nil ? token : @"" forKey:@"fcm_token"];
+    } else if( _isApple ) {
+//        [dicM_Params setObject:_UID forKey:@"mem_token"];
+        [dicM_Params setObject:@"A" forKey:@"mem_login_type"];
+        [dicM_Params setObject:_UID forKey:@"mem_password"];
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+        [dicM_Params setObject:token != nil ? token : @"" forKey:@"fcm_token"];
+    } else {
+        [dicM_Params setObject:[Util sha256:_pw] forKey:@"mem_password"];
+        [dicM_Params setObject:@"E" forKey:@"mem_login_type"];
+    }
     [dicM_Params setObject:_email forKey:@"mem_email"];
-    [dicM_Params setObject:[Util sha256:_pw] forKey:@"mem_password"];
     [dicM_Params setObject:@"P" forKey:@"mem_user_type"];
+    
+    
+    NSLog(@"%@", dicM_Params);
     
     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/add" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode code) {
         if( error != nil ) {
@@ -120,6 +137,10 @@
             return;
         }
         NSLog(@"%@", resulte);
+        if( [resulte[@"message"] isEqualToString:@"Already registered member"] ) {
+            [Util showAlertWindow:NSLocalizedString(@"Already registered member.", nil)];
+            return;
+        }
         NSString *accToken = resulte[@"access_token"];
         NSString *uId = resulte[@"mem_uid"];
         NSString *refToken = resulte[@"refresh_token"];
@@ -130,9 +151,64 @@
         [[NSUserDefaults standardUserDefaults] setObject:self.pw forKey:@"UserPw"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [Util showConfirmAlret:self withMsg:NSLocalizedString(@"I have sent the authentication code.\nPlease check your authentication email and log in.", nil) completion:^(id result) {
-            [self.navigationController popToRootViewControllerAnimated:true];
-        }];
+        if( self.isGoogle ) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"G" forKey:@"LoginType"];
+
+            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+            NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+            [dicM_Params setObject:self.email forKey:@"mem_email"];
+            [dicM_Params setObject:self.UID forKey:@"mem_token"];
+            [dicM_Params setObject:@"G" forKey:@"mem_login_type"];
+            [dicM_Params setObject:token != nil ? token : @"" forKey:@"fcm_token"];
+            [self login:dicM_Params];
+        } else if( self.isApple ) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"A" forKey:@"LoginType"];
+
+            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+            NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+            [dicM_Params setObject:self.email forKey:@"mem_email"];
+            [dicM_Params setObject:self.UID forKey:@"mem_token"];
+            [dicM_Params setObject:@"A" forKey:@"mem_login_type"];
+            [dicM_Params setObject:token != nil ? token : @"" forKey:@"fcm_token"];
+            [self login:dicM_Params];
+        } else {
+            [Util showConfirmAlret:self withMsg:NSLocalizedString(@"I have sent the authentication code.\nPlease check your authentication email and log in.", nil) completion:^(id result) {
+                [self.navigationController popToRootViewControllerAnimated:true];
+            }];
+        }
+    }];
+}
+
+- (void)login:(NSMutableDictionary *)params {
+    [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/login" param:params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+        if( error != nil ) {
+            [Util showAlert:NSLocalizedString(@"Invalid ID or Password", nil) withVc:self];
+            return;
+        }
+        NSLog(@"%@", resulte);
+
+        NSString *accToken = resulte[@"access_token"];
+//        NSString *inphrToken = resulte[@"inphr_access_token"];
+        NSString *uId = resulte[@"mem_uid"];
+        NSString *refToken = resulte[@"refresh_token"];
+        if( accToken == nil || uId == nil ) {
+            [Util showAlert:NSLocalizedString(@"Invalid ID or password", nil) withVc:self];
+            return;
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:accToken != nil ? accToken : @"" forKey:@"AccToken"];
+//        [[NSUserDefaults standardUserDefaults] setObject:inphrToken != nil ? inphrToken : @"" forKey:@"InphrToken"];
+        [[NSUserDefaults standardUserDefaults] setObject:uId != nil ? uId : @"" forKey:@"UId"];
+        [[NSUserDefaults standardUserDefaults] setObject:refToken != nil ? refToken : @"" forKey:@"RefToken"];
+        
+        NSString *firstName = resulte[@"mem_first_name"];
+        NSString *lastName = resulte[@"mem_last_name"];
+        [[NSUserDefaults standardUserDefaults] setObject:firstName != nil ? firstName : @"" forKey:@"mem_first_name"];
+        [[NSUserDefaults standardUserDefaults] setObject:lastName != nil ? lastName : @"" forKey:@"mem_last_name"];
+
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [SCENE_DELEGATE showMainView];
     }];
 }
 
@@ -199,9 +275,20 @@
 
 - (IBAction)goNext:(id)sender {
     NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
-    [dicM_Params setObject:@"E" forKey:@"mem_login_type"];
     [dicM_Params setObject:_email forKey:@"mem_email"];
-    [dicM_Params setObject:_pw forKey:@"mem_password"];
+//    [dicM_Params setObject:_pw forKey:@"mem_password"];
+//    [dicM_Params setObject:@"E" forKey:@"mem_login_type"];
+    if( _isGoogle ) {
+        [dicM_Params setObject:_UID forKey:@"mem_token"];
+        [dicM_Params setObject:@"G" forKey:@"mem_login_type"];
+    } else if( _isApple ) {
+        [dicM_Params setObject:_UID forKey:@"mem_token"];
+        [dicM_Params setObject:@"A" forKey:@"mem_login_type"];
+    } else {
+        [dicM_Params setObject:[Util sha256:_pw] forKey:@"mem_password"];
+        [dicM_Params setObject:@"E" forKey:@"mem_login_type"];
+    }
+
     [dicM_Params setObject:@"P" forKey:@"mem_user_type"];
     [dicM_Params setObject:_tf_FirstName.text forKey:@"mem_first_name"];
     [dicM_Params setObject:_tf_LastName.text forKey:@"mem_last_name"];

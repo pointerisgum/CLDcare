@@ -7,6 +7,8 @@
 
 #import "ClauseViewController.h"
 #import "ClauseDetailViewController.h"
+#import "JoinViewController.h"
+#import "Join2ViewController.h"
 
 @interface ClauseViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *btn_All;
@@ -80,6 +82,20 @@
     }
     
     [self updateButtonStatus];
+}
+
+- (IBAction)goNext:(id)sender {
+    if( _isGoogle || _isApple ) {
+        Join2ViewController *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"Join2ViewController"];
+        vc.email = _email;
+        vc.isGoogle = _isGoogle;
+        vc.isApple = _isApple;
+        vc.UID = _UID;
+        [self.navigationController pushViewController:vc animated:true];
+    } else {
+        JoinViewController *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"JoinViewController"];
+        [self.navigationController pushViewController:vc animated:true];
+    }
 }
 
 @end

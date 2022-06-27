@@ -134,6 +134,7 @@
 		1881E3652704143F005AE92C /* NDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E2F92704143F005AE92C /* NDDevice.m */; };
 		1881E3692704155D005AE92C /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E3682704155D005AE92C /* HistoryViewController.m */; };
 		18B682CA27F1A66000B66617 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18B682CC27F1A66100B66617 /* Localizable.strings */; };
+		18DB92E32865BC7600882597 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DB92E22865BC7600882597 /* AuthenticationServices.framework */; };
 		18F2AA5D277AC7760091373E /* Join2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F2AA5C277AC7760091373E /* Join2ViewController.m */; };
 		18F2AA60277AD6690091373E /* AdditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F2AA5F277AD6690091373E /* AdditionViewController.m */; };
 		18F2AA67277B5ECB0091373E /* FeedBackMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F2AA66277B5ECB0091373E /* FeedBackMainViewController.m */; };
@@ -407,6 +408,7 @@
 		18B682CB27F1A66100B66617 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18B682CE27F1A66C00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		18B682CF27F1A66D00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		18DB92E22865BC7600882597 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		18F2AA5B277AC7760091373E /* Join2ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Join2ViewController.h; sourceTree = "<group>"; };
 		18F2AA5C277AC7760091373E /* Join2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Join2ViewController.m; sourceTree = "<group>"; };
 		18F2AA5E277AD6690091373E /* AdditionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdditionViewController.h; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DB92E32865BC7600882597 /* AuthenticationServices.framework in Frameworks */,
 				1881E1FF27041295005AE92C /* UserNotifications.framework in Frameworks */,
 				1881E1FD2704128B005AE92C /* WebKit.framework in Frameworks */,
 				2C0C5005628882219D6D4A6F /* Pods_CLDcare.framework in Frameworks */,
@@ -972,6 +975,7 @@
 		8A9B0434D1D25D31FB73EDEB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18DB92E22865BC7600882597 /* AuthenticationServices.framework */,
 				1881E1FE27041295005AE92C /* UserNotifications.framework */,
 				1881E1FC2704128B005AE92C /* WebKit.framework */,
 				5F30AD08BB218B262107EFF7 /* Pods_CLDcare.framework */,

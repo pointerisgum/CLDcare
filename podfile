@@ -17,6 +17,9 @@ target 'CLDcare' do
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   pod 'UITextView+Placeholder'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
+  pod 'GoogleSignIn'
 
   target 'CLDcareTests' do
     inherit! :search_paths

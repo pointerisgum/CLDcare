@@ -9,6 +9,7 @@
 #import <UserNotifications/UserNotifications.h>
 @import UserNotifications;
 @import Firebase;
+@import GoogleSignIn;
 
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
@@ -159,6 +160,12 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     NSLog(@"FCM registration token: %@", fcmToken);
     
     
+}
+
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options API_AVAILABLE(ios(9.0)) {
+    NSLog(@"openURL : %@", url);
+    return [[GIDSignIn sharedInstance] handleURL:url];
 }
 
 @end
