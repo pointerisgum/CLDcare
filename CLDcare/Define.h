@@ -41,4 +41,6 @@ _Pragma("clang diagnostic pop") \
 //#define MAIN_COLOR          [UIColor colorWithHexString:@"00aac1"]
 #define MAIN_COLOR          [UIColor linkColor]
 
+#define FilePath            NSTemporaryDirectory()
+
 #endif /* Define_h */

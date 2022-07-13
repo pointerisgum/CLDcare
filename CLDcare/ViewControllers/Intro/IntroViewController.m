@@ -25,13 +25,27 @@
     NSString *str_UserEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     NSString *str_Pw = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPw"];
     NSString *str_LoginType = [[NSUserDefaults standardUserDefaults] objectForKey:@"LoginType"];
-
-    if( str_UserEmail.length > 0 && str_Pw.length > 0 && str_LoginType.length > 0 ) {
+    
+    BOOL isSNSMode = false;
+    if( str_LoginType.length > 0 && [str_LoginType isEqualToString:@"E"] == false ) {
+        isSNSMode = true;
+    }
+    if( isSNSMode || (str_UserEmail.length > 0 && str_Pw.length > 0 && str_LoginType.length > 0) ) {
         //오토 로그인
         NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+        if( isSNSMode ) {
+            NSString *snsToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"snsToken"];
+            if( snsToken == nil || snsToken.length <= 0 ) {
+                [SCENE_DELEGATE showLoginView];
+                return;
+            }
+            [dicM_Params setObject:snsToken forKey:@"mem_token"];
+        } else {
+            [dicM_Params setObject:[Util sha256:str_Pw] forKey:@"mem_password"];
+        }
+
         [dicM_Params setObject:str_LoginType forKey:@"mem_login_type"];
         [dicM_Params setObject:str_UserEmail forKey:@"mem_email"];
-        [dicM_Params setObject:[Util sha256:str_Pw] forKey:@"mem_password"];
         [dicM_Params setObject:token != nil ? token : @"" forKey:@"fcm_token"];
 
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/login" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {

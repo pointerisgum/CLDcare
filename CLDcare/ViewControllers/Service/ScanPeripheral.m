@@ -14,8 +14,6 @@
     
 }
 
-@property (strong, nonatomic) CBCharacteristic* rx;
-@property (strong, nonatomic) CBCharacteristic* tx;
 
 @end
 
@@ -90,7 +88,40 @@
     
 }
 
+- (void)removeService {
+    self.peripheral.delegate = self;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // discover services
+        NSArray* services = @[];
+        [self.peripheral discoverServices:services];
+    });
+}
+
+
+
 #pragma mark - CBPeripheral delegate implementation
+//- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
+//{
+//    NSLog(@"discovered peripheral service: %@", peripheral.services);
+//
+//    BOOL success = NO;
+//    for (CBService* service in peripheral.services)
+//    {
+//        // UART service id was found
+//        if ([service.UUID isEqual:[self.class uartServiceUUID]])
+//        {
+//            success = YES;
+//
+//            NSArray* chars = @[[self.class txCharacteristicUUID], [self.class rxCharacteristicUUID]];
+//            [peripheral discoverCharacteristics:chars forService:service];
+//            break;
+//        }
+//    }
+//
+//    [self.delegate scanPeripheral:self serviceDiscovered:success];
+//}
+
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
     NSLog(@"discovered peripheral service: %@", peripheral.services);
@@ -98,14 +129,19 @@
     BOOL success = NO;
     for (CBService* service in peripheral.services)
     {
-        // UART service id was found
-        if ([service.UUID isEqual:[self.class uartServiceUUID]])
-        {
-            success = YES;
-            
-            NSArray* chars = @[[self.class txCharacteristicUUID], [self.class rxCharacteristicUUID]];
+        if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
+            NSArray* chars = @[[self.class uartServiceUUID]];
             [peripheral discoverCharacteristics:chars forService:service];
-            break;
+            success = YES;
+        } else {
+            // UART service id was found
+            if ([service.UUID isEqual:[self.class uartServiceUUID]])
+            {
+                success = YES;
+                NSArray* chars = @[[self.class txCharacteristicUUID], [self.class rxCharacteristicUUID]];
+                [peripheral discoverCharacteristics:chars forService:service];
+                break;
+            }
         }
     }
     

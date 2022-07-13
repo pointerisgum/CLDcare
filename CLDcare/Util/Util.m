@@ -240,7 +240,6 @@ static Util *shared = nil;
     
     if( [lookup[@"resultCount"] integerValue] == 1 ) {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
-        NSLog(@"appStoreVersion : %@", appStoreVersion);
         NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
         NSArray *store = [appStoreVersion componentsSeparatedByString:@"."];
         NSArray *current = [currentVersion componentsSeparatedByString:@"."];
@@ -622,7 +621,7 @@ static Util *shared = nil;
 }
 
 
-+ (void)checkReqUpdate:(UIViewController *)vc {
++ (UpdateStatus)checkReqUpdate:(UIViewController *)vc {
     UpdateStatus updateStatus = [Util needsUpdate];
     if( updateStatus == Require ) {
         PopUpViewController *vc_PopUp = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
@@ -637,6 +636,29 @@ static Util *shared = nil;
             
         }];
     }
+    
+    return updateStatus;
+}
+
++ (void)firmWareDownload:(NSString *)fileName {
+    NSLog(@"펌웨어 다운로드 시작");
+    dispatch_queue_t queue = dispatch_get_global_queue(0,0);
+    dispatch_async(queue, ^{
+        NSString *stringURL = [NSString stringWithFormat:@"http://15.164.79.24/downloads/firmware/dfu/firmware/version/%@.zip", fileName];
+        
+        NSURL  *url = [NSURL URLWithString:stringURL];
+        NSData *urlData = [NSData dataWithContentsOfURL:url];
+
+//        //Find a cache directory. You could consider using documenets dir instead (depends on the data you are fetching)
+//        NSLog(@"Got the data!");
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//        NSString *path = [paths  objectAtIndex:0];
+
+        NSString *dataPath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
+        dataPath = [dataPath stringByStandardizingPath];
+        [urlData writeToFile:dataPath atomically:YES];
+        NSLog(@"펌웨어 다운로드 완료");
+    });
 }
 
 @end

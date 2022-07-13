@@ -170,9 +170,11 @@
     NSInteger nMin = [dic[@"min"] integerValue];
     BOOL isOn = [dic[@"on"] boolValue];
 
-    if( nHour >= 12 ) {
+    if( nHour > 12 ) {
         cell.lb_AmPm.text = NSLocalizedString(@"PM", nil);
         nHour -= 12;
+    } else if( nHour == 12 ) {
+        cell.lb_AmPm.text = NSLocalizedString(@"PM", nil);
     } else {
         cell.lb_AmPm.text = NSLocalizedString(@"AM", nil);
     }

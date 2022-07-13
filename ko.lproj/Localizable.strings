@@ -202,3 +202,12 @@
 "Sign in with Apple errored." = "에러가 발생했습니다.";
 
 "Already registered member." = "이미 가입 된 계정 입니다.";
+
+"Sign in with Google" = "구글로 로그인";
+
+"Checking FirmWare Update..." = "펌웨어 업데이트 확인 중...";
+"FirmWare Update..." = "펌웨어 업데이트 중...";
+
+"Keep your medicine case close to your phone and don't turn off the app." = "약통을 핸드폰과 가까이 두고 앱을 끄지 마세요.";
+
+"Failed to get serial number.\nPlease reconnect the medicine case." = "시리얼 번호를 얻어오지 못했습니다.\n약통을 다시 연결해 주세요.";

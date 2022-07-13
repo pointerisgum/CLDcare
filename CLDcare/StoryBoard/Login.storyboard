@@ -220,7 +220,7 @@
                                                             <action selector="goGoogleLogin:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="5iq-Af-X5t"/>
                                                         </connections>
                                                     </button>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="And-sA-DVe">
+                                                    <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="And-sA-DVe">
                                                         <rect key="frame" x="158" y="14" width="112.33333333333331" height="20"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="google_login_48" translatesAutoresizingMaskIntoConstraints="NO" id="Kpy-hD-Q3M">
@@ -354,6 +354,7 @@
                         <outlet property="btn_Google" destination="iuv-YC-v96" id="7f0-mX-GB1"/>
                         <outlet property="btn_Join" destination="U6q-ZJ-rAH" id="Fd2-UL-Qp7"/>
                         <outlet property="btn_Login" destination="oTC-Am-Oc5" id="ggk-zy-7hn"/>
+                        <outlet property="lb_GoogleTitle" destination="SQu-hP-LJg" id="o8e-CP-IpI"/>
                         <outlet property="stv_Apple" destination="37s-dd-gXE" id="IXI-AA-HZn"/>
                         <outlet property="sv_Main" destination="MPi-ly-LIf" id="VJm-10-9dE"/>
                         <outlet property="tf_Email" destination="DU4-a4-P3f" id="pGw-ek-ePw"/>

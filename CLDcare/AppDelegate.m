@@ -40,7 +40,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+
     [FIRApp configure];
     [FIRMessaging messaging].delegate = self;
     

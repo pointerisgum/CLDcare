@@ -33,7 +33,7 @@ typedef struct
 
 typedef struct
 {
-    uint8_t index;
+    uint16_t index;
 } ble_req_data_t;
 
 typedef struct
@@ -44,8 +44,20 @@ typedef struct
 
 typedef struct
 {
-    uint8_t serial[12];
+    uint8_t serial[19];
 } ble_serial_data_t;
+
+typedef struct
+{
+    uint32_t version;
+} ble_version_t;
+
+typedef struct
+{
+    uint8_t cmd[2];
+//    uint8_t cmd1;
+//    uint8_t cmd2;
+} ble_cmd_data_t;
 
 enum
 {
@@ -54,6 +66,8 @@ enum
     ncmd_count,
     ncmd_get_data,
     ncmd_serial_data,
+    ncmd_version,
+    ncmd_firmware_uart,
 };
 
 #pragma pack()

@@ -603,6 +603,19 @@ PODS:
   - AppAuth/Core (1.5.0)
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
+  - ASIHTTPRequest (1.8.2):
+    - ASIHTTPRequest/ASIWebPageRequest (= 1.8.2)
+    - ASIHTTPRequest/CloudFiles (= 1.8.2)
+    - ASIHTTPRequest/Core (= 1.8.2)
+    - ASIHTTPRequest/S3 (= 1.8.2)
+  - ASIHTTPRequest/ASIWebPageRequest (1.8.2):
+    - ASIHTTPRequest/Core
+  - ASIHTTPRequest/CloudFiles (1.8.2):
+    - ASIHTTPRequest/Core
+  - ASIHTTPRequest/Core (1.8.2):
+    - Reachability
+  - ASIHTTPRequest/S3 (1.8.2):
+    - ASIHTTPRequest/Core
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
     - BoringSSL-GRPC/Interface (= 0.0.24)
@@ -774,6 +787,8 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.2)
+  - iOSDFULibrary (4.11.1):
+    - ZIPFoundation (= 0.9.11)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -788,11 +803,14 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - Reachability (3.2)
   - Toast (4.0.0)
   - "UITextView+Placeholder (1.4.0)"
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
+  - ASIHTTPRequest
   - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
@@ -800,6 +818,7 @@ DEPENDENCIES:
   - FirebaseFirestore
   - FSCalendar
   - GoogleSignIn
+  - iOSDFULibrary (~> 4.10)
   - MBProgressHUD
   - Toast (~> 4.0.0)
   - "UITextView+Placeholder"
@@ -809,6 +828,7 @@ SPEC REPOS:
     - abseil
     - ActionSheetPicker-3.0
     - AppAuth
+    - ASIHTTPRequest
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
@@ -827,18 +847,22 @@ SPEC REPOS:
     - gRPC-Core
     - GTMAppAuth
     - GTMSessionFetcher
+    - iOSDFULibrary
     - leveldb-library
     - Libuv-gRPC
     - MBProgressHUD
     - nanopb
     - PromisesObjC
+    - Reachability
     - Toast
     - "UITextView+Placeholder"
+    - ZIPFoundation
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
   ActionSheetPicker-3.0: 36da254b97a09ff89679ecb8b8510bd3e5bdc773
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  ASIHTTPRequest: ec013992946676b7978dcbde6396d57312d21db4
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   Firebase: e84d95f6d3a91f634abc384f0751c434cb3aecfa
   FirebaseAnalytics: 8f32ae54ad42754f503354782575c4ddfc1425c3
@@ -857,14 +881,17 @@ SPEC CHECKSUMS:
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  iOSDFULibrary: 3500ac00451aa7d8ec48a752e91099669a2c1d27
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: ce389dceec00cf90d04d8cfe52e148db038c3fea
+PODFILE CHECKSUM: ae2c22cdd3629c9c4954e863f3edd7f7e7abb2ab
 
 COCOAPODS: 1.11.3

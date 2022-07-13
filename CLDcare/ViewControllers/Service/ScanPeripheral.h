@@ -19,10 +19,13 @@
 @property (strong, nonatomic) NSData* manufData;
 @property (assign, nonatomic) int rssi;
 @property (strong, nonatomic) id<ScanPeripheralDelegate> delegate;
+@property (strong, nonatomic) CBCharacteristic* rx;
+@property (strong, nonatomic) CBCharacteristic* tx;
 
 + (ScanPeripheral*) initWithPeripheral:(CBPeripheral*)peripheral;
 - (id)initWithPeripheral:(CBPeripheral*)peripheral;
 - (void)findService;
+- (void)removeService;
 - (void)writeData:(NSData*) data;
 - (void)writeString:(NSString*) str;
 - (void)writeBuffer:(const void*)buffer withLength:(NSUInteger) len;

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_Join;
 @property (weak, nonatomic) IBOutlet UIButton *btn_Google;
 @property (weak, nonatomic) IBOutlet UIStackView *stv_Apple;
+@property (weak, nonatomic) IBOutlet UILabel *lb_GoogleTitle;
 @property (nonatomic, strong) NSString *currentNonce;
 @end
 
@@ -47,7 +48,8 @@
     _tf_Pw.placeholder = NSLocalizedString(@"Password", nil);
     [_btn_Login setTitle:NSLocalizedString(@"Log In", nil) forState:UIControlStateNormal];
     [_btn_Join setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
-
+    _lb_GoogleTitle.text = NSLocalizedString(@"Sign in with Google", nil);
+    
     NSString *str_Email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     if( str_Email.length > 0 ) {
         _tf_Email.text = str_Email;
@@ -133,6 +135,9 @@
         NSString *lastName = resulte[@"mem_last_name"];
         [[NSUserDefaults standardUserDefaults] setObject:firstName != nil ? firstName : @"" forKey:@"mem_first_name"];
         [[NSUserDefaults standardUserDefaults] setObject:lastName != nil ? lastName : @"" forKey:@"mem_last_name"];
+        
+        NSString *UID = params[@"mem_token"];
+        [[NSUserDefaults standardUserDefaults] setObject:UID != nil ? UID : @"" forKey:@"snsToken"];
 
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -304,7 +309,6 @@
             }];
         } else {
             NSLog(@"%@", error);
-            [Util showAlert:NSLocalizedString(@"An error has occurred.", nil) withVc:self];
         }
     }];
 }

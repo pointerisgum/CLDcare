@@ -21,6 +21,7 @@
     uint8_t           send_cmd;
     uint32_t          history_count;
     NSInteger         history_index;
+    NSInteger         historyArrayIndx;
 }
 //@property (strong, nonatomic) UIView *view;
 @property (strong, nonatomic) ScanPeripheral* device;
@@ -51,12 +52,24 @@
     self.ar_List = ar;
     
     history_count = 0;
-    
+    historyArrayIndx = 0;
+
     NSInteger nStartIdx = [[ar firstObject] integerValue];
     history_index = nStartIdx;
     
     connectBlock = ^() {
         [weakSelf sendPacket:ncmd_count data:NULL length:0];
+    };
+    
+    //    [self showHUD:@"Connecting" mode:MBProgressHUDModeDeterminate];
+    [_centralManager connectPeripheral:_device.peripheral options:@{CBConnectPeripheralOptionNotifyOnConnectionKey:@YES}];
+}
+
+- (void)updateConnect {
+    __weak typeof(self) weakSelf = self;
+    
+    connectBlock = ^() {
+        weakSelf.firmwareUARTCompleteBlock(true);
     };
     
     //    [self showHUD:@"Connecting" mode:MBProgressHUDModeDeterminate];
@@ -83,6 +96,21 @@
         dt.take_min = take_components.minute;
         [weakSelf sendPacket:ncmd_take_time data:&dt length:sizeof(dt)];
         //0, 8, 11
+    };
+    
+    //    [self showHUD:@"Connecting" mode:MBProgressHUDModeDeterminate];
+    [_centralManager connectPeripheral:_device.peripheral options:@{CBConnectPeripheralOptionNotifyOnConnectionKey:@YES}];
+}
+
+- (void)firmWareUART {
+    __weak typeof(self) weakSelf = self;
+
+    connectBlock = ^() {
+        NSLog(@"sendPacket:ncmd_firmware_uart");
+        ble_cmd_data_t cd;
+        cd.cmd[0] = 42;
+        cd.cmd[1] = 42;
+        [weakSelf sendPacket:ncmd_firmware_uart data:&cd length:sizeof(cd)];
     };
     
     //    [self showHUD:@"Connecting" mode:MBProgressHUDModeDeterminate];
@@ -131,22 +159,26 @@
     //    }
 }
 
-- (void)sendPacket:(uint8_t)cmd data:(void*)data length:(NSUInteger)length
-{
+- (void)sendPacket:(uint8_t)cmd data:(void*)data length:(NSUInteger)length {
     NSUInteger len = length + ble_nus_header_length;
-    uint8_t buf[len];
-    ble_nus_data_t* base = (ble_nus_data_t*)buf;
-    base->cmd = cmd;
-    base->header = ble_nus_prefix;
     
-    if (length != 0)
-        memcpy((uint8_t*)buf + ble_nus_header_length, data, length);
-    
-    [_device writeBuffer:buf withLength:len];
-    
-    // save command & start timer
-    send_cmd = cmd;
-    [commandTimer start];
+    if( cmd == ncmd_firmware_uart ) {
+        [_device writeBuffer:data withLength:len];
+        [self finishFirmwareUART];
+    } else {
+        uint8_t buf[len];
+        ble_nus_data_t* base = (ble_nus_data_t*)buf;
+        base->cmd = cmd;
+        base->header = ble_nus_prefix;
+
+        if (length != 0) {
+            memcpy((uint8_t*)buf + ble_nus_header_length, data, length);
+        }
+        [_device writeBuffer:buf withLength:len];
+        
+        send_cmd = cmd;
+        [commandTimer start];
+    }
 }
 
 #pragma mark - ScanPeripheral delegate
@@ -211,6 +243,14 @@
     _device.delegate = nil;
     if( _timeSyncCompleteBlock ) {
         _timeSyncCompleteBlock(true);
+    }
+}
+
+- (void)finishFirmwareUART {
+    NSLog(@"finishFirmwareUART");
+    _device.delegate = nil;
+    if( _firmwareUARTCompleteBlock ) {
+        _firmwareUARTCompleteBlock(true);
     }
 }
 
@@ -303,7 +343,14 @@
                                       res->serial[9],
                                       res->serial[10]];
                 
-                NSLog(@"get serialNo : %@", serialNo);
+                NSString *fwVersion = [NSString stringWithFormat:@"%02x%02x",
+                                      res->serial[17],
+                                      res->serial[18]];
+
+                NSLog(@"get version : %@", fwVersion);
+                [[NSUserDefaults standardUserDefaults] setObject:fwVersion forKey:@"FWVersion"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 //                NSLog(@"%s", res->serial);
                 
                 NSMutableString *serialNoChar = [NSMutableString string];
@@ -323,13 +370,19 @@
                 [self finishSerial:serialNo serialChar:serialNoChar mac:mac];
             }
                 break;
+//            case ncmd_firmware_uart: {
+//                NSLog(@"%s", rcv->buffer);
+//                NSLog(@"receivePacket:ncmd_firmware_uart");
+//                success = YES;
+//                [self finishFirmwareUART];
+//            }
+//                break;
         }
     }
     
     if (success) {
         // disconnect
         [_centralManager cancelPeripheralConnection:self.device.peripheral];
-        
         //        [self setHUDProgress:1.0f];
         //        [self hideHUD];
         

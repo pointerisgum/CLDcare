@@ -20,7 +20,9 @@ target 'CLDcare' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'GoogleSignIn'
-
+  pod 'ASIHTTPRequest'
+  pod 'iOSDFULibrary', '~> 4.10'
+  
   target 'CLDcareTests' do
     inherit! :search_paths
     # Pods for testing

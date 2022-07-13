@@ -435,12 +435,12 @@
                                                         </constraints>
                                                     </imageView>
                                                     <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8Gs-9c-MJp">
-                                                        <rect key="frame" x="247" y="0.0" width="120" height="56"/>
+                                                        <rect key="frame" x="127" y="0.0" width="240" height="56"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9n-3Q-vza">
-                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="56"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="56"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="60" id="BwL-IP-J6V"/>
+                                                                    <constraint firstAttribute="width" constant="80" id="BwL-IP-J6V"/>
                                                                 </constraints>
                                                                 <state key="normal" title="Sync"/>
                                                                 <connections>
@@ -448,10 +448,18 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fn0-k9-VCg">
-                                                                <rect key="frame" x="60" y="0.0" width="60" height="56"/>
+                                                                <rect key="frame" x="80" y="0.0" width="80" height="56"/>
                                                                 <state key="normal" title="Reset"/>
                                                                 <connections>
                                                                     <action selector="goReset:" destination="Xuu-iG-wXo" eventType="touchUpInside" id="nBv-L6-hjd"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOP-gP-0N8">
+                                                                <rect key="frame" x="160" y="0.0" width="80" height="56"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="Update"/>
+                                                                <connections>
+                                                                    <action selector="goFWUpdate:" destination="Xuu-iG-wXo" eventType="touchUpInside" id="k7x-J4-YYd"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>

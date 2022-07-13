@@ -205,6 +205,7 @@
         NSString *lastName = resulte[@"mem_last_name"];
         [[NSUserDefaults standardUserDefaults] setObject:firstName != nil ? firstName : @"" forKey:@"mem_first_name"];
         [[NSUserDefaults standardUserDefaults] setObject:lastName != nil ? lastName : @"" forKey:@"mem_last_name"];
+        [[NSUserDefaults standardUserDefaults] setObject:self.UID != nil ? self.UID : @"" forKey:@"snsToken"];
 
         [[NSUserDefaults standardUserDefaults] synchronize];
         
