@@ -55,8 +55,6 @@ typedef struct
 typedef struct
 {
     uint8_t cmd[2];
-//    uint8_t cmd1;
-//    uint8_t cmd2;
 } ble_cmd_data_t;
 
 enum

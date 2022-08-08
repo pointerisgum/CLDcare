@@ -12,6 +12,7 @@
 #import <MBProgressHUD.h>
 #import "ComTimer.h"
 #import "NDHistory.h"
+#import "CLDcare-Swift.h"
 
 #define def_command_timeout 5
 
@@ -153,9 +154,13 @@
 }
 
 - (void)dealloc {
-    
+    NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
+    if( serialNo != nil || serialNo.length > 0 ) {
+        _device.delegate = nil;
+    }
+
     //    if (self.isMovingFromParentViewController || self.isBeingDismissed) {
-    _device.delegate = nil;
+    
     //    }
 }
 
@@ -204,7 +209,7 @@
     //[UIAlertController mesageBoxWithTitle:@"Setting has been successfully transferred!" message:nil style:MBS_OK handler:nil];
 }
 
-- (void) requestHistoryData {
+- (void)requestHistoryData {
     ble_req_data_t req;
     req.index = history_index;
     [self sendPacket:ncmd_get_data data:&req length:sizeof(req)];
@@ -257,7 +262,11 @@
 - (void)scanPeripheral:(id)peripheral didReceiveData:(NSData *)data
 {
 //    NSLog(@"Did receive data\n");
-    
+    if( kCryptoMode ) {
+        data = [AES256Util decryptWithData:data];
+        NSLog(@"dec data : %@", data);
+    }
+
     ble_nus_data_t* rcv = (ble_nus_data_t*)data.bytes;
     if(data.length < ble_nus_header_length)
     {
@@ -299,32 +308,44 @@
                 break;
             case ncmd_get_data: {
                 ble_res_data_t* res = (ble_res_data_t*)rcv->buffer;
-                NSLog(@"(v:%d) %d-%d-%d %d:%d:%d",
+                NSLog(@"(v:%d) %d-%d-%d %d:%d:%d history_index : %ld",
                       res->valid, res->ttime[0], res->ttime[1], res->ttime[2], res->ttime[3],
-                      res->ttime[4], res->ttime[5]);
+                      res->ttime[4], res->ttime[5], history_index);
                 
                 NSMutableDictionary *dicM = [NSMutableDictionary dictionary];
                 if (res->valid) {
                     [dicM setObject:[NSData dataWithBytes:res length:sizeof(ble_res_data_t)] forKey:@"item"];
-                }
-                
-                if( [self.ar_List containsObject:@(history_index)] ) {
-                    [dicM setObject:@(history_index) forKey:@"index"];
-                    [_items addObject:dicM];
-                }
-                
-                history_index++;
-                
-                if( history_index >= history_count || res->valid == 0 ) {
-                    [_centralManager cancelPeripheralConnection:self.device.peripheral];
-                    
-                    //                        [self setHUDProgress:1.0f];
-                    //                        [self hideHUD];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self finishHistory];
-                    });
                 } else {
-                    [self requestHistoryData];
+                    NSLog(@"동기화 에러");
+                }
+                
+                [dicM setObject:@(history_index) forKey:@"index"];
+                [_items addObject:dicM];
+
+                if( self.ar_List.count == 1 && [[self.ar_List firstObject] integerValue] == 0 ) {
+                    //전체 데이터 가져오기
+                    history_index++;
+                    
+                    if( history_index >= history_count || res->valid == 0 ) {
+                        [_centralManager cancelPeripheralConnection:self.device.peripheral];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self finishHistory];
+                        });
+                    } else {
+                        [self requestHistoryData];
+                    }
+                } else {
+                    //파라미터로 넘어온것만 가져오기
+                    historyArrayIndx++;
+                    if( self.ar_List.count <= historyArrayIndx || res->valid == 0 ) {
+                        [_centralManager cancelPeripheralConnection:self.device.peripheral];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self finishHistory];
+                        });
+                    } else {
+                        history_index = [self.ar_List[historyArrayIndx] integerValue];
+                        [self requestHistoryData];
+                    }
                 }
             }
                 break;

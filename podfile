@@ -22,7 +22,8 @@ target 'CLDcare' do
   pod 'GoogleSignIn'
   pod 'ASIHTTPRequest'
   pod 'iOSDFULibrary', '~> 4.10'
-  
+  pod 'CryptoSwift'
+
   target 'CLDcareTests' do
     inherit! :search_paths
     # Pods for testing

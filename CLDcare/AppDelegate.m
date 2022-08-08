@@ -11,6 +11,9 @@
 @import Firebase;
 @import GoogleSignIn;
 
+//@import CryptoSwift;
+//#import "CryptoSwift-Swift.h"
+
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate, FIRMessagingDelegate>
@@ -23,7 +26,6 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     BOOL Init = ![[NSUserDefaults standardUserDefaults] boolForKey:@"Init"];
     if( Init ) {
 //            if( 1 ) {
-
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"Init"];
 
         //알람 초기 등록

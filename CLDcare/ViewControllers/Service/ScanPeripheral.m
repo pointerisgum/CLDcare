@@ -8,6 +8,7 @@
 
 #import "ScanPeripheral.h"
 #import "adv_data.h"
+#import "CLDcare-Swift.h"
 
 @interface ScanPeripheral() <CBPeripheralDelegate>
 {
@@ -181,6 +182,32 @@
 - (NSUInteger)battery
 {
     dispenser_manuf_data_t* md = (dispenser_manuf_data_t*)self.manufData.bytes;
+    if( kCryptoMode ) {
+        //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
+        uint8_t xor_val[27] = {
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
+        };
+        
+        int8_t revert_rotate_val[27] = {
+            -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            -2, -2, -2, -2, -2, -2, -2
+        };
+                    
+        Byte *data = (Byte*)[self.manufData bytes];
+        for( int j = 2; j < self.manufData.length; j++ ) {
+            if( revert_rotate_val[j-2] < 0 ) {        // rotate left
+                data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
+                data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+            } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
+                data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
+                data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+            }
+        }
+        md = (dispenser_manuf_data_t *)data;
+    }
     return md->bat;
 }
 
@@ -188,6 +215,33 @@
 //    return [self.peripheral.identifier UUIDString];
     
     dispenser_manuf_data_t* md = (dispenser_manuf_data_t*)self.manufData.bytes;
+    
+    if( kCryptoMode ) {
+        //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
+        uint8_t xor_val[27] = {
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+            0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
+        };
+        
+        int8_t revert_rotate_val[27] = {
+            -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            -2, -2, -2, -2, -2, -2, -2
+        };
+                    
+        Byte *data = (Byte*)[self.manufData bytes];
+        for( int j = 2; j < self.manufData.length; j++ ) {
+            if( revert_rotate_val[j-2] < 0 ) {        // rotate left
+                data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
+                data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+            } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
+                data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
+                data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+            }
+        }
+        md = (dispenser_manuf_data_t *)data;
+    }
     
     NSInteger macAddrLength = sizeof(md->addr) - 1;
     NSMutableString *macAddr = [NSMutableString stringWithCapacity:macAddrLength];
@@ -236,16 +290,25 @@
     [self writeData:data];
 }
 
-- (void)writeBuffer:(const void*)buffer withLength:(NSUInteger) len
-{
-    if (len > NUS_MAX_DATA_LEN)
-    {
+- (void)writeBuffer:(const void*)buffer withLength:(NSUInteger) len {
+    if (len > NUS_MAX_DATA_LEN) {
         NSLog(@"NUS max data length exceed");
         return;
     }
-    
+
     NSData* data = [NSData dataWithBytes:buffer length:len];
+    NSLog(@"org data : %@", data);
+    
+    if( kCryptoMode ) {
+        data = [AES256Util encryptWithData:data];
+        NSLog(@"enc data : %@", data);
+    }
+    
     [self writeData:data];
+    
+//    NSData *dec = [AES256Util decryptWithData:enc];
+//    NSLog(@"dec data : %@", dec);
+
 }
 
 

@@ -24,6 +24,7 @@
 #import "AdditionViewController.h"
 #import "ClauseDetailViewController.h"
 #import "iOSDFULibrary-Swift.h"
+#import "CLDcare-Swift.h"
 
 @import UserNotifications;
 
@@ -230,7 +231,7 @@ static BOOL isFWUpdating = false;
     _isFirstEvent = true;
 }
 
--(void)appWillResignActive:(NSNotification *)noti {
+- (void)appWillResignActive:(NSNotification *)noti {
     _isFirstEvent = true;
 }
 
@@ -241,7 +242,6 @@ static BOOL isFWUpdating = false;
             [vc setPopUpDismissBlock:^{
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -278,8 +278,8 @@ static BOOL isFWUpdating = false;
         _lb_DeviceName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
         _lb_ConnectStatus.text = NSLocalizedString(@"Connect", nil);
 //        _lb_ConnectStatus.textColor = [UIColor whiteColor];
-        NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
-        _lb_Battery.text = [NSString stringWithFormat:@"%ld%%", nBattery];
+//        NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
+//        _lb_Battery.text = [NSString stringWithFormat:@"%ld%%", nBattery];
         [_btn_ConnectSetting setTitle:NSLocalizedString(@"Disconnect", nil) forState:UIControlStateNormal];
     } else {
         _lb_DeviceName.text = NSLocalizedString(@"Pair your device", nil);
@@ -576,7 +576,7 @@ static BOOL isFWUpdating = false;
         if (self.hud == nil) {
             self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         }
-        self.hud.label.text = NSLocalizedString(@"Pairing your device. Pleasewait.", nil);
+        self.hud.label.text = NSLocalizedString(@"Pairing your device. Please wait.", nil);
         [self.hud showAnimated:true];
 
         DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:_currentDevice withManager:_centralManager];
@@ -760,9 +760,9 @@ static BOOL isFWUpdating = false;
     __block NSTimer *tm = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:true block:^(NSTimer * _Nonnull timer) {
         if( self.centralManager != nil && self.currentDevice != nil && self.isFWUpdating == false ) {
             NSLog(@"uartMode");
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                [Util keyWindow].userInteractionEnabled = false;
-            });
+//            dispatch_async(dispatch_get_main_queue(), ^{
+////                [Util keyWindow].userInteractionEnabled = false;
+//            });
 
             self.isFWUpdating = true;
 
@@ -771,16 +771,16 @@ static BOOL isFWUpdating = false;
             }
             self.hud.label.text = NSLocalizedString(@"Checking FirmWare Update...", nil);
             
-            //3초간 커넥션에 대한 반응이 없는 경우 userInteractionEnabled 취소
-            __block BOOL isCheck = false;
-            [NSTimer scheduledTimerWithTimeInterval:3.0f repeats:false block:^(NSTimer * _Nonnull timer) {
-                if( isCheck == false ) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [Util keyWindow].userInteractionEnabled = true;
-                    });
-                }
-            }];
-            //////////////////////////////////////////////////////////
+//            //3초간 커넥션에 대한 반응이 없는 경우 userInteractionEnabled 취소
+//            __block BOOL isCheck = false;
+//            [NSTimer scheduledTimerWithTimeInterval:3.0f repeats:false block:^(NSTimer * _Nonnull timer) {
+//                if( isCheck == false ) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+////                        [Util keyWindow].userInteractionEnabled = true;
+//                    });
+//                }
+//            }];
+//            //////////////////////////////////////////////////////////
 
             //1. UART 모드 진입
             DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:self.currentDevice withManager:self.centralManager];
@@ -799,7 +799,7 @@ static BOOL isFWUpdating = false;
                         if( self.dfuTargPeripheral != nil ) {
                             //2. UART 모드로 진입 완료 된 경우
                             NSLog(@"uartTm");
-                            isCheck = true;
+//                            isCheck = true;
                             
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self firmwareUpdate];
@@ -815,22 +815,22 @@ static BOOL isFWUpdating = false;
 }
 
 - (void)firmwareUpdate {
-    dispatch_async(dispatch_get_main_queue(), ^{
-//        [Util keyWindow].userInteractionEnabled = false;
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+////        [Util keyWindow].userInteractionEnabled = false;
+//    });
 
     [_dfuTargPeripheral.peripheral discoverServices:@[[ScanPeripheral uartServiceUUID]]];
     
-    //3초간 커넥션에 대한 반응이 없는 경우 userInteractionEnabled 취소
-    __block BOOL isCheck = false;
-    [NSTimer scheduledTimerWithTimeInterval:3.0f repeats:false block:^(NSTimer * _Nonnull timer) {
-        if( isCheck == false ) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                [Util keyWindow].userInteractionEnabled = true;
-            });
-        }
-    }];
-    //////////////////////////////////////////////////////////
+//    //3초간 커넥션에 대한 반응이 없는 경우 userInteractionEnabled 취소
+//    __block BOOL isCheck = false;
+//    [NSTimer scheduledTimerWithTimeInterval:3.0f repeats:false block:^(NSTimer * _Nonnull timer) {
+//        if( isCheck == false ) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+////                [Util keyWindow].userInteractionEnabled = true;
+//            });
+//        }
+//    }];
+//    //////////////////////////////////////////////////////////
 
 
     DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:_dfuTargPeripheral withManager:_centralManager];
@@ -838,15 +838,19 @@ static BOOL isFWUpdating = false;
     [deviceManager setFirmwareUARTCompleteBlock:^(BOOL isSuccess) {
         NSLog(@"setFirmwareUARTCompleteBlock");
         if( isSuccess ) {
-            isCheck = true;
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                [Util keyWindow].userInteractionEnabled = false;
-            });
+//            isCheck = true;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+////                [Util keyWindow].userInteractionEnabled = false;
+//            });
 
             NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
+            
+            //이건 다운받아서 로컬에 저장한 경우
             NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@.zip", str_NewFWVersion]];
             DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:[NSURL fileURLWithPath:filePath]]; //URLWithString 로 했다가 한참 삽질 함
-//            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0401" withExtension:@"zip" subdirectory:@"Firmwares/nRF52832"];
+            
+            //아래는 파일로 번들에 갖고 있을 경우
+//            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0402" withExtension:@"zip" subdirectory:@""];
 //            DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
 
             DFUServiceInitiator *initiator =[ [DFUServiceInitiator alloc]initWithQueue:dispatch_get_main_queue() delegateQueue:dispatch_get_main_queue() progressQueue:dispatch_get_main_queue() loggerQueue:dispatch_get_main_queue()];
@@ -979,9 +983,13 @@ static BOOL isFWUpdating = false;
 - (void)reqSync:(NSArray<NDHistory *> *)list {
     NSString *str_SerialNo = [Util convertSerialNo];
     if( str_SerialNo == nil ) {
+        [self.hud hideAnimated:true];
+        self.hud = nil;
         return;
     }
     if( list.count <= 0 ) {
+        [self.hud hideAnimated:true];
+        self.hud = nil;
         return;
     }
     
@@ -1201,7 +1209,7 @@ static BOOL isFWUpdating = false;
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
     __weak typeof(self) weakSelf = self;
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         if( self.isFWUpdating == true ) {
             if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
@@ -1212,9 +1220,8 @@ static BOOL isFWUpdating = false;
             }
             return;
         }
-        
+
         NSData* manufData = advertisementData[CBAdvertisementDataManufacturerDataKey];
-        
         if( manufData == nil ) {
             return;
         }
@@ -1222,6 +1229,34 @@ static BOOL isFWUpdating = false;
         dispenser_manuf_data_t* md = (dispenser_manuf_data_t *)manufData.bytes;
         dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
 
+        if( kCryptoMode ) {
+            //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
+            uint8_t xor_val[27] = {
+                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
+            };
+            
+            int8_t revert_rotate_val[27] = {
+                -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+                2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                -2, -2, -2, -2, -2, -2, -2
+            };
+                        
+            Byte *data = (Byte*)[manufData bytes];
+            for( int j = 2; j < manufData.length; j++ ) {
+                if( revert_rotate_val[j-2] < 0 ) {        // rotate left
+                    data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
+                    data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+                } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
+                    data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
+                    data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+                }
+            }
+            md = (dispenser_manuf_data_t *)data;
+        }
+
+        
         if (md->company_identifier != (0x4d<<8 | 0x4f)) { return; }
         
         if( IS_CONNECTED == false ) {
@@ -1258,7 +1293,6 @@ static BOOL isFWUpdating = false;
         if( weakSelf.currentDevice != nil && weakSelf.currentDevice.peripheral == peripheral ) {
             self->count = md->count;
             if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] == false && self->isTilt == false ) {
-                NSLog(@"b2 : %@", @(md_tilt->bat));
 
 //            if( [currentMacAddr isEqualToString:macAddr] == false && self->isTilt == false ) {
 //            if( [current_ble_uuid isEqualToString:macAddr] == false && self->isTilt == false ) {
@@ -1276,9 +1310,9 @@ static BOOL isFWUpdating = false;
 //                }
                 if( self->tiltCnt < md_tilt->info_count ) {
                     self->tiltCnt = md_tilt->info_count;
-                    NSLog(@"count1 : %hu", md_tilt->count);
-                    NSLog(@"count2 : %hu", md->count);
-                    NSLog(@"md_tilt->info_count : %d", md_tilt->info_count);
+//                    NSLog(@"count1 : %hu", md_tilt->count);
+//                    NSLog(@"count2 : %hu", md->count);
+//                    NSLog(@"md_tilt->info_count : %d", md_tilt->info_count);
                     self->isTilt = true;
                     [self performSelector:@selector(onTiltCheck:) withObject:manufData afterDelay:5.0f];
                 }
@@ -1321,7 +1355,7 @@ static BOOL isFWUpdating = false;
 //            }
 
 //            NSLog(@"connection macAddr : %@", currentMacAddr);
-
+            self.lb_Battery.text = [NSString stringWithFormat:@"%ld%%", [@(md->bat) integerValue]];
             [[NSUserDefaults standardUserDefaults] setObject:@(md->bat) forKey:@"battery"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -1571,9 +1605,9 @@ static BOOL isFWUpdating = false;
     
     self.isFWUpdating = false;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-//        [Util keyWindow].userInteractionEnabled = true;
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+////        [Util keyWindow].userInteractionEnabled = true;
+//    });
     
     NSDictionary* options = @{CBCentralManagerScanOptionAllowDuplicatesKey : @YES};
     [_centralManager scanForPeripheralsWithServices:_services options:options];
@@ -1581,9 +1615,9 @@ static BOOL isFWUpdating = false;
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     self.isFWUpdating = false;
-    dispatch_async(dispatch_get_main_queue(), ^{
-//        [Util keyWindow].userInteractionEnabled = true;
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+////        [Util keyWindow].userInteractionEnabled = true;
+//    });
 }
 
 
@@ -1670,9 +1704,9 @@ static BOOL isFWUpdating = false;
     if( state == 1 ) {
         //업데이트 시작
         self.isExcuteFWUpdateMode = true;
-        dispatch_async(dispatch_get_main_queue(), ^{
-//            [Util keyWindow].userInteractionEnabled = false;
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+////            [Util keyWindow].userInteractionEnabled = false;
+//        });
 
         self.isFWUpdating = true;
 
@@ -1723,9 +1757,9 @@ static BOOL isFWUpdating = false;
         });
     } else if( state == 7 || state == 5 ) {
         //중단 되거나 연결이 끊긴 경우
-        dispatch_async(dispatch_get_main_queue(), ^{
-//            [Util keyWindow].userInteractionEnabled = true;
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+////            [Util keyWindow].userInteractionEnabled = true;
+//        });
         _isFWUpdating = false;
         _dfuTargPeripheral = nil;
 

@@ -76,6 +76,7 @@
 
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    NSLog(@"%ld", central.state);
     if( central.state == CBManagerStatePoweredOn ) {
         [_items removeAllObjects];
         [self updateListUI];
@@ -123,14 +124,49 @@
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     NSLog(@"disconnected..");
 //    [self scanForPeripherals:YES];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.hud != nil) {
+            [self.hud hideAnimated:YES];
+        }
+        self.hud = nil;
+    });
+
     if( _centralManager.state != CBManagerStatePoweredOn ) {
         return;
     }
-    
+        
     NSDictionary* options = @{CBCentralManagerScanOptionAllowDuplicatesKey : @YES};
     [_centralManager scanForPeripheralsWithServices:@[[ScanPeripheral uartServiceUUID]] options:options];
+
+    NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
+    if( serialNo == nil || serialNo.length <= 0 ) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self connectSerial];
+        });
+    }
 }
 
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.hud != nil) {
+            [self.hud hideAnimated:YES];
+        }
+        self.hud = nil;
+    });
+}
+
+- (void)centralManager:(CBCentralManager *)central connectionEventDidOccur:(CBConnectionEvent)event forPeripheral:(CBPeripheral *)peripheral {
+    
+}
+
+- (void)centralManager:(CBCentralManager *)central didUpdateANCSAuthorizationForPeripheral:(CBPeripheral *)peripheral {
+    
+}
+
+- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary<NSString *, id> *)dict {
+    
+}
 
 #pragma mark - UITableViewDataSource, UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -176,32 +212,35 @@
     
     if( _centralManager != nil && device != nil ) {
         _currentDevice = device;
-        
-        if (self.hud == nil) {
-            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        }
-        self.hud.label.text = NSLocalizedString(@"Pairing your device. Pleasewait.", nil);;
-        [self.hud showAnimated:true];
+        [self connectSerial];
+    }
+}
 
-        DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:device withManager:_centralManager];
-        [deviceManager getSerial];
-        [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo, NSString *serialChar, NSString *mac) {
-            NSLog(@"%@", serialNo);
+- (void)connectSerial {
+    if (self.hud == nil) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    self.hud.label.text = NSLocalizedString(@"Pairing your device. Please wait.", nil);;
+    [self.hud showAnimated:true];
+
+    DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:_currentDevice withManager:_centralManager];
+    [deviceManager getSerial];
+    [deviceManager setSerialNoCompleteBlock:^(NSString *serialNo, NSString *serialChar, NSString *mac) {
+        NSLog(@"%@", serialNo);
 //            serialNo = @"4b:52:43:43:53:41:4e:4e:32:36:56";   //B타입 테스트
 //            [[NSUserDefaults standardUserDefaults] setObject:[self getMacAddr:device.peripheral.name] forKey:@"mac"];
-            [[NSUserDefaults standardUserDefaults] setObject:mac forKey:@"mac"];
+        [[NSUserDefaults standardUserDefaults] setObject:mac forKey:@"mac"];
 //            [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"mac"];
-            [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"serialChar"];
-            [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [self authDevive:device withMacAddr:mac];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.hud hideAnimated:true];
-            });
-        }];
-    }
+        [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"serialChar"];
+        [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self authDevive:self->_currentDevice withMacAddr:mac];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.hud hideAnimated:true];
+        });
+    }];
 }
 
 - (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr {
