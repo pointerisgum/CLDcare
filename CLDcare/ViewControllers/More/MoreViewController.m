@@ -7,6 +7,7 @@
 
 #import "MoreViewController.h"
 #import "ClauseDetailViewController.h"
+#import "PopUpViewController.h"
 @import UserNotifications;
 
 @interface MoreViewController ()
@@ -27,8 +28,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_TermsFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_FeedBackFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_VersionInfo;
+@property (weak, nonatomic) IBOutlet UIButton *btn_DisConnect;
 @property (assign, nonatomic) UpdateStatus updateStatus;
 @property (weak, nonatomic) IBOutlet UIView *v_Addtion;
+@property (weak, nonatomic) IBOutlet UIButton *btn_Leave;
 @end
 
 @implementation MoreViewController
@@ -51,6 +54,9 @@
     [_btn_FeedBackFix setTitle:NSLocalizedString(@"Send Feedback", nil) forState:0];
     [_btn_VersionInfo setTitle:NSLocalizedString(@"Version", nil) forState:0];
     [_btn_Update setTitle:NSLocalizedString(@"Update", nil) forState:0];
+    [_btn_DisConnect setTitle:NSLocalizedString(@"Unpair Sensor Device", nil) forState:0];
+    [_btn_Leave setTitle:NSLocalizedString(@"Delete Account", nil) forState:0];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -139,18 +145,62 @@
 }
 */
 
+- (void)leave:(NSString *)email {
+    NSString *myEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+    if( [myEmail isEqualToString:email] == false ) {
+        [UIAlertController showAlertInViewController:self
+                                           withTitle:@""
+                                             message:NSLocalizedString(@"Email does not match.", nil)
+                                   cancelButtonTitle:nil
+                              destructiveButtonTitle:nil
+                                   otherButtonTitles:@[NSLocalizedString(@"Confirm", nil)]
+                                            tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
+        }];
+        return;
+    }
+    
+    NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+    [dicM_Params setObject:email forKey:@"mem_email"];
+    [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/delete" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+        if( error != nil ) {
+            return;
+        }
+        
+        if( msgCode == SUCCESS ) {
+            [UIAlertController showAlertInViewController:self
+                                               withTitle:@""
+                                                 message:NSLocalizedString(@"Success Delete Account\nThank you for your use.", nil)
+                                       cancelButtonTitle:nil
+                                  destructiveButtonTitle:nil
+                                       otherButtonTitles:@[NSLocalizedString(@"Confirm", nil)]
+                                                tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AccToken"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"InphrToken"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UId"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"RefToken"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserEmail"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"InphrEmail"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserPw"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LoginType"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [SCENE_DELEGATE showLoginView];
+            }];
+        }
+    }];
+}
+
 
 #pragma mark - Action
 - (IBAction)goLogOut:(id)sender {
     [UIAlertController showAlertInViewController:self
                                        withTitle:NSLocalizedString(@"Would you like to log out?", nil)
                                          message:@""
-                               cancelButtonTitle:NSLocalizedString(@"cancel", nil)
+                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                           destructiveButtonTitle:nil
                                otherButtonTitles:@[NSLocalizedString(@"confirm", nil)]
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
         if( action.style == UIAlertActionStyleDefault ) {
-            
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AccToken"];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"InphrToken"];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UId"];
@@ -253,6 +303,66 @@
 //복약 알림 리포트
 - (IBAction)goReport:(id)sender {
     
+}
+
+- (IBAction)goDisConnect:(id)sender {
+    if( IS_CONNECTED ) {
+        PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
+        [vc setPopUpDismissBlock:^{
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"DisConnect" object:nil];
+        }];
+        [self presentViewController:vc animated:true completion:^{
+            
+        }];
+    }
+}
+
+//회원탈퇴
+- (IBAction)goLeave:(id)sender {
+    //탈퇴하기
+    [UIAlertController showAlertInViewController:self
+                                       withTitle:@""
+                                         message:NSLocalizedString(@"If you leave, all information will be deleted\nand will not be recovered.\nDo you want to leave?", nil)
+                               cancelButtonTitle:NSLocalizedString(@"No", nil)
+                          destructiveButtonTitle:nil
+                               otherButtonTitles:@[NSLocalizedString(@"Yes", nil)]
+                                        tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
+        if( buttonIndex == 2 ) {
+            UIAlertController *alert= [UIAlertController
+                                       alertControllerWithTitle:@""
+                                       message:NSLocalizedString(@"Please enter email", nil)
+                                       preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil) style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action){
+                UITextField *textField = alert.textFields[0];
+                NSLog(@"text was %@", textField.text);
+                [self leave:textField.text];
+                
+            }];
+            UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alert addAction:ok];
+            [alert addAction:cancel];
+            
+            [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                textField.placeholder = NSLocalizedString(@"Please enter email", nil);
+                textField.keyboardType = UIKeyboardTypeEmailAddress;
+            }];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }];
 }
 
 @end

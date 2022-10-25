@@ -23,6 +23,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     BOOL Init = ![[NSUserDefaults standardUserDefaults] boolForKey:@"Init"];
     if( Init ) {
 //            if( 1 ) {
@@ -33,13 +34,24 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
         //서베이 토글
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"SurveyAlarm"];
-
+        
         NSMutableArray *arM_Alarms = [NSMutableArray array];
         [arM_Alarms addObject:@{@"hour":@(8), @"min":@(30), @"on":@(false)}];
         [arM_Alarms addObject:@{@"hour":@(13), @"min":@(30), @"on":@(false)}];
         [arM_Alarms addObject:@{@"hour":@(19), @"min":@(30), @"on":@(false)}];
         [Util saveAlarm:arM_Alarms];
 
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
+    NSString *str_FWUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWUpdateDate"];
+    if( str_FWUpdateDate == nil || str_FWUpdateDate.length <= 0 ) {
+        //펌웨어 업데이트 일자
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        NSString *now = [dateFormatter stringFromDate:[NSDate date]];
+        [[NSUserDefaults standardUserDefaults] setValue:now forKey:@"FWUpdateDate"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 

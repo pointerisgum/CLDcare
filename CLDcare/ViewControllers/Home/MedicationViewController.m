@@ -185,7 +185,12 @@
                     self.lb_MedicationTime.hidden = false;
 
                     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+                    NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+                    if( [language isEqualToString:@"ko"] ) {
+                        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+                    } else {
+                        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+                    }
                     [dateFormatter setDateFormat:@"a hh:mm"];
                     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
                     self.lb_MedicationTime.text = [dateFormatter stringFromDate:lastDate];
@@ -278,7 +283,12 @@
         _lb_RemainDayFix.hidden = false;
         
         NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
-        dateFormatter1.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+        NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+        if( [language isEqualToString:@"ko"] ) {
+            dateFormatter1.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+        } else {
+            dateFormatter1.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        }
         [dateFormatter1 setDateFormat:@"yyyy-MM-dd HH:mm"];
 //        [dateFormatter1 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
         _lb_StandardTime.text = [NSString stringWithFormat:@"%@ 기준", [dateFormatter1 stringFromDate:[NSDate date]]];
@@ -296,7 +306,12 @@
             if( targetComp.year == toDayComp.year && targetComp.month == toDayComp.month && targetComp.day == toDayComp.day ) {
                 //오늘 복용 했을 경우
                 NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
-                dateFormatter2.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+                NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+                if( [language isEqualToString:@"ko"] ) {
+                    dateFormatter2.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+                } else {
+                    dateFormatter2.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+                }
                 [dateFormatter2 setDateFormat:@"a hh:mm"];
                 [dateFormatter2 setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
                 _lb_MedicationTime.text = [dateFormatter2 stringFromDate:[NSDate dateWithTimeIntervalSince1970:date.timeIntervalSince1970 + (60 * 60 * 9)]];
@@ -366,7 +381,12 @@
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:(item.time)];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+    NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    if( [language isEqualToString:@"ko"] ) {
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+    } else {
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    }
 //    [dateFormatter setDateFormat:@"HH:mm"];
     [dateFormatter setDateFormat:@"a hh:mm"];
 

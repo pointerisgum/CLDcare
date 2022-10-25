@@ -23,6 +23,7 @@ target 'CLDcare' do
   pod 'ASIHTTPRequest'
   pod 'iOSDFULibrary', '~> 4.10'
   pod 'CryptoSwift'
+  pod 'lottie-ios', '~> 2.5.3'
 
   target 'CLDcareTests' do
     inherit! :search_paths

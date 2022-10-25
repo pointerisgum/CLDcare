@@ -46,6 +46,6 @@ typedef enum {
 
 + (NSString *)getAppStoreVersion;
 + (UpdateStatus)checkReqUpdate:(UIViewController *)vc;
-+ (void)firmWareDownload:(NSString *)fileName;
++ (void)firmWareDownload:(NSString *)fileName withCompletion:(void (^)(BOOL isSuccess))completion;
 
 @end

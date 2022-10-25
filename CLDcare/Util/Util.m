@@ -542,7 +542,9 @@ static Util *shared = nil;
             [strM_MacCode appendString:str];
         }
         
-        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@0203", str_SerialNoAscii, [strM_MacCode capitalizedString]];
+//        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@0203", str_SerialNoAscii, [strM_MacCode capitalizedString]];
+        //시리얼 넘버 조합시 0203(펌웨어버전)은 빼고 보대달라고 요청옴 22.10.05 이규관
+        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@", str_SerialNoAscii, [strM_MacCode capitalizedString]];
         NSLog(@"complete serialNo : %@", str_SerialNo);
         return str_SerialNo;
     } else {
@@ -640,7 +642,7 @@ static Util *shared = nil;
     return updateStatus;
 }
 
-+ (void)firmWareDownload:(NSString *)fileName {
++ (void)firmWareDownload:(NSString *)fileName withCompletion:(void (^)(BOOL isSuccess))completion {
     NSLog(@"펌웨어 다운로드 시작");
     dispatch_queue_t queue = dispatch_get_global_queue(0,0);
     dispatch_async(queue, ^{
@@ -649,6 +651,9 @@ static Util *shared = nil;
         NSURL  *url = [NSURL URLWithString:stringURL];
         NSData *urlData = [NSData dataWithContentsOfURL:url];
 
+        [[NSUserDefaults standardUserDefaults] setFloat:urlData.length forKey:@"FWSize"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
 //        //Find a cache directory. You could consider using documenets dir instead (depends on the data you are fetching)
 //        NSLog(@"Got the data!");
 //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -658,6 +663,8 @@ static Util *shared = nil;
         dataPath = [dataPath stringByStandardizingPath];
         [urlData writeToFile:dataPath atomically:YES];
         NSLog(@"펌웨어 다운로드 완료");
+        
+        completion(true);
     });
 }
 

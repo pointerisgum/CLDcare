@@ -26,24 +26,26 @@ typedef struct {
     uint32_t epochtime1;
     uint32_t epochtime2;
     uint32_t epochtime3;
-    uint32_t reserved;
+    uint16_t cover_count;
+    uint16_t body_count;
 } dispenser_manuf_data_t;
 
-//기울기 데이터
-typedef struct {
-    uint16_t company_identifier;    //19791
-    uint8_t mac_identifier;         //95 -> 95
-    uint16_t info_ir1;               //204 -> 139
-    uint8_t info_identifier[3];     //07:08:08 -> 08:07:08 -> 08:08:07
-    uint16_t count;                 //34 -> 35
-    uint16_t info_count;            //41 -> 44
-    uint8_t bat;
-    uint32_t epochtime1;
-    uint32_t epochtime2;
-    uint32_t epochtime3;
-    int16_t info_ir2;               //199 -> 201
-    int16_t info_ir3;               //202 -> 199
-} dispenser_tilt_data_t;
+////기울기 데이터
+//typedef struct {
+//    uint16_t company_identifier;    //19791
+//    uint8_t mac_identifier;         //95 -> 95
+//    uint16_t info_ir1;               //204 -> 139
+//    uint8_t info_identifier[3];     //07:08:08 -> 08:07:08 -> 08:08:07
+//    uint16_t count;                 //34 -> 35
+//    uint16_t info_count;            //41 -> 44
+//    uint8_t bat;
+//    uint32_t epochtime1;
+//    uint32_t epochtime2;
+//    uint32_t epochtime3;
+//    uint32_t epochtime4;
+//    int16_t info_ir2;               //199 -> 201
+//    int16_t info_ir3;               //202 -> 199
+//} dispenser_tilt_data_t;
 
 
 
@@ -52,8 +54,8 @@ typedef struct {
 typedef struct {
     uint16_t company_identifier;    //19791
     uint8_t mac_identifier;         //0     //95 -> 95
-    uint8_t reserved;               //1
-    uint8_t body_info;              //2               //식별자(body infomation on/off)
+    uint8_t reservedbyte;               //1
+    uint8_t body_identifier;              //2               //식별자(body infomation on/off)
     uint8_t info_identifier[3];     //07:08:08 -> 08:07:08 -> 08:08:07
     uint16_t count;                 //34 -> 35
     uint16_t info_count;            //41 -> 44
@@ -61,9 +63,9 @@ typedef struct {
     uint32_t epochtime1;
     uint32_t epochtime2;
     uint32_t epochtime3;
-    uint32_t epochtime_body_info;
-//    int16_t info_ir2;               //199 -> 201
-//    int16_t info_ir3;               //202 -> 199
+    uint32_t reserved;
+    int16_t info_ir2;               //199 -> 201
+    int16_t info_ir3;               //202 -> 199
 } dispenser_tilt_data_t_v2;
 
 

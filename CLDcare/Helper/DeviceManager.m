@@ -312,6 +312,15 @@
                       res->valid, res->ttime[0], res->ttime[1], res->ttime[2], res->ttime[3],
                       res->ttime[4], res->ttime[5], history_index);
                 
+                NSString *str_res = [NSString stringWithFormat:@"%d-%d-%d-%d-%d-%d", res->ttime[0], res->ttime[1], res->ttime[2], res->ttime[3], res->ttime[4], res->ttime[5]];
+                if( [str_res isEqualToString:@"255-255-255-255-255-255"] ) {
+                    [_centralManager cancelPeripheralConnection:self.device.peripheral];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self finishHistory];
+                    });
+                    return;
+                }
+                
                 NSMutableDictionary *dicM = [NSMutableDictionary dictionary];
                 if (res->valid) {
                     [dicM setObject:[NSData dataWithBytes:res length:sizeof(ble_res_data_t)] forKey:@"item"];

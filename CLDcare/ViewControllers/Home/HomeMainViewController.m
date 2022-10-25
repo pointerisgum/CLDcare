@@ -25,6 +25,10 @@
 #import "ClauseDetailViewController.h"
 #import "iOSDFULibrary-Swift.h"
 #import "CLDcare-Swift.h"
+#import "FrimwareCheckPopupViewController.h"
+#import "FWConnectingPopUpViewController.h"
+#import "FWDownloadPopUpViewController.h"
+#import "FWUpdateViewController.h"
 
 @import UserNotifications;
 
@@ -65,10 +69,12 @@ static BOOL isFWUpdating = false;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DateEmpty;
 
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceName;
-@property (weak, nonatomic) IBOutlet UIButton *btn_MedicationCount;
+//@property (weak, nonatomic) IBOutlet UIButton *btn_MedicationCount;
 @property (weak, nonatomic) IBOutlet UILabel *lb_ConnectStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lb_Battery;
-@property (weak, nonatomic) IBOutlet UIButton *btn_ConnectSetting;
+//@property (weak, nonatomic) IBOutlet UIButton *btn_ConnectSetting;
+@property (weak, nonatomic) IBOutlet UIButton *btn_TotalPills;
+@property (weak, nonatomic) IBOutlet UIButton *btn_ToDayPills;
 
 @property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) NSString *str_ToDayMedication;
@@ -82,7 +88,7 @@ static BOOL isFWUpdating = false;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceNameFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_ConnectStatusFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_BatteryFix;
-@property (weak, nonatomic) IBOutlet UIButton *btn_DrugCountFix;
+//@property (weak, nonatomic) IBOutlet UIButton *btn_DrugCountFix;
 @property (weak, nonatomic) IBOutlet UIButton *btn_ConnectYnFix;
 
 @property (nonatomic, strong) NSMutableArray<CBUUID*>* services;
@@ -94,9 +100,14 @@ static BOOL isFWUpdating = false;
 //@property (nonatomic, assign) BOOL isFirmWareUpdate;
 //@property (nonatomic, assign) BOOL isUartFinish;
 
+@property (weak, nonatomic) IBOutlet UILabel *lb_TotalPillsFix;
+@property (weak, nonatomic) IBOutlet UILabel *lb_ToDayPillsFix;
 
 @property (nonatomic, assign) BOOL isFWUpdating;            //FW업데이트중인지
 @property (nonatomic, assign) BOOL isExcuteFWUpdateMode;    //FW업데이트를 실행 했었는지
+
+@property (nonatomic, strong) DFUServiceController *dfuController;
+@property (nonatomic, strong) FWUpdateViewController *vc_FWUpdate;
 @end
 
 @implementation HomeMainViewController
@@ -106,7 +117,8 @@ static BOOL isFWUpdating = false;
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:@"DisConnect" object:nil];
+    
     _services = [NSMutableArray array];
     [_services addObject:[ScanPeripheral uartServiceUUID]];
     
@@ -127,7 +139,7 @@ static BOOL isFWUpdating = false;
 
     [UIApplication sharedApplication].idleTimerDisabled = true;
 
-    _lb_MedicationFix.text = NSLocalizedString(@"Med Info", nil);
+    _lb_MedicationFix.text = NSLocalizedString(@"Your Med", nil);
     [_lb_MedicationYnFix setTitle:NSLocalizedString(@"Med Status", nil) forState:0];
     [_btn_DrugSeeFix setTitle:NSLocalizedString(@"Drug info", nil) forState:0];
     [_btn_RemainingTimeFix setTitle:NSLocalizedString(@"Next Med Time", nil) forState:0];
@@ -136,9 +148,14 @@ static BOOL isFWUpdating = false;
     
     [_btn_ConnectStatusFix setTitle:NSLocalizedString(@"Pairing", nil) forState:0];
     [_btn_BatteryFix setTitle:NSLocalizedString(@"Battery", nil) forState:0];
-    [_btn_DrugCountFix setTitle:NSLocalizedString(@"Pills Taken", nil) forState:0];
+//    [_btn_DrugCountFix setTitle:NSLocalizedString(@"Pills Taken", nil) forState:0];
     [_btn_ConnectYnFix setTitle:NSLocalizedString(@"Device connect", nil) forState:0];
 
+    _lb_TotalPillsFix.text = NSLocalizedString(@"Total Pills Taken from Bottle", nil);
+    _lb_ToDayPillsFix.text = NSLocalizedString(@"Pills Taken Today", nil);
+
+
+    
     _items = [NSMutableArray array];
     _lb_MedicationStatus.text = @"-";
     _lb_StandardTime.text = @"-";
@@ -168,10 +185,10 @@ static BOOL isFWUpdating = false;
     _stv_Temp.hidden = false;
 #endif
     
-    _btn_ConnectSetting.clipsToBounds = true;
-    _btn_ConnectSetting.layer.borderWidth = 1;
-    _btn_ConnectSetting.layer.cornerRadius = 2;
-    _btn_ConnectSetting.layer.borderColor = [UIColor colorWithHexString:@"ECECEC"].CGColor;
+//    _btn_ConnectSetting.clipsToBounds = true;
+//    _btn_ConnectSetting.layer.borderWidth = 1;
+//    _btn_ConnectSetting.layer.cornerRadius = 2;
+//    _btn_ConnectSetting.layer.borderColor = [UIColor colorWithHexString:@"ECECEC"].CGColor;
 
     NSInteger nCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"count"];
     [self updateCountLabel:nCount];
@@ -202,31 +219,31 @@ static BOOL isFWUpdating = false;
         return;
     }
 
-    //펌웨어 체크 후 업데이트 필요시 업데이트
-    NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
-    NSString *str_MyFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"];
-//    NSString *str_MyFWVersion = @"0400";
-    if( (str_MyFWVersion != nil && str_NewFWVersion != nil) && ([str_NewFWVersion integerValue] > [str_MyFWVersion integerValue]) ) {
-        NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", str_NewFWVersion]];
-        if( [[NSFileManager defaultManager] fileExistsAtPath:filePath] == false ) {
-            //파일이 없는 경우 다운로드
-            [Util firmWareDownload:str_NewFWVersion];
-        }
-
-        [self setUARTMode];
-    }
+//    //펌웨어 체크 후 업데이트 필요시 업데이트
+//    NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
+//    NSString *str_MyFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"];
+////    NSString *str_MyFWVersion = @"0400";
+//    if( (str_MyFWVersion != nil && str_NewFWVersion != nil) && ([str_NewFWVersion integerValue] > [str_MyFWVersion integerValue]) ) {
+//        NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", str_NewFWVersion]];
+//        if( [[NSFileManager defaultManager] fileExistsAtPath:filePath] == false ) {
+//            //파일이 없는 경우 다운로드
+//            [Util firmWareDownload:str_NewFWVersion];
+//        }
+//
+//        [self setUARTMode];
+//    }
 
 
     [self updateData];
     [self updateStatus];
     
-    NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
-    NSString *pill = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_UserPill", email]]; //현재약품
-    if( pill == nil || pill.length <= 0 ) {
-        AdditionViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AdditionViewController"];
-        vc.isHideClose = true;
-        [self presentViewController:vc animated:true completion:nil];
-    }
+//    NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+//    NSString *pill = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_UserPill", email]]; //현재약품
+//    if( pill == nil || pill.length <= 0 ) {
+//        AdditionViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AdditionViewController"];
+//        vc.isHideClose = true;
+//        [self presentViewController:vc animated:true completion:nil];
+//    }
     
     _isFirstEvent = true;
 }
@@ -235,30 +252,16 @@ static BOOL isFWUpdating = false;
     _isFirstEvent = true;
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(nullable id)sender {
-    if( [identifier isEqualToString:@"SearchDeviceSegue"] ) {
-        if( IS_CONNECTED ) {
-            PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
-            [vc setPopUpDismissBlock:^{
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                [self.items removeAllObjects];
-                [self.cv_List reloadData];
-                
-                [self updateStatus];
-            }];
-            [self presentViewController:vc animated:true completion:^{
-                
-            }];
-            return false;
-        }
-    }
-    return true;
+- (void)disconnect {
+    NSLog(@"disconnect");
+    [self.items removeAllObjects];
+    [self.cv_List reloadData];
+    [self updateStatus];
 }
+
+//- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(nullable id)sender {
+//    return true;
+//}
 
 - (void)applicationDidEnterForeground:(NSNotification *)notification {
     [self updateData];
@@ -276,18 +279,19 @@ static BOOL isFWUpdating = false;
 - (void)updateStatus {
     if( IS_CONNECTED ) {
         _lb_DeviceName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
-        _lb_ConnectStatus.text = NSLocalizedString(@"Connect", nil);
+        _lb_ConnectStatus.text = NSLocalizedString(@"Paired", nil);
 //        _lb_ConnectStatus.textColor = [UIColor whiteColor];
 //        NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
 //        _lb_Battery.text = [NSString stringWithFormat:@"%ld%%", nBattery];
-        [_btn_ConnectSetting setTitle:NSLocalizedString(@"Disconnect", nil) forState:UIControlStateNormal];
+//        [_btn_ConnectSetting setTitle:NSLocalizedString(@"Disconnect", nil) forState:UIControlStateNormal];
     } else {
         _lb_DeviceName.text = NSLocalizedString(@"Pair your device", nil);
-        _lb_ConnectStatus.text = NSLocalizedString(@"Not paired", nil);
+        _lb_ConnectStatus.text = NSLocalizedString(@"Not Paired", nil);
 //        _lb_ConnectStatus.textColor = [UIColor colorWithHexString:@"afafaf"];
         _lb_Battery.text = @"-";
-        [_btn_ConnectSetting setTitle:NSLocalizedString(@"Setting", nil) forState:UIControlStateNormal];
-        [_btn_MedicationCount setTitle:@"-" forState:UIControlStateNormal];
+//        [_btn_ConnectSetting setTitle:NSLocalizedString(@"Setting", nil) forState:UIControlStateNormal];
+        [_btn_TotalPills setTitle:@"-" forState:UIControlStateNormal];
+        [_btn_ToDayPills setTitle:@"-" forState:UIControlStateNormal];
     }
 }
 
@@ -298,7 +302,7 @@ static BOOL isFWUpdating = false;
 }
 
 - (void)updateCountLabel:(NSInteger)count {
-    [_btn_MedicationCount setTitle:[NSString stringWithFormat:@"%ld%@", count, NSLocalizedString(@"ea", nil)] forState:UIControlStateNormal];
+    [_btn_TotalPills setTitle:[NSString stringWithFormat:@"%ld%@", count, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
 }
 
 - (void)updateMedicationList {
@@ -373,6 +377,7 @@ static BOOL isFWUpdating = false;
 
             NSLog(@"%@", resulte);
             NSDate *lastDate = nil;
+            NSInteger todayCnt = 0;
             NSArray *ar_List = resulte[@"timeline_list"];
             if( ar_List.count > 0 ) {
                 for( NSArray *sub in ar_List ) {
@@ -390,32 +395,63 @@ static BOOL isFWUpdating = false;
                             msg = NSLocalizedString(@"Med taken", nil);
                         } else if( [type isEqualToString:@"timeset1"] ) {
 //                            code = TIMESET1;
-                            msg = NSLocalizedString(@"This is the first med time", nil);
                             if( ar_Alarm.count == 3 ) {
                                 NSDictionary *dic = ar_Alarm[0];
                                 if( [dic boolForKey:@"on"] != true ) {
                                     continue;
                                 }
+                                NSString *ampm = @"AM";
+                                if( [dic[@"hour"] integerValue] >= 12 ) {
+                                    ampm = @"PM";
+                                }
+                                msg = [NSString stringWithFormat:@"%@ %@%ld:%@ %@",
+                                       NSLocalizedString(@"Med alarm time", nil),
+                                       ampm,
+                                       [dic[@"hour"] integerValue] > 12 ? [dic[@"hour"] integerValue] - 12 : [dic[@"hour"] integerValue],
+                                       dic[@"min"],
+                                       NSLocalizedString(@"set up", nil)
+                                ];
                             }
                         } else if( [type isEqualToString:@"timeset2"] ) {
-                            msg = NSLocalizedString(@"This is the second med time", nil);
                             if( ar_Alarm.count == 3 ) {
                                 NSDictionary *dic = ar_Alarm[1];
                                 if( [dic boolForKey:@"on"] != true ) {
                                     continue;
                                 }
+                                NSString *ampm = @"AM";
+                                if( [dic[@"hour"] integerValue] >= 12 ) {
+                                    ampm = @"PM";
+                                }
+                                msg = [NSString stringWithFormat:@"%@ %@%ld:%@ %@",
+                                       NSLocalizedString(@"Med alarm time", nil),
+                                       ampm,
+                                       [dic[@"hour"] integerValue] > 12 ? [dic[@"hour"] integerValue] - 12 : [dic[@"hour"] integerValue],
+                                       dic[@"min"],
+                                       NSLocalizedString(@"set up", nil)
+                                ];
                             }
                         } else if( [type isEqualToString:@"timeset3"] ) {
-                            msg = NSLocalizedString(@"This is the third med time", nil);
                             if( ar_Alarm.count == 3 ) {
                                 NSDictionary *dic = ar_Alarm[2];
                                 if( [dic boolForKey:@"on"] != true ) {
                                     continue;
                                 }
+                                NSString *ampm = @"AM";
+                                if( [dic[@"hour"] integerValue] >= 12 ) {
+                                    ampm = @"PM";
+                                }
+                                msg = [NSString stringWithFormat:@"%@ %@%ld:%@ %@",
+                                       NSLocalizedString(@"Med alarm time", nil),
+                                       ampm,
+                                       [dic[@"hour"] integerValue] > 12 ? [dic[@"hour"] integerValue] - 12 : [dic[@"hour"] integerValue],
+                                       dic[@"min"],
+                                       NSLocalizedString(@"set up", nil)
+                                ];
                             }
                         } else if( [type isEqualToString:@"dose"] ) {
                             msg = NSLocalizedString(@"Med taken", nil);
                             lastDate = date;
+                            todayCnt++;
                         } else if( [type isEqualToString:@"survey"] ) {
                             msg = NSLocalizedString(@"Completed the survey", nil);
                         } else if( [type isEqualToString:@"confirm"] ) {
@@ -432,6 +468,7 @@ static BOOL isFWUpdating = false;
             }
 
             if( [self.str_ToDayMedication isEqualToString:@"Y"] ) {
+                [self.btn_ToDayPills setTitle:[NSString stringWithFormat:@"%ld", todayCnt] forState:0];
                 if( lastDate != nil ) {
                     self.lb_MedicationTime.hidden = false;
 
@@ -755,7 +792,7 @@ static BOOL isFWUpdating = false;
 
 
 #pragma mark - FW Update
-- (void)setUARTMode {
+- (void)setUARTMode:(void (^)(BOOL isSuccess))completion {
     if( _isExcuteFWUpdateMode == true ) { return; }
     __block NSTimer *tm = [NSTimer scheduledTimerWithTimeInterval:0.1f repeats:true block:^(NSTimer * _Nonnull timer) {
         if( self.centralManager != nil && self.currentDevice != nil && self.isFWUpdating == false ) {
@@ -766,10 +803,10 @@ static BOOL isFWUpdating = false;
 
             self.isFWUpdating = true;
 
-            if (self.hud == nil) {
-                self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            }
-            self.hud.label.text = NSLocalizedString(@"Checking FirmWare Update...", nil);
+//            if (self.hud == nil) {
+//                self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//            }
+//            self.hud.label.text = NSLocalizedString(@"Checking FirmWare Update...", nil);
             
 //            //3초간 커넥션에 대한 반응이 없는 경우 userInteractionEnabled 취소
 //            __block BOOL isCheck = false;
@@ -788,8 +825,8 @@ static BOOL isFWUpdating = false;
             [deviceManager setFirmwareUARTCompleteBlock:^(BOOL isSuccess) {
                 dispatch_async(dispatch_get_main_queue(), ^{
 
-                    [self.hud hideAnimated:true];
-                    self.hud = nil;
+//                    [self.hud hideAnimated:true];
+//                    self.hud = nil;
 
                     //UART 설정 완료가 되면 UART 서비스만 감지하던걸 전체 감지로 변경
                     NSDictionary* options = @{CBCentralManagerScanOptionAllowDuplicatesKey : @YES};
@@ -802,7 +839,8 @@ static BOOL isFWUpdating = false;
 //                            isCheck = true;
                             
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [self firmwareUpdate];
+                                completion(true);
+//                                [self firmwareUpdate];
                             });
                             [uartTm invalidate];
                         }
@@ -843,15 +881,17 @@ static BOOL isFWUpdating = false;
 ////                [Util keyWindow].userInteractionEnabled = false;
 //            });
 
+#ifdef DEBUG //펌웨어 업데이트 테스트 코드
+            //파일로 번들에 갖고 있을 경우
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0603" withExtension:@"zip" subdirectory:@""];
+            DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
+            NSLog(@"%@", firmware);
+#else
             NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
-            
             //이건 다운받아서 로컬에 저장한 경우
             NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@.zip", str_NewFWVersion]];
             DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:[NSURL fileURLWithPath:filePath]]; //URLWithString 로 했다가 한참 삽질 함
-            
-            //아래는 파일로 번들에 갖고 있을 경우
-//            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0402" withExtension:@"zip" subdirectory:@""];
-//            DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
+#endif
 
             DFUServiceInitiator *initiator =[ [DFUServiceInitiator alloc]initWithQueue:dispatch_get_main_queue() delegateQueue:dispatch_get_main_queue() progressQueue:dispatch_get_main_queue() loggerQueue:dispatch_get_main_queue()];
             initiator = [initiator withFirmware:firmware];
@@ -859,7 +899,7 @@ static BOOL isFWUpdating = false;
             initiator.delegate = self;
             initiator.enableUnsafeExperimentalButtonlessServiceInSecureDfu = false;
             initiator.dataObjectPreparationDelay = 2.0f;
-            [initiator startWithTarget:self.dfuTargPeripheral.peripheral];
+            self.dfuController = [initiator startWithTarget:self.dfuTargPeripheral.peripheral];
         }
     }];
 }
@@ -1105,7 +1145,7 @@ static BOOL isFWUpdating = false;
 }
 
 - (void)onTiltCheck:(NSData *)manufData {
-    dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
+    dispenser_tilt_data_t_v2 *md_tilt = (dispenser_tilt_data_t_v2*)manufData.bytes;
 
     self->isTilt = false;
     NSLog(@"%@", @(md_tilt->count));
@@ -1124,45 +1164,188 @@ static BOOL isFWUpdating = false;
     }
 }
 
-- (void)sendTiltData:(NSData *)manufData idx:(NSInteger)idx {
-    dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
+- (void)FWReset {
+    if( _dfuController ) {
+        BOOL isStoped = [_dfuController abort];
+        NSLog(@"%d", isStoped);
+    }
+    
+    _isFWUpdating = false;
+    _dfuTargPeripheral = nil;
 
+//    [_centralManager cancelPeripheralConnection:_dfuTargPeripheral.peripheral];
+//    _dfuTargPeripheral.peripheral.delegate = nil;
+
+    _services = [NSMutableArray arrayWithObject:[ScanPeripheral uartServiceUUID]];
+    
+//    NSDictionary* options = @{CBCentralManagerScanOptionAllowDuplicatesKey : @YES};
+//    [_centralManager scanForPeripheralsWithServices:_services options:options];
+    
+    [_currentDevice.peripheral discoverServices:@[[ScanPeripheral uartServiceUUID]]];
+    
+//    _dfuTargPeripheral = nil;
+//    _isFWUpdating = false;
+    _isExcuteFWUpdateMode = false;
+    _dfuController = nil;
+    
+    [_currentDevice findService];
+}
+
+- (void)startFWUpdate {
+    __weak typeof(self) weakSelf = self;
+    self.vc_FWUpdate = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FWUpdateViewController"];
+    self.vc_FWUpdate.isInitMode = true;
+    [self.vc_FWUpdate setStartFirmwareUpdate:^{
+        [weakSelf firmwareUpdate];
+        NSLog(@"firmware update start");
+    }];
+    [self.vc_FWUpdate setPauseFirmwareUpdate:^{
+        [weakSelf.dfuController pause];
+        NSLog(@"firmware update pause");
+    }];
+    [self.vc_FWUpdate setResumeFirmwareUpdate:^{
+        [weakSelf.dfuController resume];
+        NSLog(@"firmware update resume");
+    }];
+    [self.vc_FWUpdate setCancelFirmwareUpdate:^{
+        BOOL isStop = [weakSelf.dfuController abort];
+        [weakSelf FWReset];
+        NSLog(@"firmware update cancel : %d", isStop);
+    }];
+    [self.vc_FWUpdate setCloseFirmwareUpdate:^{
+        [weakSelf FWReset];
+        NSLog(@"firmware update close");
+    }];
+    [self.vc_FWUpdate setFinishFirmwareUpdate:^{
+        NSLog(@"firmware update success");
+    }];
+    [self presentViewController:self.vc_FWUpdate animated:true completion:nil];
+
+}
+
+- (IBAction)goShowFWStatus:(id)sender {
+    if( IS_CONNECTED ) {
+        
+#ifdef DEBUG //펌웨어 업데이트 테스트 코드
+        [[NSUserDefaults standardUserDefaults] setObject:@"0401" forKey:@"FWVersion"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"0603" forKey:@"NewFWVersion"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+#endif
+
+        
+        
+        
+        __weak typeof(self) weakSelf = self;
+
+        FrimwareCheckPopupViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FrimwareCheckPopupViewController"];
+        [vc setFirmwareUpdate:^{
+            __block FWConnectingPopUpViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FWConnectingPopUpViewController"];
+            [weakSelf presentViewController:vc animated:true completion:nil];
+            [weakSelf setUARTMode:^(BOOL isSuccess) {
+                [vc dismissViewControllerAnimated:true completion:nil];
+                
+#ifdef DEBUG //펌웨어 업데이트 테스트 코드
+                [weakSelf startFWUpdate];
+#else
+                NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
+                NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", str_NewFWVersion]];
+                if( [[NSFileManager defaultManager] fileExistsAtPath:filePath] == false ) {
+                    //파일이 없는 경우 다운로드
+                    FWDownloadPopUpViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FWDownloadPopUpViewController"];
+                    [weakSelf presentViewController:vc animated:true completion:nil];
+                    [Util firmWareDownload:str_NewFWVersion withCompletion:^(BOOL isSuccess) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [vc dismissViewControllerAnimated:true completion:^{
+                                [weakSelf startFWUpdate];
+                            }];
+                        });
+                    }];
+                } else {
+                    [weakSelf startFWUpdate];
+                }
+#endif
+            }];
+            
+//            NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
+//            NSString *filePath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", str_NewFWVersion]];
+//            if( [[NSFileManager defaultManager] fileExistsAtPath:filePath] == false ) {
+//                //파일이 없는 경우 다운로드
+//                [Util firmWareDownload:str_NewFWVersion];
+//            }
+//
+//            [self setUARTMode];
+        }];
+        [self presentViewController:vc animated:true completion:nil];
+    } else {
+        UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchDeviceViewController"];
+        [self.navigationController pushViewController:vc animated:true];
+    }
+}
+
+- (void)sendTiltData:(NSData *)manufData idx:(NSInteger)idx {
+    dispenser_tilt_data_t_v2 *md_tilt = (dispenser_tilt_data_t_v2*)manufData.bytes;
+    
+//    if( kCryptoMode ) {
+//        md_tilt = (dispenser_tilt_data_t_v2 *)[self decrypt:[manufData mutableCopy]];
+//    }
+    
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
     NSString *str_NowDate = [Util getDateString:[NSDate date] withTimeZone:nil];
+//    int ir = 0;
+//    switch (idx) {
+//        case 0:
+//            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime1)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//            ir = md_tilt->info_ir1;
+//            break;
+//        case 1:
+//            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime2)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//            ir = md_tilt->info_ir2;
+//            break;
+//        case 2:
+//            str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//            ir = md_tilt->info_ir3;
+//            break;
+//        default:
+//            break;
+//    }
+    
+    NSString *str_BodyDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->reserved)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+
+//    NSString *str_StatusInfo = [NSString stringWithFormat:@"%@,%@,%@", @(md_tilt->info_identifier[0]),@(md_tilt->info_identifier[1]),@(md_tilt->info_identifier[2])];
+    
+    
     NSString *str_DoseDate = @"";
-    int ir = 0;
+    NSString *str_StatusInfo = @"";
     switch (idx) {
         case 0:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime1)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-            ir = md_tilt->info_ir1;
+            str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[0])];
             break;
         case 1:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime2)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-            ir = md_tilt->info_ir2;
+            str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[1])];
             break;
         case 2:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-            ir = md_tilt->info_ir3;
-            break;
-        default:
+            str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[2])];
             break;
     }
-    
-    NSString *str_StatusInfo = [NSString stringWithFormat:@"%@,%@,%@", @(md_tilt->info_identifier[0]),@(md_tilt->info_identifier[1]),@(md_tilt->info_identifier[2])];
-    NSLog(@"%@", str_StatusInfo);
+//    NSLog(@"%@", str_StatusInfo);
 //    NSArray *ar_StatusInfo = @[@(md_tilt->info_identifier[0]), @(md_tilt->info_identifier[1]), @(md_tilt->info_identifier[2])];
     NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
     [dicM_Params setObject:email forKey:@"mem_email"];
     [dicM_Params setObject:@(md_tilt->info_count) forKey:@"information_idx"];   //디바이스 정보 인덱스
-    [dicM_Params setObject:@(self->count) forKey:@"dose_count"];                //토출갯수
+//    [dicM_Params setObject:@(self->count) forKey:@"dose_count"];                //토출갯수
     [dicM_Params setObject:str_StatusInfo forKey:@"status_info"];                     //커맨드 값
-    [dicM_Params setObject:@(ir) forKey:@"ir_value"];                           //기울기 값
+//    [dicM_Params setObject:@(ir) forKey:@"ir_value"];                           //기울기 값
     [dicM_Params setObject:deviceName forKey:@"device_id"];
     [dicM_Params setObject:[NSString stringWithFormat:@"%ld", nBattery] forKey:@"device_battery"];
     [dicM_Params setObject:str_DoseDate forKey:@"datetime"];
     [dicM_Params setObject:str_NowDate forKey:@"datetime_realtime"];
+    [dicM_Params setObject:@(md_tilt->body_identifier) forKey:@"body_info"];
+    [dicM_Params setObject:str_BodyDate forKey:@"datetime_body"];
 
     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dispenerinfo" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
         [self.hud hideAnimated:true];
@@ -1186,6 +1369,7 @@ static BOOL isFWUpdating = false;
                     
                 }];
             }
+            
             [self sendTiltData:manufData idx:1];
             [self sendTiltData:manufData idx:2];
         }
@@ -1207,12 +1391,43 @@ static BOOL isFWUpdating = false;
 
 //1
 
+- (Byte *)decrypt:(NSData *)manufData {
+    //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
+    uint8_t xor_val[27] = {
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
+    };
+    
+    int8_t revert_rotate_val[27] = {
+        -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+        2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+        -2, -2, -2, -2, -2, -2, -2
+    };
+                
+    Byte *data = (Byte*)[manufData bytes];
+    for( int j = 2; j < manufData.length; j++ ) {
+        if( revert_rotate_val[j-2] < 0 ) {        // rotate left
+            data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
+            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+        } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
+            data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
+            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+        }
+    }
+    
+    return data;
+}
+
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
     __weak typeof(self) weakSelf = self;
 
+//    NSLog(@"RSSI : %@", peripheral.name);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if( self.isFWUpdating == true ) {
-            if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
+//            if( [peripheral.name.lowercaseString rangeOfString:@"dfutarg"].location != NSNotFound ) {
+            if( [peripheral.name.lowercaseString hasPrefix:@"dfutarg"] ) {
                 if( self.dfuTargPeripheral != nil ) {
                     return;
                 }
@@ -1227,40 +1442,19 @@ static BOOL isFWUpdating = false;
         }
         
         dispenser_manuf_data_t* md = (dispenser_manuf_data_t *)manufData.bytes;
-        dispenser_tilt_data_t *md_tilt = (dispenser_tilt_data_t*)manufData.bytes;
-
+        dispenser_tilt_data_t_v2 *md_tilt = (dispenser_tilt_data_t_v2*)manufData.bytes;
+        
         if( kCryptoMode ) {
-            //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
-            uint8_t xor_val[27] = {
-                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
-                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
-                0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
-            };
-            
-            int8_t revert_rotate_val[27] = {
-                -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-                2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-                -2, -2, -2, -2, -2, -2, -2
-            };
-                        
-            Byte *data = (Byte*)[manufData bytes];
-            for( int j = 2; j < manufData.length; j++ ) {
-                if( revert_rotate_val[j-2] < 0 ) {        // rotate left
-                    data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
-                    data[j] = (Byte)(data[j] ^ xor_val[j-2]);
-                } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
-                    data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
-                    data[j] = (Byte)(data[j] ^ xor_val[j-2]);
-                }
-            }
-            md = (dispenser_manuf_data_t *)data;
+            md = (dispenser_manuf_data_t *)[self decrypt:manufData];
+            md_tilt = (dispenser_tilt_data_t_v2 *)[self decrypt:[manufData mutableCopy]];
         }
 
         
         if (md->company_identifier != (0x4d<<8 | 0x4f)) { return; }
         
         if( IS_CONNECTED == false ) {
-            [self.btn_MedicationCount setTitle:@"-" forState:UIControlStateNormal];
+            [self.btn_TotalPills setTitle:@"-" forState:UIControlStateNormal];
+            [self.btn_ToDayPills setTitle:@"-" forState:UIControlStateNormal];
             return;
         }
         
@@ -1285,10 +1479,15 @@ static BOOL isFWUpdating = false;
 //            }
 //        }
 
-        
+        NSString *str_CoverDate_test = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md->epochtime_cover)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        NSLog(@"%@", str_CoverDate_test);
+        //1665753943
         NSString *currentLastMacAddr = [NSString stringWithFormat:@"%02x", (unsigned int) md->addr[0]];
         NSArray *ar_MacAddr = [macAddr componentsSeparatedByString:@":"];
 
+        
+//#ifdef DEBUG
+//#else
         //기울기 감지
         if( weakSelf.currentDevice != nil && weakSelf.currentDevice.peripheral == peripheral ) {
             self->count = md->count;
@@ -1309,6 +1508,10 @@ static BOOL isFWUpdating = false;
 //                    }
 //                }
                 if( self->tiltCnt < md_tilt->info_count ) {
+//                    NSLog(@"md_tilt->body_identifier : %c", md_tilt->body_identifier);
+//                    NSLog(@"md_tilt->body_identifier : %@", @(md_tilt->body_identifier));
+//                    NSLog(@"md_tilt->body_identifier : %d", md_tilt->body_identifier);
+//                    NSLog(@"md_tilt->body_identifier : %@", [NSString stringWithFormat:@"%02x", md_tilt->body_identifier]);
                     self->tiltCnt = md_tilt->info_count;
 //                    NSLog(@"count1 : %hu", md_tilt->count);
 //                    NSLog(@"count2 : %hu", md->count);
@@ -1322,6 +1525,7 @@ static BOOL isFWUpdating = false;
             }
         }
         ////////////////////////////
+//#endif
 
         
         
@@ -1363,7 +1567,11 @@ static BOOL isFWUpdating = false;
 //            [weakSelf.vc_Device updateInfo:md];
 
 //            [self updateInfo:md];
-            [self.btn_MedicationCount setTitle:[NSString stringWithFormat:@"%u%@", md->count, NSLocalizedString(@"ea", nil)] forState:UIControlStateNormal];
+            
+            
+//            NSLog(@"count : %@", @(md->count));
+            
+            [self.btn_TotalPills setTitle:[NSString stringWithFormat:@"%u%@", md->count, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
 
 //            BOOL isInitDevice = [[NSUserDefaults standardUserDefaults] boolForKey:@"isInitDevice"];
 //            if( isInitDevice != true && md->count > 0 ) {
@@ -1443,11 +1651,15 @@ static BOOL isFWUpdating = false;
                         return;
                     }
                     
+                    if( md->count <= 0 ) {
+                        return;
+                    }
                     
                     
     //                NSInteger doseCnt = md->count - self->current_count;
                     NSString *str_NowDate = [Util getDateString:[NSDate date] withTimeZone:nil];
                     NSString *str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md->epochtime1)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                    NSString *str_CoverDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md->epochtime_cover)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
 
                     NSDateFormatter *format = [[NSDateFormatter alloc] init];
                     [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1467,21 +1679,28 @@ static BOOL isFWUpdating = false;
 
                     NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
                     [dicM_Params setObject:email forKey:@"mem_email"];
-                    if( self->current_count == 1 ) {
-                        [dicM_Params setObject:@"0" forKey:@"dose_count"];
-                    } else {
-                        [dicM_Params setObject:[NSString stringWithFormat:@"%ld", self->current_count - 1] forKey:@"dose_count"];
-                    }
+//                    if( self->current_count == 1 ) {
+//                        [dicM_Params setObject:@"0" forKey:@"dose_count"];
+//                    } else {
+//                        [dicM_Params setObject:[NSString stringWithFormat:@"%ld", self->current_count - 1] forKey:@"dose_count"];
+//                    }
+                    
+                    
+                    NSInteger doseCount = [@(md->count) integerValue];
+                    [dicM_Params setObject:[NSString stringWithFormat:@"%ld", doseCount] forKey:@"dose_count"];
+                    
+                    
                     [dicM_Params setObject:[NSString stringWithFormat:@"%ld", nBattery] forKey:@"device_battery"];
                     [dicM_Params setObject:str_DoseDate forKey:@"datetime"];                  //토출시간
                     [dicM_Params setObject:str_NowDate forKey:@"datetime_realtime"];         //현재시간
-                    [dicM_Params setObject:@"9" forKey:@"dispenser_top"];                   //우선 9로 하드코딩
-                    [dicM_Params setObject:@"9" forKey:@"dispenser_bottom"];                //우선 9로 하드코딩
+                    [dicM_Params setObject:@(md->cover_count) forKey:@"dispenser_top"];
+                    [dicM_Params setObject:@(md->body_count) forKey:@"dispenser_bottom"];
                     [dicM_Params setObject:deviceName forKey:@"device_id"];
                     [dicM_Params setObject:macAddr forKey:@"device_mac_address"];
                     [dicM_Params setObject:@"N" forKey:@"mapping_status"];                  //처방내역 연동여부
                     [dicM_Params setObject:@"" forKey:@"mapping_pill_name"];                //처방 약품 이름
                     [dicM_Params setObject:str_SerialNo forKey:@"serial_num"];    //시리얼 넘버
+                    [dicM_Params setObject:str_CoverDate forKey:@"datetime_cover"];
                     //SA-07C6
                     
                     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dose" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
@@ -1578,7 +1797,9 @@ static BOOL isFWUpdating = false;
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
     NSLog(@"connected ...");
-    if( [peripheral.name isEqualToString:@"DfuTarg"] == false ) {
+//    if( [peripheral.name isEqualToString:@"DfuTarg"] == false ) {
+//    if( [peripheral.name.lowercaseString rangeOfString:@"dfutarg"].location == NSNotFound ) {
+    if( [peripheral.name.lowercaseString hasPrefix:@"dfutarg"] == false ) {
         [_currentDevice findService];
     } else {
         if( _dfuTargPeripheral != nil ) {
@@ -1590,14 +1811,14 @@ static BOOL isFWUpdating = false;
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     NSLog(@"disconnected..");
 //    [self scanForPeripherals:YES];
-    if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
-        if( self.hud != nil ) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.hud hideAnimated:true];
-                self.hud = nil;
-            });
-        }
-    }
+//    if( [peripheral.name.lowercaseString hasPrefix:@"dfutarg"] ) {
+//        if( self.hud != nil ) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.hud hideAnimated:true];
+//                self.hud = nil;
+//            });
+//        }
+//    }
     
     if( _centralManager.state != CBManagerStatePoweredOn ) {
         return;
@@ -1636,8 +1857,11 @@ static BOOL isFWUpdating = false;
     return _items.count;
 }
  
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ListCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ListCVCell" forIndexPath:indexPath];
+    if( _items == nil || _items.count <= 0 ) {
+        return cell;
+    }
 
     if( _items.count - 1 < indexPath.row ) {
         return cell;
@@ -1671,7 +1895,7 @@ static BOOL isFWUpdating = false;
     
     
 //    [dateFormatter setDateFormat:@"HH:mm"];
-    [dateFormatter setDateFormat:@"a hh:mm"];
+    [dateFormatter setDateFormat:@"a hh:mm:ss"];
 
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     cell.lb_Time.text = [dateFormatter stringFromDate:date];
@@ -1697,6 +1921,7 @@ static BOOL isFWUpdating = false;
 - (void)dfuError:(enum DFUError)error didOccurWithMessage:(NSString * _Nonnull)message {
     NSLog(@"%@", message);
     self.isFWUpdating = false;
+    self.dfuController = nil;
 }
 
 - (void)dfuStateDidChangeTo:(enum DFUState)state {
@@ -1710,14 +1935,14 @@ static BOOL isFWUpdating = false;
 
         self.isFWUpdating = true;
 
-        if (self.hud == nil) {
-            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        } else {
-            [self.hud hideAnimated:true];
-        }
+//        if (self.hud == nil) {
+//            self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        } else {
+//            [self.hud hideAnimated:true];
+//        }
         
-        self.hud.label.text = NSLocalizedString(@"FirmWare Update...", nil);
-        [self.hud showAnimated:true];
+//        self.hud.label.text = NSLocalizedString(@"FirmWare Update...", nil);
+//        [self.hud showAnimated:true];
     }
     if( state == 6 ) {
         //완료 된 경우
@@ -1731,6 +1956,12 @@ static BOOL isFWUpdating = false;
             [_currentDevice.peripheral discoverServices:@[[ScanPeripheral uartServiceUUID]]];
             
             //업데이트 완료 후 내부 저장소에 펌웨어 버전도 업데이트
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+            NSString *now = [dateFormatter stringFromDate:[NSDate date]];
+            [[NSUserDefaults standardUserDefaults] setValue:now forKey:@"FWUpdateDate"];
+
             NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
             [[NSUserDefaults standardUserDefaults] setObject:str_NewFWVersion forKey:@"FWVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1744,39 +1975,33 @@ static BOOL isFWUpdating = false;
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            if( self.hud != nil ) {
-                [self.hud hideAnimated:true];
-                self.hud = nil;
-            }
+//            if( self.hud != nil ) {
+//                [self.hud hideAnimated:true];
+//                self.hud = nil;
+//            }
             
-            [NSTimer scheduledTimerWithTimeInterval:1 repeats:false block:^(NSTimer * _Nonnull timer) {
+            [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:false block:^(NSTimer * _Nonnull timer) {
                 self.isFWUpdating = false;
+                self.isExcuteFWUpdateMode = false;
 //                [Util keyWindow].userInteractionEnabled = true;
                 NSLog(@"펌웨어 업데이트 완료");
+                self.dfuController = nil;
+                [self.vc_FWUpdate updateFinish];
             }];
         });
     } else if( state == 7 || state == 5 ) {
-        //중단 되거나 연결이 끊긴 경우
-//        dispatch_async(dispatch_get_main_queue(), ^{
-////            [Util keyWindow].userInteractionEnabled = true;
-//        });
         _isFWUpdating = false;
         _dfuTargPeripheral = nil;
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if( self.hud != nil ) {
-                [self.hud hideAnimated:true];
-                self.hud = nil;
-            }
-        });
     }
 }
 
 - (void)dfuProgressDidChangeFor:(NSInteger)part outOf:(NSInteger)totalParts to:(NSInteger)progress currentSpeedBytesPerSecond:(double)currentSpeedBytesPerSecond avgSpeedBytesPerSecond:(double)avgSpeedBytesPerSecond {
-    if( self.hud != nil ) {
-        NSString *msg = [NSString stringWithFormat:@"%@ %ld%%", NSLocalizedString(@"FirmWare Update...", nil), progress];
-        self.hud.label.text = msg;
-    }
+//    if( self.hud != nil ) {
+//        NSString *msg = [NSString stringWithFormat:@"%@ %ld%%", NSLocalizedString(@"FirmWare Update...", nil), progress];
+//        self.hud.label.text = msg;
+//    }
+    
+    [self.vc_FWUpdate updatePer:progress];
 }
 
 - (void)updateFocusIfNeeded {

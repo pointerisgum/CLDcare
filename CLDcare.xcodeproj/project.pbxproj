@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		179FFF5AF784C8FF892D9FC8 /* Pods_CLDcare_CLDcareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707F8328DBB625484F88CDD5 /* Pods_CLDcare_CLDcareUITests.framework */; };
+		1829988E28F8F180004B7161 /* 0603.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1829988D28F8F180004B7161 /* 0603.zip */; };
+		183B18E428DC8B8900BCED2B /* FWUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */; };
+		183F139328DC2FC0006EF623 /* FWConnectingPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183F139228DC2FC0006EF623 /* FWConnectingPopUpViewController.m */; };
+		183F139628DC3DCB006EF623 /* FWDownloadPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183F139528DC3DCB006EF623 /* FWDownloadPopUpViewController.m */; };
+		183F139828DC3F46006EF623 /* downloading.json in Resources */ = {isa = PBXBuildFile; fileRef = 183F139728DC3F46006EF623 /* downloading.json */; };
 		184F514027191E0D009695C2 /* JoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F513F27191E0D009695C2 /* JoinViewController.m */; };
 		184F5143271C0E24009695C2 /* ListCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F5142271C0E24009695C2 /* ListCVCell.m */; };
 		186BC4F22883CEFA009F88EF /* 0402.zip in Resources */ = {isa = PBXBuildFile; fileRef = 186BC4F12883CEFA009F88EF /* 0402.zip */; };
@@ -128,6 +133,9 @@
 		1881E3642704143F005AE92C /* NDPrescripHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E2F82704143F005AE92C /* NDPrescripHistory.m */; };
 		1881E3652704143F005AE92C /* NDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E2F92704143F005AE92C /* NDDevice.m */; };
 		1881E3692704155D005AE92C /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E3682704155D005AE92C /* HistoryViewController.m */; };
+		1885CB4128E4445D001717C5 /* 0502.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1885CB4028E4445D001717C5 /* 0502.zip */; };
+		18A1995528DD932200464377 /* 0602.zip in Resources */ = {isa = PBXBuildFile; fileRef = 18A1995428DD932200464377 /* 0602.zip */; };
+		18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */; };
 		18B682CA27F1A66000B66617 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18B682CC27F1A66100B66617 /* Localizable.strings */; };
 		18C62340286AC9F900B6D532 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6232F286AC9F900B6D532 /* AFImageRequestOperation.m */; };
 		18C62341286AC9F900B6D532 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C62330286AC9F900B6D532 /* AFPropertyListRequestOperation.m */; };
@@ -166,6 +174,14 @@
 
 /* Begin PBXFileReference section */
 		14D3B962A769EA3CFCE3B94F /* Pods-CLDcare-CLDcareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLDcare-CLDcareUITests.release.xcconfig"; path = "Target Support Files/Pods-CLDcare-CLDcareUITests/Pods-CLDcare-CLDcareUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1829988D28F8F180004B7161 /* 0603.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0603.zip; sourceTree = "<group>"; };
+		183B18E228DC8B8900BCED2B /* FWUpdateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWUpdateViewController.h; sourceTree = "<group>"; };
+		183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWUpdateViewController.m; sourceTree = "<group>"; };
+		183F139128DC2FC0006EF623 /* FWConnectingPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWConnectingPopUpViewController.h; sourceTree = "<group>"; };
+		183F139228DC2FC0006EF623 /* FWConnectingPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWConnectingPopUpViewController.m; sourceTree = "<group>"; };
+		183F139428DC3DCB006EF623 /* FWDownloadPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWDownloadPopUpViewController.h; sourceTree = "<group>"; };
+		183F139528DC3DCB006EF623 /* FWDownloadPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWDownloadPopUpViewController.m; sourceTree = "<group>"; };
+		183F139728DC3F46006EF623 /* downloading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = downloading.json; sourceTree = "<group>"; };
 		184F513E27191E0D009695C2 /* JoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewController.h; sourceTree = "<group>"; };
 		184F513F27191E0D009695C2 /* JoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinViewController.m; sourceTree = "<group>"; };
 		184F5141271C0E24009695C2 /* ListCVCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListCVCell.h; sourceTree = "<group>"; };
@@ -396,6 +412,10 @@
 		1881E3662704145E005AE92C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		1881E3672704155C005AE92C /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		1881E3682704155D005AE92C /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		1885CB4028E4445D001717C5 /* 0502.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0502.zip; sourceTree = "<group>"; };
+		18A1995428DD932200464377 /* 0602.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0602.zip; sourceTree = "<group>"; };
+		18B091D528C36AD4001790F5 /* FrimwareCheckPopupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrimwareCheckPopupViewController.h; sourceTree = "<group>"; };
+		18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrimwareCheckPopupViewController.m; sourceTree = "<group>"; };
 		18B682CB27F1A66100B66617 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18B682CE27F1A66C00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		18B682CF27F1A66D00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -468,6 +488,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		183F139028DC2F7D006EF623 /* FWUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				18B091D528C36AD4001790F5 /* FrimwareCheckPopupViewController.h */,
+				18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */,
+				183F139128DC2FC0006EF623 /* FWConnectingPopUpViewController.h */,
+				183F139228DC2FC0006EF623 /* FWConnectingPopUpViewController.m */,
+				183F139428DC3DCB006EF623 /* FWDownloadPopUpViewController.h */,
+				183F139528DC3DCB006EF623 /* FWDownloadPopUpViewController.m */,
+				183B18E228DC8B8900BCED2B /* FWUpdateViewController.h */,
+				183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */,
+			);
+			path = FWUpdate;
+			sourceTree = "<group>";
+		};
 		187B1DD12704114800CDB291 = {
 			isa = PBXGroup;
 			children = (
@@ -494,6 +529,10 @@
 		187B1DDC2704114800CDB291 /* CLDcare */ = {
 			isa = PBXGroup;
 			children = (
+				183F139728DC3F46006EF623 /* downloading.json */,
+				1829988D28F8F180004B7161 /* 0603.zip */,
+				18A1995428DD932200464377 /* 0602.zip */,
+				1885CB4028E4445D001717C5 /* 0502.zip */,
 				186BC4F12883CEFA009F88EF /* 0402.zip */,
 				1881E204270413EC005AE92C /* CLDcare.entitlements */,
 				1881E20027041330005AE92C /* GoogleService-Info.plist */,
@@ -605,6 +644,7 @@
 			isa = PBXGroup;
 			children = (
 				1881E21D2704143E005AE92C /* Cells */,
+				183F139028DC2F7D006EF623 /* FWUpdate */,
 				1881E2222704143E005AE92C /* HomeMainViewController.h */,
 				1881E21C2704143E005AE92C /* HomeMainViewController.m */,
 				1881E2232704143E005AE92C /* DeviceViewController.h */,
@@ -672,16 +712,16 @@
 		1881E2382704143E005AE92C /* More */ = {
 			isa = PBXGroup;
 			children = (
-				1881E2392704143E005AE92C /* AlarmDetailViewController.m */,
 				1881E23A2704143E005AE92C /* Cells */,
 				1881E23D2704143E005AE92C /* SurveryAccView.xib */,
-				1881E23E2704143E005AE92C /* FeedBackViewController.h */,
-				1881E23F2704143E005AE92C /* SurveryAccView.h */,
-				1881E2402704143E005AE92C /* MoreViewController.m */,
 				1881E2412704143E005AE92C /* AlarmDetailViewController.h */,
-				1881E2422704143E005AE92C /* SurveryAccView.m */,
+				1881E2392704143E005AE92C /* AlarmDetailViewController.m */,
+				1881E23E2704143E005AE92C /* FeedBackViewController.h */,
 				1881E2432704143E005AE92C /* FeedBackViewController.m */,
+				1881E23F2704143E005AE92C /* SurveryAccView.h */,
+				1881E2422704143E005AE92C /* SurveryAccView.m */,
 				1881E2442704143E005AE92C /* MoreViewController.h */,
+				1881E2402704143E005AE92C /* MoreViewController.m */,
 				18F2AA5E277AD6690091373E /* AdditionViewController.h */,
 				18F2AA5F277AD6690091373E /* AdditionViewController.m */,
 			);
@@ -1129,9 +1169,13 @@
 				1881E20127041330005AE92C /* GoogleService-Info.plist in Resources */,
 				1881E33F2704143F005AE92C /* README.md in Resources */,
 				1881E3592704143F005AE92C /* PopUp.storyboard in Resources */,
+				1885CB4128E4445D001717C5 /* 0502.zip in Resources */,
 				1881E3572704143F005AE92C /* Main.storyboard in Resources */,
 				187B1DEA2704114900CDB291 /* Assets.xcassets in Resources */,
+				183F139828DC3F46006EF623 /* downloading.json in Resources */,
 				1881E20B2704142A005AE92C /* bell.mp3 in Resources */,
+				18A1995528DD932200464377 /* 0602.zip in Resources */,
+				1829988E28F8F180004B7161 /* 0603.zip in Resources */,
 				1881E20A2704142A005AE92C /* Clause.plist in Resources */,
 				1881E30E2704143F005AE92C /* SurveryAccView.xib in Resources */,
 				18B682CA27F1A66000B66617 /* Localizable.strings in Resources */,
@@ -1277,6 +1321,7 @@
 				1881E3192704143F005AE92C /* SurveyCell.m in Sources */,
 				186BC4FB28853C89009F88EF /* Test2.swift in Sources */,
 				1881E3082704143F005AE92C /* PrescripCell.m in Sources */,
+				183F139628DC3DCB006EF623 /* FWDownloadPopUpViewController.m in Sources */,
 				184F514027191E0D009695C2 /* JoinViewController.m in Sources */,
 				1881E3072704143F005AE92C /* PopUpCalendarViewController.m in Sources */,
 				1881E35E2704143F005AE92C /* NDHint.m in Sources */,
@@ -1304,10 +1349,12 @@
 				18F2AA6A277B65AF0091373E /* SurveyViewController.m in Sources */,
 				1881E3412704143F005AE92C /* MKAnnotationView+WebCache.m in Sources */,
 				1881E3022704143F005AE92C /* ScheduleCell.m in Sources */,
+				18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */,
 				1881E3262704143F005AE92C /* JoinFinishViewController.m in Sources */,
 				1881E2FB2704143F005AE92C /* UIAlertController+Blocks.m in Sources */,
 				1881E32C2704143F005AE92C /* SBJsonStreamParserAccumulator.m in Sources */,
 				1881E32B2704143F005AE92C /* SBJsonParser.m in Sources */,
+				183F139328DC2FC0006EF623 /* FWConnectingPopUpViewController.m in Sources */,
 				1881E3302704143F005AE92C /* SBJsonStreamWriter.m in Sources */,
 				18C62347286AC9F900B6D532 /* AFXMLRequestOperation.m in Sources */,
 				1881E31C2704143F005AE92C /* SurveyCheckViewController.m in Sources */,
@@ -1350,6 +1397,7 @@
 				1881E3062704143F005AE92C /* IntroViewController.m in Sources */,
 				1881E3542704143F005AE92C /* PopUpViewController.m in Sources */,
 				1881E3402704143F005AE92C /* UIImage+WebP.m in Sources */,
+				183B18E428DC8B8900BCED2B /* FWUpdateViewController.m in Sources */,
 				1881E34B2704143F005AE92C /* SDWebImageDownloaderOperation.m in Sources */,
 				1881E3002704143F005AE92C /* NSData+Base64.m in Sources */,
 				1881E3102704143F005AE92C /* SurveryAccView.m in Sources */,
@@ -1575,22 +1623,23 @@
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CLDcare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "CLD Care";
+				INFOPLIST_KEY_CFBundleDisplayName = "Coledy Care";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "약통 탐색을 위해 블루투스에 접근 합니다. 이 외의 용도로는 사용되지 않습니다.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "CLDcare use bletooth";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = CLD_Dev;
@@ -1618,22 +1667,23 @@
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CLDcare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "CLD Care";
+				INFOPLIST_KEY_CFBundleDisplayName = "Coledy Care";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "약통 탐색을 위해 블루투스에 접근 합니다. 이 외의 용도로는 사용되지 않습니다.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "CLDcare use bletooth";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = CLD_Dis;

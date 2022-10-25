@@ -797,6 +797,7 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
+  - lottie-ios (2.5.3)
   - MBProgressHUD (1.2.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -821,6 +822,7 @@ DEPENDENCIES:
   - FSCalendar
   - GoogleSignIn
   - iOSDFULibrary (~> 4.10)
+  - lottie-ios (~> 2.5.3)
   - MBProgressHUD
   - Toast (~> 4.0.0)
   - "UITextView+Placeholder"
@@ -853,6 +855,7 @@ SPEC REPOS:
     - iOSDFULibrary
     - leveldb-library
     - Libuv-gRPC
+    - lottie-ios
     - MBProgressHUD
     - nanopb
     - PromisesObjC
@@ -888,6 +891,7 @@ SPEC CHECKSUMS:
   iOSDFULibrary: 3500ac00451aa7d8ec48a752e91099669a2c1d27
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
+  lottie-ios: a50d5c0160425cd4b01b852bb9578963e6d92d31
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -896,6 +900,6 @@ SPEC CHECKSUMS:
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: c912e64e974b3e0308d3d2812fc4259ff5b8b971
+PODFILE CHECKSUM: 65eba82d1ed20b02a5065b96ee1d587ca0e07f2a
 
 COCOAPODS: 1.11.3

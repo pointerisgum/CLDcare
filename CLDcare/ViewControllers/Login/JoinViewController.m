@@ -43,7 +43,7 @@ static NSInteger kResetTime = 180;
     _tf_Pw.placeholder = NSLocalizedString(@"8 digits password including upper and lowercase, number, special characters", nil);
     _tf_PwConfirm.placeholder = NSLocalizedString(@"8 digits password including upper and lowercase, number, special characters", nil);
     [_btn_SendCert setTitle:NSLocalizedString(@"Verification", nil) forState:UIControlStateNormal];
-    [_btn_Next setTitle:NSLocalizedString(@"next", nil) forState:UIControlStateNormal];
+    [_btn_Next setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
 
     [self disableBtn:_btn_Next];
     

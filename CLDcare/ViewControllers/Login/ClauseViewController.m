@@ -29,7 +29,7 @@
     [_btn_All setTitle:NSLocalizedString(@"Accept all", nil) forState:UIControlStateNormal];
     [_btn_Clause1 setTitle:NSLocalizedString(@"Terms of Use", nil) forState:UIControlStateNormal];
     [_btn_Clause2 setTitle:NSLocalizedString(@"Privacy policy", nil) forState:UIControlStateNormal];
-    [_btn_Next setTitle:NSLocalizedString(@"next", nil) forState:UIControlStateNormal];
+    [_btn_Next setTitle:NSLocalizedString(@"Next", nil) forState:UIControlStateNormal];
 
     [self updateButtonStatus];
 }

@@ -16,6 +16,9 @@
 "Done" = "완료";
 "close" = "닫기";
 "Close" = "닫기";
+"Yes" = "네";
+"No" = "아니요";
+"No" = "아니오";
 
 //로그인
 "E-mail address" = "이메일 주소";
@@ -55,7 +58,7 @@
 
 
 //홈
-"Med Info" = "복약 정보";
+"Your Med" = "복약 정보";
 "Next Med Time" = "남은 시간";
 "Drug info" = "약품정보 확인";
 "Med Status" = "복약 여부";
@@ -72,7 +75,7 @@
 "Pills Taken" = "복약 개수";
 "Device connect" = "연결 여부";
 "Setting" = "설정하기";
-"Connect" = "연동 완료";
+"Paired" = "연동 완료";
 
 "Med taken" = "약을 복용했습니다";
 "Please take your med" = "복약 시간입니다";
@@ -82,7 +85,7 @@
 "Completed the survey" = "설문을 완료 했습니다";
 "Checked the alarm" = "알람을 확인 했습니다";
 "Postponed the alarm" = "알람을 미루었습니다";
-"Not paired" = "미연결";
+"Not Paired" = "미연결";
 "Disconnect" = "해제하기";
 "Scan Device" = "기기 찾기";
 "Place sensor device close to\nyour mobile phone with Bluetooth on" = "모바일의 블루투스를 켠 상태에서\n기기와 가까이 하세요";
@@ -211,3 +214,65 @@
 "Keep your medicine case close to your phone and don't turn off the app." = "약통을 핸드폰과 가까이 두고 앱을 끄지 마세요.";
 
 "Failed to get serial number.\nPlease reconnect the medicine case." = "시리얼 번호를 얻어오지 못했습니다.\n약통을 다시 연결해 주세요.";
+
+
+"Device Information" = "디바이스 정보";
+"Firmware information" = "펌웨어 정보";
+"This is the latest version." = "최신버전 입니다.";
+"Firmware Update" = "펌웨어 업데이트";
+
+
+"Total Pills Taken from Bottle" = "총 복약 개수";
+"Pills Taken Today" = "당일 복약 개수";
+"Unpair Sensor Device" = "연결해제";
+
+
+
+"Place Coledy App Next to Sensor Device\nwith Cap Opened." = "스마트폰 옆에 센서 디바이스의 캡을 열고 놓아주세요.";
+
+"Device ID" = "디바이스 아이디";
+"Current Firmware Version" = "현재 버전";
+"Firmware Update Date" = "펌웨어 업데이트 일자";
+
+"Your Firmware is Up To Date" = "최신버전입니다.";
+"New Firmware Version Available" = "새 펌웨어 버전";
+
+"Firmware needs to be updated" = "새 버전의 펌웨어로 업데이트가 필요합니다";
+"Download and Install" = "다운로드 및 설치";
+"Entering the Firmware Update Mode.\nPlace Your Device Next to Coledy App and Wait.\n\n\nPreparing Update..." = "펌웨어 업데이트 모드에 진입합니다\n디바이스를 놓고 잠시 기다려주세요\n\n\n페어링 중...";
+"Downloading Firmware..." = "펌웨어 다운로드 중...";
+
+
+
+
+
+
+"Install Device Firmware" = "디바이스 펌웨어 설치";
+"Device Firmware Install Process" = "디바이스에 펌웨어 설치 안내";
+"Please Install Device Firmware to Your Device.\nPlease Follow Installation Steps" = "펌웨어 업데이트 안내 페이지입니다\n안내에 따라 펌웨어 업데이트를 실행해주세요";
+"File Name" = "파일명";
+"Size" = "사이즈";
+"Status" = "상태";
+"Contents" = "내용";
+"Place Coledy App Next to Sensor\nDevice with Cap Open" = "스마트폰 옆에 센서 디바이스의\n캡을 열고놓아주세요";
+"Start" = "시작하기";
+"Installing..." = "인스톨 중...";
+"Keep Coledy App Open\nwith Device Cap Open While Installing" = "펌웨어 설치 중에는 앱을 닫지 말고\n센서 디바이스의 캡을 계속 열어놓으세요";
+"Installation is Complete." = "업데이트가 완료되었습니다";
+
+
+"Cancel The Firmware Update?" = "펌웨어 업데이트를 취소하시겠습니까?";
+"Med alarm time" = "복약 알림 시간";
+"set up" = "설정됨";
+
+"Email does not match." = "이메일이 일치하지 않습니다.";
+
+"Success Delete Account\nThank you for your use." = "탈퇴 되었습니다.\n이용해 주셔서 감사합니다.";
+
+"If you leave, all information will be deleted and will not be recovered.\nDo you want to leave?" = "탈퇴시 모든 정보가 삭제되며 복구되지 않습니다.\n탈퇴하시겠습니까?";
+
+"Please enter email." = "탈퇴 하시려면 이메일을 입력해 주세요.";
+"Please enter email" = "이메일을 입력해 주세요";
+"Delete Account" = "회원탈퇴";
+"Latest version" = "최신 버전 입니다.";
+"Dose problem occurrence" = "디바이스 문제 발생";

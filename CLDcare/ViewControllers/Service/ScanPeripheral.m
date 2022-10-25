@@ -130,7 +130,8 @@
     BOOL success = NO;
     for (CBService* service in peripheral.services)
     {
-        if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
+//        if( [peripheral.name isEqualToString:@"DfuTarg"] ) {
+        if( [peripheral.name.lowercaseString hasPrefix:@"dfutarg"] ) {
             NSArray* chars = @[[self.class uartServiceUUID]];
             [peripheral discoverCharacteristics:chars forService:service];
             success = YES;

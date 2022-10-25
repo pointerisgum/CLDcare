@@ -20,8 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _calendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
-    
+    NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    if( [language isEqualToString:@"ko"] ) {
+        _calendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+    } else {
+        _calendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    }
+
     NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
     [_btn_Month setTitle:[NSString stringWithFormat:@"%04ld. %02ld", comp.year, comp.month] forState:UIControlStateNormal];
     _nCurrentMonth = comp.month;

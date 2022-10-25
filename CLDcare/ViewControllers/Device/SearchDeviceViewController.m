@@ -48,19 +48,19 @@
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         if( weakSelf.items.count > 0 ) {
-            if( weakSelf.items.count > 2 ) {
-                weakSelf.lc_ListHeight.constant = 30 + (75 * 2) + 30;
+            if( weakSelf.items.count > 3 ) {
+                weakSelf.lc_ListHeight.constant = 30 + (75 * 3) + 30;
             } else {
                 weakSelf.lc_ListHeight.constant = 30 + (75 * weakSelf.items.count);
             }
-            weakSelf.lb_Descrip.textColor = [UIColor colorWithHexString:@"222222"];
-            weakSelf.lb_Descrip.text = [NSString stringWithFormat:@"%ld %@", weakSelf.items.count, NSLocalizedString(@"Scanned Device", nil)];
+//            weakSelf.lb_Descrip.textColor = [UIColor colorWithHexString:@"222222"];
+//            weakSelf.lb_Descrip.text = [NSString stringWithFormat:@"%ld %@", weakSelf.items.count, NSLocalizedString(@"Scanned Device", nil)];
         } else {
             weakSelf.lc_ListHeight.constant = 0;
-            weakSelf.lb_Descrip.textColor = [UIColor colorWithHexString:@"8b8b8b"];
-            weakSelf.lb_Descrip.text = NSLocalizedString(@"Place sensor device close to\nyour mobile phone with Bluetooth on", nil);
+//            weakSelf.lb_Descrip.textColor = [UIColor colorWithHexString:@"8b8b8b"];
+//            weakSelf.lb_Descrip.text = NSLocalizedString(@"Place sensor device close to\nyour mobile phone with Bluetooth on", nil);
         }
-        
+        weakSelf.lb_Descrip.text = NSLocalizedString(@"Place Coledy App Next to Sensor Device\nwith Cap Opened.", nil);
         [weakSelf.tbv_List reloadData];
         
         [UIView animateWithDuration:0.15 animations:^{
