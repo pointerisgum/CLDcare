@@ -244,15 +244,19 @@
         md = (dispenser_manuf_data_t *)data;
     }
     
-    NSInteger macAddrLength = sizeof(md->addr) - 1;
-    NSMutableString *macAddr = [NSMutableString stringWithCapacity:macAddrLength];
-    for (NSInteger i = macAddrLength; i >= 0; i--) {
-        [macAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->addr[i]]];
-        if( i > 0 ) {
-            [macAddr appendString:@":"];
-        }
-    }
+//    NSInteger macAddrLength = sizeof(md->addr) - 1;
+//    NSMutableString *macAddr = [NSMutableString stringWithCapacity:macAddrLength];
+//    for (NSInteger i = macAddrLength; i >= 0; i--) {
+//        [macAddr appendString:[NSString stringWithFormat:@"%02x", (unsigned int) md->addr[i]]];
+//        if( i > 0 ) {
+//            [macAddr appendString:@":"];
+//        }
+//    }
+//    return macAddr;
+    
+    NSString *macAddr = [NSString stringWithFormat:@"%02x", (unsigned int) md->device_last_name];
     return macAddr;
+
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error

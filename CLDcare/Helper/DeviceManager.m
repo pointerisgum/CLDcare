@@ -377,7 +377,7 @@
                                       res->serial[17],
                                       res->serial[18]];
 
-                NSLog(@"get version : %@", fwVersion);
+                NSLog(@"get firmware version : %@", fwVersion);
                 [[NSUserDefaults standardUserDefaults] setObject:fwVersion forKey:@"FWVersion"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 

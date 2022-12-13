@@ -98,7 +98,8 @@
 }
 
 - (void)updateNextStatus {
-    if( (_btn_Male.selected || _btn_FeMale.selected) && _tf_FirstName.text.length > 0 && _tf_LastName.text.length > 0 && _tf_BirthDay.text.length > 0 ) {
+//    if( (_btn_Male.selected || _btn_FeMale.selected) && _tf_FirstName.text.length > 0 && _tf_LastName.text.length > 0 && _tf_BirthDay.text.length > 0 ) {
+    if( _tf_FirstName.text.length > 0 && _tf_LastName.text.length > 0 && _tf_BirthDay.text.length > 0 ) {
         _btn_Next.enabled = true;
         [self enableBtn:_btn_Next];
     } else {
@@ -293,7 +294,8 @@
     [dicM_Params setObject:@"P" forKey:@"mem_user_type"];
     [dicM_Params setObject:_tf_FirstName.text forKey:@"mem_first_name"];
     [dicM_Params setObject:_tf_LastName.text forKey:@"mem_last_name"];
-    [dicM_Params setObject:_btn_Male.selected ? @"M" : @"F" forKey:@"mem_gender"];
+//    [dicM_Params setObject:_btn_Male.selected ? @"M" : @"F" forKey:@"mem_gender"];
+    [dicM_Params setObject:@"" forKey:@"mem_gender"];
     [dicM_Params setObject:_tf_BirthDay.text forKey:@"mem_birthday"];
 
     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/check" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {

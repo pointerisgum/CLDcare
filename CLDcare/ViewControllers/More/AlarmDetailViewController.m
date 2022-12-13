@@ -194,20 +194,21 @@
         cell.lb_Type.alpha = cell.lb_Time.alpha = cell.lb_AmPm.alpha = 0.3f;
     }
     
-    switch (indexPath.row) {
-        case 0:
-            cell.lb_Type.text = NSLocalizedString(@"morning", nil);
-            break;
-        case 1:
-            cell.lb_Type.text = NSLocalizedString(@"afternoon", nil);
-            break;
-        case 2:
-            cell.lb_Type.text = NSLocalizedString(@"evening", nil);
-            break;
-        default:
-            cell.lb_Type.text = @"";
-            break;
-    }
+    cell.lb_Type.text = @"";
+//    switch (indexPath.row) {
+//        case 0:
+//            cell.lb_Type.text = NSLocalizedString(@"morning", nil);
+//            break;
+//        case 1:
+//            cell.lb_Type.text = NSLocalizedString(@"afternoon", nil);
+//            break;
+//        case 2:
+//            cell.lb_Type.text = NSLocalizedString(@"evening", nil);
+//            break;
+//        default:
+//            cell.lb_Type.text = @"";
+//            break;
+//    }
     return cell;
 }
 
@@ -221,7 +222,7 @@
     NSString *str_Date = [NSString stringWithFormat:@"%02ld-%02ld", nHour, nMin];
     NSDate *date = [format dateFromString:str_Date];
 
-    [ActionSheetDatePicker showPickerWithTitle:@"알람 수정"
+    [ActionSheetDatePicker showPickerWithTitle:NSLocalizedString(@"Modify Alarm", nil)
                                 datePickerMode:UIDatePickerModeTime
                                   selectedDate:date
                                      doneBlock:^(ActionSheetDatePicker *picker, id selectedDate, id origin) {

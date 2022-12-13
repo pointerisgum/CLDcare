@@ -18,7 +18,8 @@
 
 typedef struct {
     uint16_t company_identifier;//0,1
-    uint8_t addr[2];            //2,3
+    uint8_t device_last_name;   //2
+    uint8_t pairing;            //3
     uint32_t epochtime_cover;   //4,5,6,7
     uint16_t count;             //8,9
     uint16_t info_count;        //10,11

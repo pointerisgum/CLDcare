@@ -35,11 +35,11 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         //서베이 토글
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"SurveyAlarm"];
         
-        NSMutableArray *arM_Alarms = [NSMutableArray array];
-        [arM_Alarms addObject:@{@"hour":@(8), @"min":@(30), @"on":@(false)}];
-        [arM_Alarms addObject:@{@"hour":@(13), @"min":@(30), @"on":@(false)}];
-        [arM_Alarms addObject:@{@"hour":@(19), @"min":@(30), @"on":@(false)}];
-        [Util saveAlarm:arM_Alarms];
+//        NSMutableArray *arM_Alarms = [NSMutableArray array];
+//        [arM_Alarms addObject:@{@"hour":@(8), @"min":@(30), @"on":@(false)}];
+//        [arM_Alarms addObject:@{@"hour":@(13), @"min":@(30), @"on":@(false)}];
+//        [arM_Alarms addObject:@{@"hour":@(19), @"min":@(30), @"on":@(false)}];
+//        [Util saveAlarm:arM_Alarms];
 
         [[NSUserDefaults standardUserDefaults] synchronize];
     }

@@ -309,13 +309,7 @@
     if( IS_CONNECTED ) {
         PopUpViewController *vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"PopUpViewController"];
         [vc setPopUpDismissBlock:^{
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            
+            [Util deleteData];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DisConnect" object:nil];
         }];
         [self presentViewController:vc animated:true completion:^{

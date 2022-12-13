@@ -8,17 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		179FFF5AF784C8FF892D9FC8 /* Pods_CLDcare_CLDcareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707F8328DBB625484F88CDD5 /* Pods_CLDcare_CLDcareUITests.framework */; };
+		1821E0EF29347BA500B53ABD /* SeparatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1821E0EE29347BA500B53ABD /* SeparatViewController.m */; };
 		1829988E28F8F180004B7161 /* 0603.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1829988D28F8F180004B7161 /* 0603.zip */; };
 		183B18E428DC8B8900BCED2B /* FWUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */; };
+		183DA8F82947FE2700C59328 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DA8F72947FE2700C59328 /* Localizable.swift */; };
+		183DA8FB294807E400C59328 /* MediRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 183DA8F9294807E400C59328 /* MediRecordCell.m */; };
 		183F139328DC2FC0006EF623 /* FWConnectingPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183F139228DC2FC0006EF623 /* FWConnectingPopUpViewController.m */; };
 		183F139628DC3DCB006EF623 /* FWDownloadPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183F139528DC3DCB006EF623 /* FWDownloadPopUpViewController.m */; };
 		183F139828DC3F46006EF623 /* downloading.json in Resources */ = {isa = PBXBuildFile; fileRef = 183F139728DC3F46006EF623 /* downloading.json */; };
+		1843BC0629348EA80035534A /* MediSetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843BC0529348EA80035534A /* MediSetUpViewController.m */; };
+		1843BC09293495D70035534A /* MDMediSetUpData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843BC08293495D70035534A /* MDMediSetUpData.m */; };
 		184F514027191E0D009695C2 /* JoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F513F27191E0D009695C2 /* JoinViewController.m */; };
 		184F5143271C0E24009695C2 /* ListCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F5142271C0E24009695C2 /* ListCVCell.m */; };
 		186BC4F22883CEFA009F88EF /* 0402.zip in Resources */ = {isa = PBXBuildFile; fileRef = 186BC4F12883CEFA009F88EF /* 0402.zip */; };
 		186BC4F928853A51009F88EF /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4F828853A51009F88EF /* Test.swift */; };
 		186BC4FB28853C89009F88EF /* Test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4FA28853C89009F88EF /* Test2.swift */; };
 		186BC4FD28853D17009F88EF /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4FC28853D17009F88EF /* AES.swift */; };
+		187493C72948736A00D11456 /* DeviceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187493C62948736900D11456 /* DeviceInfoViewController.m */; };
+		187493CA29489F3D00D11456 /* PairinigGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187493C929489F3D00D11456 /* PairinigGuideViewController.m */; };
 		187B1DDF2704114800CDB291 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1DDE2704114800CDB291 /* AppDelegate.m */; };
 		187B1DE22704114800CDB291 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1DE12704114800CDB291 /* SceneDelegate.m */; };
 		187B1DE52704114800CDB291 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1DE42704114800CDB291 /* ViewController.m */; };
@@ -28,6 +35,8 @@
 		187B1DFA2704114A00CDB291 /* CLDcareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1DF92704114A00CDB291 /* CLDcareTests.m */; };
 		187B1E042704114A00CDB291 /* CLDcareUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1E032704114A00CDB291 /* CLDcareUITests.m */; };
 		187B1E062704114A00CDB291 /* CLDcareUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187B1E052704114A00CDB291 /* CLDcareUITestsLaunchTests.m */; };
+		187E05152935BA1F00DC875F /* MediAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187E05142935BA1F00DC875F /* MediAlarmViewController.m */; };
+		187E051A2935C86900DC875F /* MediSetUpFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187E05192935C86900DC875F /* MediSetUpFinishViewController.m */; };
 		1881E1FD2704128B005AE92C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1881E1FC2704128B005AE92C /* WebKit.framework */; };
 		1881E1FF27041295005AE92C /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1881E1FE27041295005AE92C /* UserNotifications.framework */; };
 		1881E20127041330005AE92C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1881E20027041330005AE92C /* GoogleService-Info.plist */; };
@@ -134,6 +143,7 @@
 		1881E3652704143F005AE92C /* NDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E2F92704143F005AE92C /* NDDevice.m */; };
 		1881E3692704155D005AE92C /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E3682704155D005AE92C /* HistoryViewController.m */; };
 		1885CB4128E4445D001717C5 /* 0502.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1885CB4028E4445D001717C5 /* 0502.zip */; };
+		189DA31729111AFA009B2E0E /* 0604.zip in Resources */ = {isa = PBXBuildFile; fileRef = 189DA31629111AFA009B2E0E /* 0604.zip */; };
 		18A1995528DD932200464377 /* 0602.zip in Resources */ = {isa = PBXBuildFile; fileRef = 18A1995428DD932200464377 /* 0602.zip */; };
 		18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */; };
 		18B682CA27F1A66000B66617 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18B682CC27F1A66100B66617 /* Localizable.strings */; };
@@ -174,14 +184,23 @@
 
 /* Begin PBXFileReference section */
 		14D3B962A769EA3CFCE3B94F /* Pods-CLDcare-CLDcareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLDcare-CLDcareUITests.release.xcconfig"; path = "Target Support Files/Pods-CLDcare-CLDcareUITests/Pods-CLDcare-CLDcareUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1821E0ED29347BA500B53ABD /* SeparatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeparatViewController.h; sourceTree = "<group>"; };
+		1821E0EE29347BA500B53ABD /* SeparatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeparatViewController.m; sourceTree = "<group>"; };
 		1829988D28F8F180004B7161 /* 0603.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0603.zip; sourceTree = "<group>"; };
 		183B18E228DC8B8900BCED2B /* FWUpdateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWUpdateViewController.h; sourceTree = "<group>"; };
 		183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWUpdateViewController.m; sourceTree = "<group>"; };
+		183DA8F72947FE2700C59328 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		183DA8F9294807E400C59328 /* MediRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediRecordCell.m; sourceTree = "<group>"; };
+		183DA8FA294807E400C59328 /* MediRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediRecordCell.h; sourceTree = "<group>"; };
 		183F139128DC2FC0006EF623 /* FWConnectingPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWConnectingPopUpViewController.h; sourceTree = "<group>"; };
 		183F139228DC2FC0006EF623 /* FWConnectingPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWConnectingPopUpViewController.m; sourceTree = "<group>"; };
 		183F139428DC3DCB006EF623 /* FWDownloadPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWDownloadPopUpViewController.h; sourceTree = "<group>"; };
 		183F139528DC3DCB006EF623 /* FWDownloadPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWDownloadPopUpViewController.m; sourceTree = "<group>"; };
 		183F139728DC3F46006EF623 /* downloading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = downloading.json; sourceTree = "<group>"; };
+		1843BC0429348EA80035534A /* MediSetUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediSetUpViewController.h; sourceTree = "<group>"; };
+		1843BC0529348EA80035534A /* MediSetUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediSetUpViewController.m; sourceTree = "<group>"; };
+		1843BC07293495D70035534A /* MDMediSetUpData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDMediSetUpData.h; sourceTree = "<group>"; };
+		1843BC08293495D70035534A /* MDMediSetUpData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDMediSetUpData.m; sourceTree = "<group>"; };
 		184F513E27191E0D009695C2 /* JoinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewController.h; sourceTree = "<group>"; };
 		184F513F27191E0D009695C2 /* JoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinViewController.m; sourceTree = "<group>"; };
 		184F5141271C0E24009695C2 /* ListCVCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListCVCell.h; sourceTree = "<group>"; };
@@ -192,6 +211,10 @@
 		186BC4F828853A51009F88EF /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		186BC4FA28853C89009F88EF /* Test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test2.swift; sourceTree = "<group>"; };
 		186BC4FC28853D17009F88EF /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
+		187493C52948736900D11456 /* DeviceInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceInfoViewController.h; sourceTree = "<group>"; };
+		187493C62948736900D11456 /* DeviceInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceInfoViewController.m; sourceTree = "<group>"; };
+		187493C829489F3D00D11456 /* PairinigGuideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PairinigGuideViewController.h; sourceTree = "<group>"; };
+		187493C929489F3D00D11456 /* PairinigGuideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PairinigGuideViewController.m; sourceTree = "<group>"; };
 		187B1DDA2704114800CDB291 /* CLDcare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLDcare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		187B1DDD2704114800CDB291 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		187B1DDE2704114800CDB291 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -208,6 +231,10 @@
 		187B1DFF2704114A00CDB291 /* CLDcareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CLDcareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		187B1E032704114A00CDB291 /* CLDcareUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLDcareUITests.m; sourceTree = "<group>"; };
 		187B1E052704114A00CDB291 /* CLDcareUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLDcareUITestsLaunchTests.m; sourceTree = "<group>"; };
+		187E05132935BA1F00DC875F /* MediAlarmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediAlarmViewController.h; sourceTree = "<group>"; };
+		187E05142935BA1F00DC875F /* MediAlarmViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediAlarmViewController.m; sourceTree = "<group>"; };
+		187E05182935C86900DC875F /* MediSetUpFinishViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediSetUpFinishViewController.h; sourceTree = "<group>"; };
+		187E05192935C86900DC875F /* MediSetUpFinishViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediSetUpFinishViewController.m; sourceTree = "<group>"; };
 		1881E1FC2704128B005AE92C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		1881E1FE27041295005AE92C /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1881E20027041330005AE92C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -413,6 +440,8 @@
 		1881E3672704155C005AE92C /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		1881E3682704155D005AE92C /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		1885CB4028E4445D001717C5 /* 0502.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0502.zip; sourceTree = "<group>"; };
+		1891EDD6291396BA009A035B /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		189DA31629111AFA009B2E0E /* 0604.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0604.zip; sourceTree = "<group>"; };
 		18A1995428DD932200464377 /* 0602.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0602.zip; sourceTree = "<group>"; };
 		18B091D528C36AD4001790F5 /* FrimwareCheckPopupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrimwareCheckPopupViewController.h; sourceTree = "<group>"; };
 		18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrimwareCheckPopupViewController.m; sourceTree = "<group>"; };
@@ -530,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				183F139728DC3F46006EF623 /* downloading.json */,
+				189DA31629111AFA009B2E0E /* 0604.zip */,
 				1829988D28F8F180004B7161 /* 0603.zip */,
 				18A1995428DD932200464377 /* 0602.zip */,
 				1885CB4028E4445D001717C5 /* 0502.zip */,
@@ -580,6 +610,29 @@
 				187B1E052704114A00CDB291 /* CLDcareUITestsLaunchTests.m */,
 			);
 			path = CLDcareUITests;
+			sourceTree = "<group>";
+		};
+		187E05162935BB2B00DC875F /* MediSetUp */ = {
+			isa = PBXGroup;
+			children = (
+				187E05172935BB3600DC875F /* Data */,
+				1843BC0429348EA80035534A /* MediSetUpViewController.h */,
+				1843BC0529348EA80035534A /* MediSetUpViewController.m */,
+				187E05132935BA1F00DC875F /* MediAlarmViewController.h */,
+				187E05142935BA1F00DC875F /* MediAlarmViewController.m */,
+				187E05182935C86900DC875F /* MediSetUpFinishViewController.h */,
+				187E05192935C86900DC875F /* MediSetUpFinishViewController.m */,
+			);
+			path = MediSetUp;
+			sourceTree = "<group>";
+		};
+		187E05172935BB3600DC875F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				1843BC07293495D70035534A /* MDMediSetUpData.h */,
+				1843BC08293495D70035534A /* MDMediSetUpData.m */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		1881E2052704142A005AE92C /* Resource */ = {
@@ -645,12 +698,19 @@
 			children = (
 				1881E21D2704143E005AE92C /* Cells */,
 				183F139028DC2F7D006EF623 /* FWUpdate */,
+				187E05162935BB2B00DC875F /* MediSetUp */,
 				1881E2222704143E005AE92C /* HomeMainViewController.h */,
 				1881E21C2704143E005AE92C /* HomeMainViewController.m */,
+				187493C52948736900D11456 /* DeviceInfoViewController.h */,
+				187493C62948736900D11456 /* DeviceInfoViewController.m */,
 				1881E2232704143E005AE92C /* DeviceViewController.h */,
 				1881E2212704143E005AE92C /* DeviceViewController.m */,
 				1881E2202704143E005AE92C /* MedicationViewController.h */,
 				1881E2242704143E005AE92C /* MedicationViewController.m */,
+				1821E0ED29347BA500B53ABD /* SeparatViewController.h */,
+				1821E0EE29347BA500B53ABD /* SeparatViewController.m */,
+				187493C829489F3D00D11456 /* PairinigGuideViewController.h */,
+				187493C929489F3D00D11456 /* PairinigGuideViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -662,6 +722,8 @@
 				1881E21F2704143E005AE92C /* ScheduleCell.h */,
 				184F5141271C0E24009695C2 /* ListCVCell.h */,
 				184F5142271C0E24009695C2 /* ListCVCell.m */,
+				183DA8FA294807E400C59328 /* MediRecordCell.h */,
+				183DA8F9294807E400C59328 /* MediRecordCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -962,6 +1024,7 @@
 				1881E2E42704143F005AE92C /* Util.m */,
 				1881E2E52704143F005AE92C /* UIColor+HexString.h */,
 				1881E2E72704143F005AE92C /* UIColor+HexString.m */,
+				183DA8F72947FE2700C59328 /* Localizable.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1031,6 +1094,7 @@
 		8A9B0434D1D25D31FB73EDEB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1891EDD6291396BA009A035B /* ExternalAccessory.framework */,
 				18DB92E22865BC7600882597 /* AuthenticationServices.framework */,
 				1881E1FE27041295005AE92C /* UserNotifications.framework */,
 				1881E1FC2704128B005AE92C /* WebKit.framework */,
@@ -1167,6 +1231,7 @@
 				1881E35A2704143F005AE92C /* Survey.storyboard in Resources */,
 				187B1DED2704114900CDB291 /* LaunchScreen.storyboard in Resources */,
 				1881E20127041330005AE92C /* GoogleService-Info.plist in Resources */,
+				189DA31729111AFA009B2E0E /* 0604.zip in Resources */,
 				1881E33F2704143F005AE92C /* README.md in Resources */,
 				1881E3592704143F005AE92C /* PopUp.storyboard in Resources */,
 				1885CB4128E4445D001717C5 /* 0502.zip in Resources */,
@@ -1326,6 +1391,7 @@
 				1881E3072704143F005AE92C /* PopUpCalendarViewController.m in Sources */,
 				1881E35E2704143F005AE92C /* NDHint.m in Sources */,
 				1881E3172704143F005AE92C /* ComTimer.m in Sources */,
+				1843BC09293495D70035534A /* MDMediSetUpData.m in Sources */,
 				1881E3292704143F005AE92C /* NSObject+SBJson.m in Sources */,
 				1881E34A2704143F005AE92C /* SDImageCache.m in Sources */,
 				1881E3552704143F005AE92C /* BaseNavigationViewController.m in Sources */,
@@ -1352,6 +1418,7 @@
 				18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */,
 				1881E3262704143F005AE92C /* JoinFinishViewController.m in Sources */,
 				1881E2FB2704143F005AE92C /* UIAlertController+Blocks.m in Sources */,
+				1843BC0629348EA80035534A /* MediSetUpViewController.m in Sources */,
 				1881E32C2704143F005AE92C /* SBJsonStreamParserAccumulator.m in Sources */,
 				1881E32B2704143F005AE92C /* SBJsonParser.m in Sources */,
 				183F139328DC2FC0006EF623 /* FWConnectingPopUpViewController.m in Sources */,
@@ -1368,6 +1435,7 @@
 				1881E3462704143F005AE92C /* UIImage+GIF.m in Sources */,
 				1881E2FF2704143F005AE92C /* NSData+CommonCrypto.m in Sources */,
 				1881E3142704143F005AE92C /* ConnectedDeviceListViewController.m in Sources */,
+				187E05152935BA1F00DC875F /* MediAlarmViewController.m in Sources */,
 				18C62344286AC9F900B6D532 /* AFURLConnectionOperation.m in Sources */,
 				1881E31D2704143F005AE92C /* SurveyRadioViewController.m in Sources */,
 				1881E3032704143F005AE92C /* DeviceViewController.m in Sources */,
@@ -1378,13 +1446,16 @@
 				1881E3422704143F005AE92C /* SDWebImageManager.m in Sources */,
 				184F5143271C0E24009695C2 /* ListCVCell.m in Sources */,
 				1881E32D2704143F005AE92C /* SBJsonUTF8Stream.m in Sources */,
+				183DA8F82947FE2700C59328 /* Localizable.swift in Sources */,
 				187B1DE52704114800CDB291 /* ViewController.m in Sources */,
 				1881E3122704143F005AE92C /* MainTabBarViewController.m in Sources */,
 				1881E3622704143F005AE92C /* NDJoin.m in Sources */,
 				1881E3602704143F005AE92C /* NDPrescrip.m in Sources */,
+				1821E0EF29347BA500B53ABD /* SeparatViewController.m in Sources */,
 				1881E30C2704143F005AE92C /* AlarmDetailViewController.m in Sources */,
 				1881E32E2704143F005AE92C /* SBJsonStreamParserState.m in Sources */,
 				186BC4FD28853D17009F88EF /* AES.swift in Sources */,
+				187493C72948736A00D11456 /* DeviceInfoViewController.m in Sources */,
 				1881E30D2704143F005AE92C /* AlarmCell.m in Sources */,
 				1881E31E2704143F005AE92C /* SurveyFinishViewController.m in Sources */,
 				1881E3472704143F005AE92C /* UIImage+MultiFormat.m in Sources */,
@@ -1397,7 +1468,9 @@
 				1881E3062704143F005AE92C /* IntroViewController.m in Sources */,
 				1881E3542704143F005AE92C /* PopUpViewController.m in Sources */,
 				1881E3402704143F005AE92C /* UIImage+WebP.m in Sources */,
+				187E051A2935C86900DC875F /* MediSetUpFinishViewController.m in Sources */,
 				183B18E428DC8B8900BCED2B /* FWUpdateViewController.m in Sources */,
+				183DA8FB294807E400C59328 /* MediRecordCell.m in Sources */,
 				1881E34B2704143F005AE92C /* SDWebImageDownloaderOperation.m in Sources */,
 				1881E3002704143F005AE92C /* NSData+Base64.m in Sources */,
 				1881E3102704143F005AE92C /* SurveryAccView.m in Sources */,
@@ -1419,6 +1492,7 @@
 				1881E3612704143F005AE92C /* NDSurvey.m in Sources */,
 				1881E31F2704143F005AE92C /* SurveyBaseViewController.m in Sources */,
 				1881E2FD2704143F005AE92C /* NSString+Base64.m in Sources */,
+				187493CA29489F3D00D11456 /* PairinigGuideViewController.m in Sources */,
 				18C62342286AC9F900B6D532 /* AFHTTPClient.m in Sources */,
 				1881E3642704143F005AE92C /* NDPrescripHistory.m in Sources */,
 				1881E34F2704143F005AE92C /* UIButton+WebCache.m in Sources */,

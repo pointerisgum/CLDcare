@@ -11,6 +11,8 @@
 #import "DeviceCell.h"
 #import <MBProgressHUD.h>
 #import "DeviceManager.h"
+#import "MDMediSetUpData.h"
+#import "MediSetUpViewController.h"
 @import CoreBluetooth;
 
 @interface SearchDeviceViewController () <CBCentralManagerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -42,6 +44,8 @@
     
     dispatch_queue_t centralQueue = dispatch_queue_create("CB_QUEUE", DISPATCH_QUEUE_SERIAL);
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:centralQueue];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMediSetUpFinish) name:@"MediSetUpFinish" object:nil];
 }
 
 - (void)updateListUI {
@@ -60,13 +64,20 @@
 //            weakSelf.lb_Descrip.textColor = [UIColor colorWithHexString:@"8b8b8b"];
 //            weakSelf.lb_Descrip.text = NSLocalizedString(@"Place sensor device close to\nyour mobile phone with Bluetooth on", nil);
         }
-        weakSelf.lb_Descrip.text = NSLocalizedString(@"Place Coledy App Next to Sensor Device\nwith Cap Opened.", nil);
+        weakSelf.lb_Descrip.text = NSLocalizedString(@"Place your device close\nto your mobile phone.", nil);
         [weakSelf.tbv_List reloadData];
         
         [UIView animateWithDuration:0.15 animations:^{
             [self.view layoutIfNeeded];
         }];
     });
+}
+
+- (void)onMediSetUpFinish {
+    NSString *mac = [[NSUserDefaults standardUserDefaults] stringForKey:@"mac"];
+    if( _currentDevice != nil && mac.length > 0 ) {
+        [self authDevive:self->_currentDevice withMacAddr:mac];
+    }
 }
 
 - (IBAction)goSearchDevice:(id)sender {
@@ -142,7 +153,7 @@
     NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
     if( serialNo == nil || serialNo.length <= 0 ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self connectSerial];
+            [self connectSerial:false];
         });
     }
 }
@@ -205,18 +216,18 @@
         
         if( _completionBlock ) {
             _completionBlock(device);
-            [self.navigationController popViewControllerAnimated:true];
+            [self.navigationController popToRootViewControllerAnimated:true];
         }
         return;
     }
     
     if( _centralManager != nil && device != nil ) {
         _currentDevice = device;
-        [self connectSerial];
+        [self connectSerial:true];
     }
 }
 
-- (void)connectSerial {
+- (void)connectSerial:(BOOL)isShowMediSetup {
     if (self.hud == nil) {
         self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
@@ -235,10 +246,17 @@
         [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self authDevive:self->_currentDevice withMacAddr:mac];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.hud hideAnimated:true];
+            
+            if( isShowMediSetup == true ) {
+                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+                navi.modalPresentationStyle = UIModalPresentationFullScreen;
+                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
+            //    MediSetUpViewController *vc = (MediSetUpViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+                vc.step = STEP1;
+                [self presentViewController:navi animated:true completion:nil];
+            }
         });
     }];
 }
@@ -246,7 +264,7 @@
 - (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr {
     NSString *str_SerialNo = [Util convertSerialNo];
     if( str_SerialNo == nil ) { return; }
-
+    
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     if( email.length > 0 ) {
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -264,12 +282,31 @@
         [dicM_Params setObject:[Util convertSerialNo] forKey:@"serial_num"];
         [dicM_Params setObject:@"" forKey:@"fw_num"];
 
+        if( [MDMediSetUpData sharedData].dayTakeCount != nil ) {
+            [dicM_Params setObject:[MDMediSetUpData sharedData].dayTakeCount forKey:@"device_medication_per_day"];  //하루 복용 횟수
+        }
+        if( [MDMediSetUpData sharedData].totalCount != nil ) {
+            [dicM_Params setObject:[MDMediSetUpData sharedData].totalCount forKey:@"bottle_pill_count"];    //약통의 알약 갯수
+        }
+        if( [MDMediSetUpData sharedData].take1Count != nil ) {
+            [dicM_Params setObject:[MDMediSetUpData sharedData].take1Count forKey:@"each_dose"];    //1회 복용시 먹는 양
+        }
+        if( [MDMediSetUpData sharedData].isEveryDay != nil ) {
+            [dicM_Params setObject:[[MDMediSetUpData sharedData].isEveryDay isEqualToString:NSLocalizedString(@"Yes", nil)] ? @"Y" : @"N" forKey:@"medication_regularly"];  //매일 복용 하는지
+        }
+
+        
+        
+
+        
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/device" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
                 [self.view makeToastCenter:NSLocalizedString(@"An error occurred during device registration", nil)];
                 return;
             }
 
+            [[MDMediSetUpData sharedData] reset];
+            
             NSLog(@"%@", resulte);
             NSLog(@"%u", msgCode);
 
@@ -304,12 +341,16 @@
                         [[NSUserDefaults standardUserDefaults] setObject:@(device.battery) forKey:@"battery"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
 
-                        [self.navigationController popViewControllerAnimated:true];
+                        [self.navigationController popToRootViewControllerAnimated:true];
                     });
                 }];
             }
         }];
     }
+}
+
+- (IBAction)goBack:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:true];
 }
 
 @end

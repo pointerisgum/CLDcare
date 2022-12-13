@@ -207,7 +207,7 @@ static Util *shared = nil;
                                          message:msg
                                cancelButtonTitle:nil
                           destructiveButtonTitle:nil
-                               otherButtonTitles:@[@"확인"]
+                               otherButtonTitles:@[NSLocalizedString(@"Confirm", nil)]
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
         completion(@"");
     }];
@@ -666,6 +666,15 @@ static Util *shared = nil;
         
         completion(true);
     });
+}
+
++ (void)deleteData {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialChar"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

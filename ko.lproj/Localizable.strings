@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   CLDcare
 
@@ -42,6 +42,8 @@
 "Male" = "남성";
 "Female" = "여성";
 "Completed" = "가입완료";
+"Complete" = "완료";
+
 "The subscription information is incorrect.\nPlease try again." = "가입 정보가 올바르지 않습니다.\n다시 시도하여 주세요.";
 "I have sent the authentication code.\nPlease check your authentication email and log in." = "인증코드를 발송하였습니다.\n인증메일 확인 후 로그인 해주세요";
 "This account is already registered" = "이미 가입된 계정 입니다";
@@ -59,10 +61,10 @@
 
 //홈
 "Your Med" = "복약 정보";
-"Next Med Time" = "남은 시간";
+"Next Medication Time" = "남은 시간";
 "Drug info" = "약품정보 확인";
-"Med Status" = "복약 여부";
-"Med Tracer" = "복약 일정";
+"Medication Status" = "복약 여부";
+"Medication Tracer" = "복약 일정";
 "Minute(s) later" = "분 전";
 "Hour(s) later" = "시간 전";
 "Day(s) later" = "일 전";
@@ -77,7 +79,7 @@
 "Setting" = "설정하기";
 "Paired" = "연동 완료";
 
-"Med taken" = "약을 복용했습니다";
+"Pill taken" = "약을 복용했습니다";
 "Please take your med" = "복약 시간입니다";
 "This is the first med time" = "첫번째 복약 시간 입니다";
 "This is the second med time" = "두번째 복약 시간 입니다";
@@ -109,7 +111,7 @@
 "Selection Month" = "월 선택";
 "Taken" = "정상복용";
 "Un-taken" = "미복용";
-"Overdose" = "초과복용";
+"Non-compliant" = "초과복용";
 
 "Subject" = "제목";
 "Enter subject" = "제목을 입력하세요";
@@ -222,13 +224,14 @@
 "Firmware Update" = "펌웨어 업데이트";
 
 
-"Total Pills Taken from Bottle" = "총 복약 개수";
+"Total Pills Taken" = "총 복약 개수";
 "Pills Taken Today" = "당일 복약 개수";
 "Unpair Sensor Device" = "연결해제";
 
 
 
 "Place Coledy App Next to Sensor Device\nwith Cap Opened." = "스마트폰 옆에 센서 디바이스의 캡을 열고 놓아주세요.";
+"Place your device close\nto your mobile phone." = "스마트폰 옆에 약통을 가까이 놓아주세요.";
 
 "Device ID" = "디바이스 아이디";
 "Current Firmware Version" = "현재 버전";
@@ -276,3 +279,50 @@
 "Delete Account" = "회원탈퇴";
 "Latest version" = "최신 버전 입니다.";
 "Dose problem occurrence" = "디바이스 문제 발생";
+
+"Pairing failed." = "페어링이 실패하였습니다.";
+"Settings -> Bluetooth" = "설정 -> Bluetooth";
+"Forget This Device" = "이 기기 지우기";
+"Do you want to go to Settings?" = "설정으로 이동하시겠습니까?";
+
+"Please select an item" = "항목을 선택해 주세요";
+"How many pills do you take each dose?" = "한 번에 몇 알씩 드세요?";
+"How often do you take it?" = "얼마나 자주 복용하세요?";
+"Do you need to take this medication every day?" = "약을 매일 먹어야 하나요?";
+"How many pills in the medicine bottle?" = "약통에 알약이 몇 개 있습니까?";
+"Did you attach a new medicine bottle?" = "새 약통인가요?";
+"Once daily" = "하루 1회";
+"Twice daily" = "하루 2회";
+"3 times a day" = "하루 3회";
+"4 times a day" = "하루 4회";
+"Modify Alarm" = "알람 수정";
+"Set Alarm" = "알람 설정";
+
+"1st dose" = "첫번째 복용시간 설정";
+"What time do you need to take the 1st Dose?" = "첫번째 복용은 몇시에 해야 하나요?";
+"Pills in a Bottle" = "개의 약이 들어 있습니다";
+"Pills for a Dose" = "알씩 복용";
+
+"1st dose" = "첫번째 복약시간";
+"2nd dose" = "두번째 복약시간";
+"3rd dose" = "세번째 복약시간";
+"4th dose" = "네번째 복약시간";
+
+"Thanks for your report." = "소중한 의견 감사합니다.";
+
+
+"Medication Setup" = "약통 설정";
+"Device Status" = "약통 상태";
+"DEVICE INFO" = "디바이스 정보";
+"Device Info" = "디바이스 정보";
+"Bottle Attached" = "약통 부착";
+"New Bottle >" = "새 약통 >";
+"Bottle Record" = "약통 기록";
+"Medication Record" = "복약 기록";
+"Bottle closed" = "약통 닫힘";
+"Bottle opened" = "약통 열림";
+"CHECK FIRMWARE VERSION" = "펌웨어 버전 체크";
+"UNPAIR" = "해제";
+"Last Synced" = "마지막 동기화";
+"Reminder Troubleshooting" = "미리알림 문제해결";
+"Yes, Completed" = "확인";

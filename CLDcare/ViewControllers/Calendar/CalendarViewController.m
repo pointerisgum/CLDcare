@@ -30,7 +30,7 @@
     _lb_TitleFix.text = NSLocalizedString(@"Medication Calendar", nil);
     _lb_TakenFix.text = NSLocalizedString(@"Taken", nil);
     _lb_UnTakenFix.text = NSLocalizedString(@"Un-taken", nil);
-    _lb_OverdoseFix.text = NSLocalizedString(@"Overdose", nil);
+    _lb_OverdoseFix.text = NSLocalizedString(@"Non-compliant", nil);
 
     NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
     if( [language isEqualToString:@"ko"] ) {

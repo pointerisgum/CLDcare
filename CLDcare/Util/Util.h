@@ -48,4 +48,6 @@ typedef enum {
 + (UpdateStatus)checkReqUpdate:(UIViewController *)vc;
 + (void)firmWareDownload:(NSString *)fileName withCompletion:(void (^)(BOOL isSuccess))completion;
 
++ (void)deleteData;
+
 @end
