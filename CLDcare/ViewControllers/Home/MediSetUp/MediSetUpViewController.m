@@ -65,7 +65,7 @@
     
     NSInteger initIdx = 0;
     if( _step == STEP2 ) {
-        initIdx = 30;
+        initIdx = 29;
     }
     ActionSheetStringPicker *p = [[ActionSheetStringPicker alloc] initWithTitle:NSLocalizedString(@"Selection", nil) rows:rows initialSelection:initIdx doneBlock:done cancelBlock:nil origin:_btn_Next];
     p.hideCancel = true;
@@ -135,7 +135,7 @@
             }
             if( [[MDMediSetUpData sharedData].isNew isEqualToString:NSLocalizedString(@"No", nil)] ) {
                 [self dismissViewControllerAnimated:true completion:^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:@{@"isNew":@(false)}];
                 }];
                 return;
             }

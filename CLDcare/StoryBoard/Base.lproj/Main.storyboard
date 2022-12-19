@@ -696,7 +696,7 @@
                                                                                                             <constraint firstAttribute="height" constant="20" id="f0W-nc-pWl"/>
                                                                                                         </constraints>
                                                                                                     </view>
-                                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x72-pV-vcM">
+                                                                                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="x72-pV-vcM">
                                                                                                         <rect key="frame" x="0.0" y="20" width="182.5" height="24"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="24" id="qAD-Zx-K9h"/>
@@ -714,7 +714,7 @@
                                                                                                     </button>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aD-HB-OWr" userLabel="Space">
                                                                                                         <rect key="frame" x="0.0" y="44" width="182.5" height="15"/>
-                                                                                                        <color key="backgroundColor" systemColor="linkColor"/>
+                                                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="15" id="2Jx-jX-WTg"/>
                                                                                                         </constraints>
@@ -1454,6 +1454,9 @@
                                                                                                         <state key="normal" title="배터리" image="ic_battery">
                                                                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         </state>
+                                                                                                        <userDefinedRuntimeAttributes>
+                                                                                                            <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Battery"/>
+                                                                                                        </userDefinedRuntimeAttributes>
                                                                                                     </button>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cMH-gV-U8P" userLabel="Space">
                                                                                                         <rect key="frame" x="0.0" y="44" width="182.5" height="15"/>
@@ -7292,7 +7295,7 @@ Open the Device Cap.</string>
                                         <rect key="frame" x="2.5" y="0.0" width="369.5" height="143.5"/>
                                         <string key="text">Press the Control Button 3times to put the Coledy Device into pairing mode.
 
-The pairing LED will flash blue.</string>
+The pairing LED will flash green.</string>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>

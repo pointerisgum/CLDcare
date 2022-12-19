@@ -155,7 +155,7 @@ static BOOL isFWUpdating = false;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:@"DisConnect" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMediSetUpFinish) name:@"MediSetUpFinish" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMediSetUpFinish:) name:@"MediSetUpFinish" object:nil];
 
     _services = [NSMutableArray array];
     [_services addObject:[ScanPeripheral uartServiceUUID]];
@@ -299,14 +299,15 @@ static BOOL isFWUpdating = false;
     [self updateStatus];
 }
 
-- (void)onMediSetUpFinish {
+- (void)onMediSetUpFinish:(NSNotification *)noti {
     NSString *mac = [[NSUserDefaults standardUserDefaults] stringForKey:@"mac"];
     if( _currentDevice != nil && mac.length > 0 ) {
-        [self authDevive:self->_currentDevice withMacAddr:mac];
+        BOOL isNew = [noti.object[@"isNew"] boolValue];
+        [self authDevive:self->_currentDevice withMacAddr:mac isNew:isNew];
     }
 }
 
-- (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr {
+- (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr isNew:(BOOL)isNew {
     NSString *str_SerialNo = [Util convertSerialNo];
     if( str_SerialNo == nil ) { return; }
     
@@ -342,29 +343,36 @@ static BOOL isFWUpdating = false;
                 return;
             }
 
-            [[MDMediSetUpData sharedData] reset];
+//            [[MDMediSetUpData sharedData] reset];
             
-            if( self.centralManager != nil && self.currentDevice != nil ) {
-                if (self.hud == nil) {
-                    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                }
-                self.hud.label.text = NSLocalizedString(@"Setting the time...", nil);
-                [self.hud showAnimated:true];
+            [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
+            [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
+            [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
 
-                DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:self.currentDevice withManager:self.centralManager];
-                [deviceManager setTime];
-                [deviceManager setTimeSyncCompleteBlock:^(BOOL isSuccess) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.hud hideAnimated:true];
-                        self.hud = nil;
-                        
-                        [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
-                        [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
-                        [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    });
-                }];
-            }
+//            if( isNew ) {
+//                if( self.centralManager != nil && self.currentDevice != nil ) {
+//                    if (self.hud == nil) {
+//                        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//                    }
+//                    self.hud.label.text = NSLocalizedString(@"Setting the time...", nil);
+//                    [self.hud showAnimated:true];
+//
+//                    DeviceManager *deviceManager = [[DeviceManager alloc] initWithDevice:self.currentDevice withManager:self.centralManager];
+//                    [deviceManager setTime];
+//                    [deviceManager setTimeSyncCompleteBlock:^(BOOL isSuccess) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [self.hud hideAnimated:true];
+//                            self.hud = nil;
+//
+//                            [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
+//                            [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
+//                            [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
+//                            [[NSUserDefaults standardUserDefaults] synchronize];
+//                        });
+//                    }];
+//                }
+//            }
         }];
     }
 }
@@ -1909,7 +1917,7 @@ static BOOL isFWUpdating = false;
                     [self presentViewController:vc_Separat animated:true completion:nil];
                     
                     self.isCanSeparation = false;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         self.isCanSeparation = true;
                     });
                 }
@@ -2114,7 +2122,7 @@ static BOOL isFWUpdating = false;
                             return;
                         }
 
-                        [self.view makeToast:NSLocalizedString(@"took one medicine", nil)];
+                        [self.view makeToast:NSLocalizedString(@"One pill dispensed.", nil)];
                         NSLog(@"약 한 알을 복용 했습니다.");
 
 //                        NSInteger nOldCnt = [[NSUserDefaults standardUserDefaults] integerForKey:@"count"];

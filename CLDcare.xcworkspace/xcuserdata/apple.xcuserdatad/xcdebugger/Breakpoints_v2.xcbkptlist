@@ -206,8 +206,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "779"
-            endingLineNumber = "779"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
             landmarkName = "-timeSync"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +286,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "768"
-            endingLineNumber = "768"
+            startingLineNumber = "776"
+            endingLineNumber = "776"
             landmarkName = "-setSerial"
             landmarkType = "7">
          </BreakpointContent>
@@ -302,8 +302,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "760"
-            endingLineNumber = "760"
+            startingLineNumber = "768"
+            endingLineNumber = "768"
             landmarkName = "-setSerial"
             landmarkType = "7">
          </BreakpointContent>
@@ -446,8 +446,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
             landmarkName = "-updateInfo:"
             landmarkType = "7">
          </BreakpointContent>
@@ -462,9 +462,9 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2199"
-            endingLineNumber = "2199"
-            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
+            startingLineNumber = "2207"
+            endingLineNumber = "2207"
+            landmarkName = "-addList:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -478,9 +478,9 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2368"
-            endingLineNumber = "2368"
-            landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
+            startingLineNumber = "2376"
+            endingLineNumber = "2376"
+            landmarkName = "-dfuError:didOccurWithMessage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -494,8 +494,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2110"
-            endingLineNumber = "2110"
+            startingLineNumber = "2118"
+            endingLineNumber = "2118"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
@@ -510,8 +510,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1774"
-            endingLineNumber = "1774"
+            startingLineNumber = "1782"
+            endingLineNumber = "1782"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
@@ -526,8 +526,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1809"
-            endingLineNumber = "1809"
+            startingLineNumber = "1817"
+            endingLineNumber = "1817"
             landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
             landmarkType = "7">
          </BreakpointContent>
@@ -558,8 +558,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1551"
-            endingLineNumber = "1551"
+            startingLineNumber = "1559"
+            endingLineNumber = "1559"
             landmarkName = "-goShowFWStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -574,8 +574,8 @@
             filePath = "CLDcare/ViewControllers/Home/HomeMainViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1520"
-            endingLineNumber = "1520"
+            startingLineNumber = "1528"
+            endingLineNumber = "1528"
             landmarkName = "-startFWUpdate"
             landmarkType = "7">
          </BreakpointContent>

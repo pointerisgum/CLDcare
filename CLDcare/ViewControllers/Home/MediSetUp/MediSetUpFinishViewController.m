@@ -24,8 +24,13 @@
     _lb_Contents1.text = [NSString stringWithFormat:@"%@ %@", [MDMediSetUpData sharedData].totalCount,
     NSLocalizedString(@"Pills in a Bottle", nil)];
     _lb_Contents2.text = NSLocalizedString([MDMediSetUpData sharedData].dayTakeCount, nil);
-    _lb_Contents3.text = [NSString stringWithFormat:@"%@ %@", [MDMediSetUpData sharedData].take1Count,
-    NSLocalizedString(@"Pills for a Dose", nil)];
+    if( [[MDMediSetUpData sharedData].take1Count integerValue] > 1 ) {
+        _lb_Contents3.text = [NSString stringWithFormat:@"%@ %@", [MDMediSetUpData sharedData].take1Count,
+                              NSLocalizedString(@"pills for a Dose", nil)];
+    } else {
+        _lb_Contents3.text = [NSString stringWithFormat:@"%@ %@", [MDMediSetUpData sharedData].take1Count,
+                              NSLocalizedString(@"pill for a Dose", nil)];
+    }
     
     _lc_TbvHeight.constant  = 50 * [MDMediSetUpData sharedData].alarms.count;
 }
@@ -41,7 +46,7 @@
     [Util saveAlarm:arM_Alarms];
 
     [self dismissViewControllerAnimated:true completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:@{@"isNew":@(true)}];
     }];
 }
 

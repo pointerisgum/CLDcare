@@ -149,7 +149,7 @@
 "PM" = "오후";
 
 
-"took one medicine" = "약 한 알을 복용 했습니다.";
+"One pill dispensed." = "약 한 알을 복용 했습니다.";
 
 
 "Feedback after taking medication" = "복약 후 맞춤 피드백";
@@ -300,8 +300,9 @@
 
 "1st dose" = "첫번째 복용시간 설정";
 "What time do you need to take the 1st Dose?" = "첫번째 복용은 몇시에 해야 하나요?";
-"Pills in a Bottle" = "개의 약이 들어 있습니다";
-"Pills for a Dose" = "알씩 복용";
+"pills in a bottle" = "개의 약이 들어 있습니다";
+"pills for a Dose" = "알씩 복용";
+"pill for a Dose" = "알 복용";
 
 "1st dose" = "첫번째 복약시간";
 "2nd dose" = "두번째 복약시간";

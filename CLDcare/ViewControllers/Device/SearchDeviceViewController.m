@@ -305,7 +305,7 @@
                 return;
             }
 
-            [[MDMediSetUpData sharedData] reset];
+//            [[MDMediSetUpData sharedData] reset];
             
             NSLog(@"%@", resulte);
             NSLog(@"%u", msgCode);
