@@ -544,13 +544,13 @@ Please push one applicable button below.</string>
                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A new medicine bottle changed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-DR-kYq">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New medicine Bottle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-DR-kYq">
                                                                 <rect key="frame" x="29" y="15" width="282" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="A new medicine bottle changed"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="New medicine Bottle"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                         </subviews>
@@ -643,13 +643,13 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opened bottle to move a pill to the bottle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svx-zx-9hV">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More than one tablet dispensed in error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svx-zx-9hV">
                                                                                 <rect key="frame" x="29" y="10" width="282" height="51"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Opened bottle to move a pill to the bottle"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="More than one tablet dispensed in error"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
                                                                         </subviews>
@@ -705,13 +705,13 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opened bottle by mistake" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-dU-Cc5">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tablet stuck and removed device to unblock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-dU-Cc5">
                                                                                 <rect key="frame" x="29" y="10" width="282" height="51"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Opened bottle by mistake"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Tablet stuck and removed device to unblock"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
                                                                         </subviews>
@@ -767,13 +767,13 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Etc." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98X-XA-K0t">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Removed from bottle in error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98X-XA-K0t">
                                                                                 <rect key="frame" x="29" y="10" width="282" height="51"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Etc."/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Removed from bottle in error"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
                                                                         </subviews>

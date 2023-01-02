@@ -49,5 +49,6 @@ typedef enum {
 + (void)firmWareDownload:(NSString *)fileName withCompletion:(void (^)(BOOL isSuccess))completion;
 
 + (void)deleteData;
++ (Byte *)decrypt:(NSData *)manufData;
 
 @end

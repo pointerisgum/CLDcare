@@ -39,8 +39,10 @@
     NSMutableArray *arM_Alarms = [NSMutableArray array];
     for( NSString *key in [MDMediSetUpData sharedData].alarms.allKeys ) {
         NSDictionary *dic = [MDMediSetUpData sharedData].alarms[key];
+        NSMutableDictionary *dicM = [NSMutableDictionary dictionaryWithDictionary:dic];
+        [dicM setObject:[MDMediSetUpData sharedData].take1Count forKey:@"take1Count"];
         if( dic.allKeys.count > 0 ) {
-            [arM_Alarms addObject:dic];
+            [arM_Alarms addObject:dicM];
         }
     }
     [Util saveAlarm:arM_Alarms];

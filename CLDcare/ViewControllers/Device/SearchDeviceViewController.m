@@ -24,7 +24,7 @@
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) ScanPeripheral *currentDevice;
-@property (weak, nonatomic) IBOutlet UIButton *btn_SearchDevice;
+//@property (weak, nonatomic) IBOutlet UIButton *btn_SearchDevice;
 @property (weak, nonatomic) IBOutlet UILabel *lb_Title;
 @property (weak, nonatomic) IBOutlet UILabel *lb_ResultFix;
 @end
@@ -36,8 +36,8 @@
     
     self.items = [NSMutableArray array];
     
-    _lb_Title.text = NSLocalizedString(@"Device Pair", nil);
-    [_btn_SearchDevice setTitle:NSLocalizedString(@"Scan Device", nil) forState:0];
+    _lb_Title.text = NSLocalizedString(@"Pairing Device", nil);
+//    [_btn_SearchDevice setTitle:NSLocalizedString(@"CANCEL", nil) forState:0];
     _lb_ResultFix.text = NSLocalizedString(@"Scanned Device", nil);
     
     [self updateListUI];
@@ -80,6 +80,7 @@
     }
 }
 
+
 - (IBAction)goSearchDevice:(id)sender {
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
@@ -108,7 +109,15 @@
         
         dispenser_manuf_data_t* md = (dispenser_manuf_data_t*)manufData.bytes;
         
-        if (md->company_identifier != (0x4d<<8 | 0x4f)) { return; }
+//        if (md->company_identifier != (0x4d<<8 | 0x4f)) { return; }
+
+        if( kCryptoMode ) {
+            md = (dispenser_manuf_data_t *)[Util decrypt:manufData];
+        }
+
+        if( md->device_last_name != 0xff || md->pairing != 0xff || md->epochtime_cover != 0xffffffff ) {
+            return;
+        }
 
         ScanPeripheral* obj =  [ScanPeripheral initWithPeripheral:peripheral];
         obj.manufData = manufData;
@@ -153,7 +162,7 @@
     NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
     if( serialNo == nil || serialNo.length <= 0 ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self connectSerial:false];
+            [self connectSerial:true];
         });
     }
 }
@@ -256,6 +265,8 @@
             //    MediSetUpViewController *vc = (MediSetUpViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
                 vc.step = STEP1;
                 [self presentViewController:navi animated:true completion:nil];
+            } else {
+                [self.navigationController popToRootViewControllerAnimated:true];
             }
         });
     }];

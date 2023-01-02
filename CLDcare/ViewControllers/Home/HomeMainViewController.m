@@ -47,8 +47,10 @@ static BOOL isFWUpdating = false;
     NSData*           deviceMac;
     NSString*         deviceName;
 }
-@property (weak, nonatomic) IBOutlet UIScrollView *sv_MainMedi;
-@property (weak, nonatomic) IBOutlet UIScrollView *sv_MainDevice;
+//@property (weak, nonatomic) IBOutlet UIScrollView *sv_MainMedi;
+//@property (weak, nonatomic) IBOutlet UIScrollView *sv_MainDevice;
+@property (weak, nonatomic) IBOutlet UIStackView *stv_MainMedi;
+@property (weak, nonatomic) IBOutlet UIStackView *stv_MainDevice;
 
 
 @property (weak, nonatomic) IBOutlet UIView *v_Noti;
@@ -115,25 +117,28 @@ static BOOL isFWUpdating = false;
 
 @property (nonatomic, strong) DFUServiceController *dfuController;
 @property (nonatomic, strong) FWUpdateViewController *vc_FWUpdate;
-@property (nonatomic, assign) BOOL isCanSeparation;
+//@property (nonatomic, assign) BOOL isCanSeparation;
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_MainMedi;
 @property (weak, nonatomic) IBOutlet UIButton *btn_MainDevice;
 @property (weak, nonatomic) IBOutlet UITableView *tbv_MediRecord;
 @property (weak, nonatomic) IBOutlet UITableView *tbv_DeviceRecord;
+@property (weak, nonatomic) IBOutlet UITableView *tbv_MediSchedule;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_MediRecordHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_DeviceRecordHeight;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_MediRecordHeight;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_DeviceRecordHeight;
 
 @property (strong, nonatomic) NSMutableArray *arM_MediRecordList;
 @property (strong, nonatomic) NSMutableArray *arM_DeviceRecordList;
 
 @property (strong, nonatomic) NSMutableArray *arM_BottleAtt;
+@property (strong, nonatomic) NSMutableArray *arm_Alarm;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *cv_Device;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatusSub;
 @property (nonatomic, assign) NSInteger oldBodyCnt;
+
 @end
 
 @implementation HomeMainViewController
@@ -144,14 +149,14 @@ static BOOL isFWUpdating = false;
     
     self.oldBodyCnt = -1;
     
-    self.sv_MainMedi.hidden = false;
-    self.sv_MainDevice.hidden = true;
+    self.stv_MainMedi.hidden = false;
+    self.stv_MainDevice.hidden = true;
     
     _arM_MediRecordList = [NSMutableArray array];
     _arM_DeviceRecordList = [NSMutableArray array];
     _arM_BottleAtt = [NSMutableArray array];
     
-    self.isCanSeparation = true;
+//    self.isCanSeparation = true;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnect) name:@"DisConnect" object:nil];
@@ -237,7 +242,7 @@ static BOOL isFWUpdating = false;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [Util topRound:_v_Schedule];
+//    [Util topRound:_v_Schedule];
 //    [Util topRound:_v_DeviceBg];
 }
 
@@ -259,7 +264,9 @@ static BOOL isFWUpdating = false;
     if( updateStatus == Require ) {
         return;
     }
-
+    
+    [self.tbv_MediSchedule reloadData];
+    
 //    //펌웨어 체크 후 업데이트 필요시 업데이트
 //    NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
 //    NSString *str_MyFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"];
@@ -305,6 +312,7 @@ static BOOL isFWUpdating = false;
         BOOL isNew = [noti.object[@"isNew"] boolValue];
         [self authDevive:self->_currentDevice withMacAddr:mac isNew:isNew];
     }
+    [self.tbv_MediSchedule reloadData];
 }
 
 - (void)authDevive:(ScanPeripheral *)device withMacAddr:(NSString *)macAddr isNew:(BOOL)isNew {
@@ -571,6 +579,8 @@ static BOOL isFWUpdating = false;
 //                                       NSLocalizedString(@"set up", nil)
 //                                ];
 //                            }
+                        } else if( [type isEqualToString:@"timeset4"] ) {
+                            continue;
                         } else if( [type isEqualToString:@"dose"] ) {
                             msg = NSLocalizedString(@"Pill taken", nil);
                             lastDate = date;
@@ -675,12 +685,12 @@ static BOOL isFWUpdating = false;
             [self.cv_Device reloadData];
             
             self.arM_MediRecordList = resulte[@"medi_record"];
-            self.lc_MediRecordHeight.constant = 56 + (self.arM_MediRecordList.count * 44) + 130;
+//            self.lc_MediRecordHeight.constant = 56 + (self.arM_MediRecordList.count * 44) + 130;
             [self.tbv_MediRecord reloadData];
             [self.view layoutIfNeeded];
 
             self.arM_DeviceRecordList = resulte[@"bottle_record"];
-            self.lc_DeviceRecordHeight.constant = 56 + (self.arM_DeviceRecordList.count * 44) + 130;
+//            self.lc_DeviceRecordHeight.constant = 56 + (self.arM_DeviceRecordList.count * 44) + 130;
             [self.tbv_DeviceRecord reloadData];
             [self.view layoutIfNeeded];
 
@@ -843,10 +853,10 @@ static BOOL isFWUpdating = false;
     self.btn_MainDevice.backgroundColor = [UIColor whiteColor];
     [self.btn_MainDevice setTitleColor:[UIColor lightGrayColor] forState:0];
 
-    self.sv_MainMedi.hidden = false;
-    self.sv_MainDevice.hidden = true;
+    self.stv_MainMedi.hidden = false;
+    self.stv_MainDevice.hidden = true;
     
-    self.lc_MediRecordHeight.constant = 56 + (self.arM_MediRecordList.count * 44) + 130;
+//    self.lc_MediRecordHeight.constant = 56 + (self.arM_MediRecordList.count * 44) + 130;
     [self.tbv_MediRecord reloadData];
     [self.view layoutIfNeeded];
 }
@@ -863,10 +873,10 @@ static BOOL isFWUpdating = false;
     self.btn_MainMedi.backgroundColor = [UIColor whiteColor];
     [self.btn_MainMedi setTitleColor:[UIColor lightGrayColor] forState:0];
     
-    self.sv_MainMedi.hidden = true;
-    self.sv_MainDevice.hidden = false;
+    self.stv_MainMedi.hidden = true;
+    self.stv_MainDevice.hidden = false;
     
-    self.lc_DeviceRecordHeight.constant = 56 + (self.arM_DeviceRecordList.count * 44) + 130;
+//    self.lc_DeviceRecordHeight.constant = 56 + (self.arM_DeviceRecordList.count * 44) + 130;
     [self.tbv_DeviceRecord reloadData];
     [self.view layoutIfNeeded];
 }
@@ -1716,34 +1726,6 @@ static BOOL isFWUpdating = false;
 
 //1
 
-- (Byte *)decrypt:(NSData *)manufData {
-    //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
-    uint8_t xor_val[27] = {
-        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
-        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
-        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
-    };
-    
-    int8_t revert_rotate_val[27] = {
-        -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
-        2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-        -2, -2, -2, -2, -2, -2, -2
-    };
-                
-    Byte *data = (Byte*)[manufData bytes];
-    for( int j = 2; j < manufData.length; j++ ) {
-        if( revert_rotate_val[j-2] < 0 ) {        // rotate left
-            data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
-            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
-        } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
-            data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
-            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
-        }
-    }
-    
-    return data;
-}
-
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
     __weak typeof(self) weakSelf = self;
 
@@ -1770,8 +1752,8 @@ static BOOL isFWUpdating = false;
         dispenser_tilt_data_t_v2 *md_tilt = (dispenser_tilt_data_t_v2*)manufData.bytes;
         
         if( kCryptoMode ) {
-            md = (dispenser_manuf_data_t *)[self decrypt:manufData];
-            md_tilt = (dispenser_tilt_data_t_v2 *)[self decrypt:[manufData mutableCopy]];
+            md = (dispenser_manuf_data_t *)[Util decrypt:manufData];
+            md_tilt = (dispenser_tilt_data_t_v2 *)[Util decrypt:[manufData mutableCopy]];
         }
 
         
@@ -1890,39 +1872,19 @@ static BOOL isFWUpdating = false;
             self.lb_DeviceStatus.text = NSLocalizedString(@"Last Synced", nil);
             self.lb_DeviceStatusSub.text = now;
             
-            //몸통 분리시 팝업 띄우기
-            if( [@(md->body_count) integerValue] % 2 == 0 && self.isCanSeparation == true && [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] ) {
-                UIViewController *topController = [Util keyWindow].rootViewController;
-                while (topController.presentedViewController) {
-                    topController = topController.presentedViewController;
-                }
+            //몸통이 분리 되었다 다시 끼워졌을때 알람 팝업 띄우기
+            //md->body_count가 홀수는 체결, 짝수는 분리
+            //올드카운트와 현재 body_count가 다르고 홀수인 경우 팝업 노출
+            if( self.oldBodyCnt <= 0 ) {
+                self.oldBodyCnt = [@(md->body_count) integerValue];
+            }
+            
+            if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] &&
+               [@(md->body_count) integerValue] % 2 == 1 &&
+               self.oldBodyCnt != [@(md->body_count) integerValue] ) {
+                
+                self.oldBodyCnt = [@(md->body_count) integerValue];
 
-                if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
-                    __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
-                    [vc_Separat setSendMsgBlock:^(NSInteger idx) {
-                        [vc_Separat dismissViewControllerAnimated:true completion:^{
-                            [self sendReport:idx];
-                            [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
-                        }];
-                    }];
-                    [vc_Separat setShowSetUpBlock:^{
-                        [vc_Separat dismissViewControllerAnimated:true completion:^{
-                            UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
-                            navi.modalPresentationStyle = UIModalPresentationFullScreen;
-                            MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
-                            vc.step = STEP1;
-                            [self presentViewController:navi animated:true completion:nil];
-                        }];
-                    }];
-                    [self presentViewController:vc_Separat animated:true completion:nil];
-                    
-                    self.isCanSeparation = false;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        self.isCanSeparation = true;
-                    });
-                }
-            } else if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] && [@(md->body_count) integerValue] % 2 == 1 && self.oldBodyCnt % 2 == 0) {
-                //뚜껑을 분리했다가 다시 닫았을 경우
                 UIViewController *topController = [Util keyWindow].rootViewController;
                 while (topController.presentedViewController) {
                     topController = topController.presentedViewController;
@@ -2301,6 +2263,12 @@ static BOOL isFWUpdating = false;
             cell.v_RightDot.hidden = false;
         }
         
+        if( _items.count < indexPath.row ) {
+            cell.lb_Time.text = @"";
+            cell.lb_Msg.text = @"";
+            return cell;
+        }
+
         NDMedication *item = _items[indexPath.row];
         
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:(item.time)];
@@ -2328,6 +2296,12 @@ static BOOL isFWUpdating = false;
         } else {
             [cell setFill:false];
         }
+        return cell;
+    }
+    
+    if( self.arM_BottleAtt.count < indexPath.row ) {
+        cell.lb_Time.text = @"";
+        cell.lb_Msg.text = @"";
         return cell;
     }
     
@@ -2465,6 +2439,11 @@ static BOOL isFWUpdating = false;
 }
 
 - (void)sendReport:(NSInteger)idx {
+    if( idx == 1 ) {
+        //2알이 나온 경우 이므로 pills taken from bottle에서 1알 빼기
+        
+    }
+    
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     NSString *str_NowDate = [Util getDateString:[NSDate date] withTimeZone:nil];
@@ -2490,6 +2469,16 @@ static BOOL isFWUpdating = false;
 #pragma mark - UITableViewDataSource, UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if( self.btn_MainMedi.selected ) {
+        if( tableView == self.tbv_MediSchedule ) {
+            self.arm_Alarm = [[NSUserDefaults standardUserDefaults] objectForKey:@"Alarms"];
+            NSInteger cnt = 0;
+            for( NSDictionary *dic in self.arm_Alarm ) {
+                if( [dic[@"on"] boolValue] == true ) {
+                    cnt++;
+                }
+            }
+            return cnt;
+        }
         return _arM_MediRecordList.count;
     }
     return _arM_DeviceRecordList.count;
@@ -2499,6 +2488,32 @@ static BOOL isFWUpdating = false;
     MediRecordCell* cell = (MediRecordCell*)[tableView dequeueReusableCellWithIdentifier:@"MediRecordCell"];
     
     if( self.btn_MainMedi.selected ) {
+        if( tableView == self.tbv_MediSchedule ) {
+            if( self.arm_Alarm.count < indexPath.row ) {
+                cell.lb_Time.text = @"";
+                return cell;
+            }
+            NSDictionary *dic = self.arm_Alarm[indexPath.row];
+            if( [dic[@"on"] boolValue] == true ) {
+                NSInteger hour = [dic[@"hour"] integerValue];
+                NSInteger min = [dic[@"min"] integerValue];
+                NSInteger takeCnt = [dic[@"take1Count"] integerValue];
+                NSString *ampm = @"AM";
+                if( hour >= 12 ) {
+                    ampm = @"PM";
+                }
+                NSInteger h = hour > 12 ? hour - 12 : hour;
+                cell.lb_Time.text = [NSString stringWithFormat:@"%ld %@ at %02ld:%02ld %@", takeCnt, takeCnt > 1 ? @"Pills": @"Pill", h, min, ampm];
+            }
+            return cell;
+        }
+
+        if( _arM_MediRecordList.count < indexPath.row ) {
+            cell.lb_Time.text = @"";
+            cell.lb_Status.text = @"";
+            return cell;
+        }
+
         NSDictionary *dic = _arM_MediRecordList[indexPath.row];
         
         cell.v_TopLine.hidden = false;
@@ -2533,6 +2548,12 @@ static BOOL isFWUpdating = false;
         return cell;
     }
     
+    if( _arM_DeviceRecordList.count < indexPath.row ) {
+        cell.lb_Time.text = @"";
+        cell.lb_Status.text = @"";
+        return cell;
+    }
+
     NSDictionary *dic = _arM_DeviceRecordList[indexPath.row];
     
     cell.v_TopLine.hidden = false;

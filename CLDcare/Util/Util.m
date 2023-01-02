@@ -32,11 +32,11 @@ static Util *shared = nil;
 + (BOOL)isCheckEmail:(NSString *)str {
     //1차로 한글이 있는지 검색
     const char *tmp = [str cStringUsingEncoding:NSUTF8StringEncoding];
-
+    
     if (str.length != strlen(tmp)) {
         return NO;
     }
-
+    
     //2차로 이메일 형식인지 검색
     NSString *check = @"([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}";
     NSRange match = [str rangeOfString:check options:NSRegularExpressionSearch];
@@ -56,7 +56,7 @@ static Util *shared = nil;
 }
 
 + (BOOL)isCheckBirth:(NSString *)str {
-
+    
     NSString *check = @"(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$";
     NSRange match = [str rangeOfString:check options:NSRegularExpressionSearch];
     if (NSNotFound == match.location) {
@@ -134,18 +134,18 @@ static Util *shared = nil;
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
-                                            
-                                        }];
-
+        
+    }];
+    
 }
 
 + (void)showAlertWindow:(NSString *)aMsg {
     UIViewController *topController = [Util keyWindow].rootViewController;
-
+    
     while (topController.presentedViewController) {
         topController = topController.presentedViewController;
     }
-
+    
     [UIAlertController showAlertInViewController:topController
                                        withTitle:@""
                                          message:aMsg
@@ -153,18 +153,18 @@ static Util *shared = nil;
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
-                                            
-                                        }];
-
+        
+    }];
+    
 }
 
 + (void)showAlertServerError {
     UIViewController *topController = [Util keyWindow].rootViewController;
-
+    
     while (topController.presentedViewController) {
         topController = topController.presentedViewController;
     }
-
+    
     [UIAlertController showAlertInViewController:topController
                                        withTitle:@""
                                          message:@"통신 상태가 원활하지 않거나\n데이터가 잘못되었습니다."
@@ -172,8 +172,8 @@ static Util *shared = nil;
                           destructiveButtonTitle:nil
                                otherButtonTitles:nil
                                         tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
-                                            
-                                        }];
+        
+    }];
 }
 
 + (BOOL)canNextStep:(UIViewController *)vc {
@@ -185,15 +185,15 @@ static Util *shared = nil;
                               destructiveButtonTitle:nil
                                    otherButtonTitles:nil
                                             tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
-                                                
-                                                if (buttonIndex == controller.cancelButtonIndex) {
-                                                    NSLog(@"Cancel Tapped");
-                                                } else if (buttonIndex == controller.destructiveButtonIndex) {
-                                                    NSLog(@"Delete Tapped");
-                                                } else if (buttonIndex >= controller.firstOtherButtonIndex) {
-                                                    
-                                                }
-                                            }];
+            
+            if (buttonIndex == controller.cancelButtonIndex) {
+                NSLog(@"Cancel Tapped");
+            } else if (buttonIndex == controller.destructiveButtonIndex) {
+                NSLog(@"Delete Tapped");
+            } else if (buttonIndex >= controller.firstOtherButtonIndex) {
+                
+            }
+        }];
         
         return NO;
     }
@@ -219,14 +219,14 @@ static Util *shared = nil;
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
     NSData* data = [NSData dataWithContentsOfURL:url];
     NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-
+    
     if ([lookup[@"resultCount"] integerValue] == 1)
     {
         NSString* appStoreVersion = lookup[@"results"][0][@"version"];
         NSLog(@"AppStore Version : %@", appStoreVersion);
         return appStoreVersion;
     }
-
+    
     return @"";
 }
 
@@ -270,7 +270,7 @@ static Util *shared = nil;
 + (BOOL)isNetworkCheckAlert {
     NSString *str_Status = [Util getNetworkSatatus];
     if( str_Status == nil ) {
-//        ALERT(nil, @"네트워크에 접속할 수 없습니다.\n3G 및 Wifi 연결상태를\n확인해주세요.", nil, @"확인", nil);
+        //        ALERT(nil, @"네트워크에 접속할 수 없습니다.\n3G 및 Wifi 연결상태를\n확인해주세요.", nil, @"확인", nil);
         return NO;
     }
     return YES;
@@ -328,7 +328,7 @@ static Util *shared = nil;
     const char* utf8chars = [text UTF8String];
     unsigned char result[CC_SHA256_DIGEST_LENGTH];
     CC_SHA256(utf8chars, (CC_LONG)strlen(utf8chars), result);
-
+    
     NSMutableString *ret = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH*2];
     for(int i = 0; i<CC_SHA256_DIGEST_LENGTH; i++) {
         [ret appendFormat:@"%02x",result[i]];
@@ -347,10 +347,10 @@ static Util *shared = nil;
 + (void)updateAlarm {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center removeAllPendingNotificationRequests];
-
+    
     NSArray *ar = [[NSUserDefaults standardUserDefaults] objectForKey:@"Alarms"];
     NSMutableArray *arM_Alarms = [NSMutableArray arrayWithArray:ar];
-
+    
     NSInteger nAlarmCnt = 0;
     for( NSDictionary *dic in arM_Alarms ) {
         BOOL isOn = [dic[@"on"] boolValue];
@@ -365,30 +365,30 @@ static Util *shared = nil;
         NSInteger nMin = [dic[@"min"] integerValue];
         NSString *str_Time = [NSString stringWithFormat:@"%02ld:%02ld:00/", nHour, nMin];
         [strM_Times appendString:str_Time];
-
+        
         BOOL isOn = [dic[@"on"] boolValue];
         if( isOn ) {
             UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
             content.body = [NSString localizedUserNotificationStringForKey:@"약 먹을 시간이예요."
-                    arguments:nil];
-//            content.sound = [UNNotificationSound defaultSound];
+                                                                 arguments:nil];
+            //            content.sound = [UNNotificationSound defaultSound];
             content.sound = [UNNotificationSound soundNamed:@"tickle.mp3"];
-//            content.sound = [UNNotificationSound soundNamed:@"bell2.m4a"];
+            //            content.sound = [UNNotificationSound soundNamed:@"bell2.m4a"];
             content.userInfo = @{@"time":[NSString stringWithFormat:@"%02ld:%02ld", nHour, nMin]};
             content.body = @"약 먹을 시간이예요.";
-
+            
             
             NSInteger nAddAlarmCnt = 24 / nAlarmCnt;
             NSLog(@"%ld", nAddAlarmCnt);
             for( NSInteger i = 0; i < nAddAlarmCnt; i++ ) {   //64 24 25 26
                 NSCalendar *currentCalendar = [NSCalendar currentCalendar];
                 NSDate *date = [currentCalendar dateByAddingUnit:NSCalendarUnitDay
-                                                                       value:i
-                                                                      toDate:[NSDate date]
-                                                                     options:NSCalendarMatchNextTime];
+                                                           value:i
+                                                          toDate:[NSDate date]
+                                                         options:NSCalendarMatchNextTime];
                 
                 NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:date];
-
+                
                 NSDateComponents* dateComp = [[NSDateComponents alloc] init];
                 dateComp.year = components.year;
                 dateComp.month = components.month;
@@ -396,7 +396,7 @@ static Util *shared = nil;
                 dateComp.hour = nHour;
                 dateComp.minute = nMin;
                 UNCalendarNotificationTrigger* trigger = [UNCalendarNotificationTrigger
-                       triggerWithDateMatchingComponents:dateComp repeats:false];
+                                                          triggerWithDateMatchingComponents:dateComp repeats:false];
                 
                 NSString *str_SkipDay = [[NSUserDefaults standardUserDefaults] objectForKey:@"skipDate"];
                 if( str_SkipDay != nil && [str_SkipDay isEqualToString:[NSString stringWithFormat:@"%04ld%02ld%02ld", dateComp.year, dateComp.month, dateComp.day]] ) {
@@ -405,10 +405,10 @@ static Util *shared = nil;
                 
                 NSString *str_Ident = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
                                        dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute];
-//                NSLog(@"str_Ident: %@", str_Ident);
+                //                NSLog(@"str_Ident: %@", str_Ident);
                 
                 UNNotificationRequest* request = [UNNotificationRequest
-                       requestWithIdentifier:str_Ident content:content trigger:trigger];
+                                                  requestWithIdentifier:str_Ident content:content trigger:trigger];
                 
                 [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
                 
@@ -424,17 +424,17 @@ static Util *shared = nil;
                 dateComp2.hour = nHour;
                 dateComp2.minute = nMin+10;
                 UNCalendarNotificationTrigger* trigger2 = [UNCalendarNotificationTrigger
-                       triggerWithDateMatchingComponents:dateComp2 repeats:false];
-
+                                                           triggerWithDateMatchingComponents:dateComp2 repeats:false];
+                
                 NSString *str_Ident2 = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
                                         dateComp2.year, dateComp2.month, dateComp2.day, dateComp2.hour, dateComp2.minute];
-//                NSLog(@"str_Ident: %@", str_Ident);
+                //                NSLog(@"str_Ident: %@", str_Ident);
                 
                 UNNotificationRequest* request2 = [UNNotificationRequest
-                       requestWithIdentifier:str_Ident2 content:content trigger:trigger2];
+                                                   requestWithIdentifier:str_Ident2 content:content trigger:trigger2];
                 
                 [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request2 withCompletionHandler:nil];
-
+                
             }
         }
     }
@@ -443,13 +443,13 @@ static Util *shared = nil;
     if( strM_Times.length > 0 ) {
         str_TimeParam = [strM_Times substringToIndex:strM_Times.length - 1];
     }
-
+    
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     if( str_TimeParam.length > 0 && email.length > 0 ) {
         NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
         [dicM_Params setObject:email forKey:@"mem_email"];
         [dicM_Params setObject:str_TimeParam forKey:@"mem_alarm_time"];
-
+        
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/alarm/update" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
                 return;
@@ -459,7 +459,11 @@ static Util *shared = nil;
 }
 
 + (void)saveAlarm:(NSMutableArray *)arM_Alarms {
-    [[NSUserDefaults standardUserDefaults] setObject:arM_Alarms forKey:@"Alarms"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hour"
+                                               ascending:YES];
+    NSArray *sortArray = [arM_Alarms sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:sortArray forKey:@"Alarms"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
@@ -484,22 +488,22 @@ static Util *shared = nil;
     for( NSDictionary *dic in arM_Alarms ) {
         NSInteger nHour = [dic[@"hour"] integerValue];
         NSInteger nMin = [dic[@"min"] integerValue];
-
+        
         NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-
+        
         NSDateComponents* dateComp = [[NSDateComponents alloc] init];
         dateComp.year = components.year;
         dateComp.month = components.month;
         dateComp.day = components.day;
         dateComp.hour = nHour;
         dateComp.minute = nMin;
-
+        
         NSString *str_Ident = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
                                dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute];
         [arM_RemoveAlarm addObject:str_Ident];
         
         NSString *str_Ident2 = [NSString stringWithFormat:@"%04ld%02ld%02ld%02ld%02ld",
-                               dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute + 10];
+                                dateComp.year, dateComp.month, dateComp.day, dateComp.hour, dateComp.minute + 10];
         [arM_RemoveAlarm addObject:str_Ident2];
     }
     
@@ -525,9 +529,9 @@ static Util *shared = nil;
         [contryCodeRawVal appendString:ar_SerialNo[i]];
     }
     
-//    NSString *contryCode = [Util convertHexToAscii:contryCodeRawVal];
+    //    NSString *contryCode = [Util convertHexToAscii:contryCodeRawVal];
     NSString *str_DeviceType = [Util getDeviceType:contryCodeRawVal];
-//    if( [contryCode isEqualToString:@"KR"] || [contryCode isEqualToString:@"US"] ) {
+    //    if( [contryCode isEqualToString:@"KR"] || [contryCode isEqualToString:@"US"] ) {
     if( [str_DeviceType isEqualToString:@"B"] ) {
         //B 타입
         NSMutableString *strM_JoinSerialNoRawVal = [NSMutableString string];
@@ -542,28 +546,28 @@ static Util *shared = nil;
             [strM_MacCode appendString:str];
         }
         
-//        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@0203", str_SerialNoAscii, [strM_MacCode capitalizedString]];
+        //        NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@0203", str_SerialNoAscii, [strM_MacCode capitalizedString]];
         //시리얼 넘버 조합시 0203(펌웨어버전)은 빼고 보대달라고 요청옴 22.10.05 이규관
         NSString *str_SerialNo = [NSString stringWithFormat:@"%@%@", str_SerialNoAscii, [strM_MacCode capitalizedString]];
         NSLog(@"complete serialNo : %@", str_SerialNo);
         return str_SerialNo;
     } else {
         //A타입
-//        macAddr = [macAddr stringByReplacingOccurrencesOfString:@"-" withString:@""];
-//        return [NSString stringWithFormat:@"KRCCPYNN26E%@0001", macAddr];
+        //        macAddr = [macAddr stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        //        return [NSString stringWithFormat:@"KRCCPYNN26E%@0001", macAddr];
         
         NSArray *ar_MacAddr = [macAddr componentsSeparatedByString:@":"];
         if( ar_MacAddr.count <= 1 ) { return nil; }
-
+        
         NSString *front = @"";
         NSString *serialChar = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialChar"];
         if( serialChar == nil || serialChar.length <= 0 ) {
-//        if( 1 ) {
+            //        if( 1 ) {
             front = @"KRCCPYNN26E";
         } else {
             front = serialChar;
         }
-
+        
 #ifdef DEBUG
         //처음 이걸로 연동되어 있어서 해제가 안되기 때문에 얘네는 이걸 사용
         if( [macAddr hasSuffix:@"07:c6"] || [macAddr hasSuffix:@"28:6a"] ) {
@@ -592,7 +596,7 @@ static Util *shared = nil;
     while (i < [hex length]){
         NSString * hexChar = [hex substringWithRange: NSMakeRange(i, 2)];
         int value = 0;
-
+        
         sscanf([hexChar cStringUsingEncoding:NSASCIIStringEncoding], "%x", &value);
         [ascii appendFormat:@"%c", (char)value];
         i += 2;
@@ -630,7 +634,7 @@ static Util *shared = nil;
         vc_PopUp.isUpdateMode = true;
         vc_PopUp.updateStatus = Require;
         [vc_PopUp setPopUpDismissBlock:^{
-//            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
+            //            NSString *str_AppStoreLink = [NSString stringWithFormat:@"itms://itunes.apple.com/app/apple-store/id%@?mt=8", APP_STORE_ID];
             NSString *str_AppStoreLink = [NSString stringWithFormat:@"https://itunes.apple.com/kr/app/apple-store/id%@?mt=8", APP_STORE_ID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str_AppStoreLink] options:@{} completionHandler:nil];
         }];
@@ -650,15 +654,15 @@ static Util *shared = nil;
         
         NSURL  *url = [NSURL URLWithString:stringURL];
         NSData *urlData = [NSData dataWithContentsOfURL:url];
-
+        
         [[NSUserDefaults standardUserDefaults] setFloat:urlData.length forKey:@"FWSize"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-//        //Find a cache directory. You could consider using documenets dir instead (depends on the data you are fetching)
-//        NSLog(@"Got the data!");
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-//        NSString *path = [paths  objectAtIndex:0];
-
+        //        //Find a cache directory. You could consider using documenets dir instead (depends on the data you are fetching)
+        //        NSLog(@"Got the data!");
+        //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        //        NSString *path = [paths  objectAtIndex:0];
+        
         NSString *dataPath = [FilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", fileName]];
         dataPath = [dataPath stringByStandardizingPath];
         [urlData writeToFile:dataPath atomically:YES];
@@ -675,6 +679,34 @@ static Util *shared = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialChar"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (Byte *)decrypt:(NSData *)manufData {
+    //암호화 적용 된 펌웨어의 경우 복호화 처리 기능
+    uint8_t xor_val[27] = {
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99 , 0xaa,
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77
+    };
+    
+    int8_t revert_rotate_val[27] = {
+        -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+        2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+        -2, -2, -2, -2, -2, -2, -2
+    };
+    
+    Byte *data = (Byte*)[manufData bytes];
+    for( int j = 2; j < manufData.length; j++ ) {
+        if( revert_rotate_val[j-2] < 0 ) {        // rotate left
+            data[j] = (Byte)( (data[j] << (-revert_rotate_val[j-2])) | ( (Byte)(~((Byte)0x80 >> (8-(-revert_rotate_val[j-2])-1) )) & (Byte)(data[j] >> (8-(-revert_rotate_val[j-2]) )) ) );
+            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+        } else if( revert_rotate_val[j-2] > 0 ) {   // rotate right
+            data[j] = (Byte)(( (~((Byte)0x80 >> (revert_rotate_val[j-2]-1))) & (Byte)(data[j] >> revert_rotate_val[j-2]) ) | (Byte)(data[j] << (8-revert_rotate_val[j-2])) );
+            data[j] = (Byte)(data[j] ^ xor_val[j-2]);
+        }
+    }
+    
+    return data;
 }
 
 @end
