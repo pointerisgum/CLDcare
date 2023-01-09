@@ -65,7 +65,7 @@ static BOOL isFWUpdating = false;
 //@property (assign, nonatomic) BOOL isSync;
 @property (weak, nonatomic) IBOutlet UIStackView *stv_Temp;
 
-@property (weak, nonatomic) IBOutlet UIView *v_Schedule;
+@property (weak, nonatomic) IBOutlet UIView *v_ScheduleBg;
 @property (weak, nonatomic) IBOutlet UIView *v_DeviceBg;
 
 @property (weak, nonatomic) IBOutlet UILabel *lb_StandardTime;
@@ -109,7 +109,6 @@ static BOOL isFWUpdating = false;
 //@property (nonatomic, assign) BOOL isFirmWareUpdate;
 //@property (nonatomic, assign) BOOL isUartFinish;
 
-@property (weak, nonatomic) IBOutlet UILabel *lb_TotalPillsFix;
 @property (weak, nonatomic) IBOutlet UILabel *lb_ToDayPillsFix;
 
 @property (nonatomic, assign) BOOL isFWUpdating;            //FW업데이트중인지
@@ -124,6 +123,8 @@ static BOOL isFWUpdating = false;
 @property (weak, nonatomic) IBOutlet UITableView *tbv_MediRecord;
 @property (weak, nonatomic) IBOutlet UITableView *tbv_DeviceRecord;
 @property (weak, nonatomic) IBOutlet UITableView *tbv_MediSchedule;
+@property (weak, nonatomic) IBOutlet UILabel *lb_BottleInCount;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_BarLeading;
 
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_MediRecordHeight;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lc_DeviceRecordHeight;
@@ -194,7 +195,6 @@ static BOOL isFWUpdating = false;
 ////    [_btn_DrugCountFix setTitle:NSLocalizedString(@"Pills Taken", nil) forState:0];
 //    [_btn_ConnectYnFix setTitle:NSLocalizedString(@"Device connect", nil) forState:0];
 //
-//    _lb_TotalPillsFix.text = NSLocalizedString(@"Total Pills Taken", nil);
 //    _lb_ToDayPillsFix.text = NSLocalizedString(@"Pills Taken Today", nil);
 
 
@@ -239,11 +239,8 @@ static BOOL isFWUpdating = false;
     [self goShowMedi:nil];
 }
 
-
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-//    [Util topRound:_v_Schedule];
-//    [Util topRound:_v_DeviceBg];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -260,6 +257,9 @@ static BOOL isFWUpdating = false;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [Util topRound:_v_ScheduleBg];
+    [Util topRound:_v_DeviceBg];
+
     UpdateStatus updateStatus = [Util checkReqUpdate:self];
     if( updateStatus == Require ) {
         return;
@@ -395,7 +395,7 @@ static BOOL isFWUpdating = false;
 
 - (void)updateData {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatter setDateFormat:@"yyyy.M.d"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     _lb_Today.text = [dateFormatter stringFromDate:[NSDate date]];
     
@@ -428,7 +428,25 @@ static BOOL isFWUpdating = false;
 }
 
 - (void)updateCountLabel:(NSInteger)count {
-    [_btn_TotalPills setTitle:[NSString stringWithFormat:@"%ld%@", count, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
+    NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+    NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+    NSInteger overCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key] integerValue];
+    if( count - overCnt <= 0 ) {
+        [_btn_TotalPills setTitle:[NSString stringWithFormat:@"0%@", NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
+    } else {
+        [_btn_TotalPills setTitle:[NSString stringWithFormat:@"%ld%@", count - overCnt, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
+    }
+    
+    
+    
+    //약통안에 들어 있는 약의 갯수
+    NSInteger nPillBottleCount = [[[NSUserDefaults standardUserDefaults] objectForKey:@"PillInBottleCount"] integerValue];
+    if( nPillBottleCount < count - overCnt ) {
+        _lb_BottleInCount.text = [NSString stringWithFormat:@"%@ 0", NSLocalizedString(@"Pills in Bottle", nil)];
+    } else {
+        _lb_BottleInCount.text = [NSString stringWithFormat:@"%@ %ld", NSLocalizedString(@"Pills in Bottle", nil), nPillBottleCount - (count - overCnt)];
+    }
 }
 
 - (void)updateMedicationList {
@@ -592,10 +610,10 @@ static BOOL isFWUpdating = false;
                         } else if( [type isEqualToString:@"snooze"] ) {
                             msg = NSLocalizedString(@"Postponed the alarm", nil);
                         } else if( [type isEqualToString:@"body_open"] ) {
-                            [self.arM_BottleAtt addObject:@{@"type":@"close", @"time":sub[0]}];
+                            [self.arM_BottleAtt addObject:@{@"type":@"open", @"time":sub[0]}];
                             continue;
                         } else if( [type isEqualToString:@"body_close"] ) {
-                            [self.arM_BottleAtt addObject:@{@"type":@"open", @"time":sub[0]}];
+                            [self.arM_BottleAtt addObject:@{@"type":@"close", @"time":sub[0]}];
                             continue;
                         }
                         self.str_ToDayMedication = resulte[@"today_medication"];
@@ -606,7 +624,27 @@ static BOOL isFWUpdating = false;
             }
 
             if( [self.str_ToDayMedication isEqualToString:@"Y"] ) {
-                [self.btn_ToDayPills setTitle:[NSString stringWithFormat:@"%ld", todayCnt] forState:0];
+                NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+                NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+                NSString *key = [NSString stringWithFormat:@"today_%@_%@", email, deviceName];
+                NSDictionary *dic_TodayOver = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+                NSString *str_Today = [dateFormatter stringFromDate:[NSDate date]];
+                NSInteger nTodayOverCnt = [dic_TodayOver[str_Today] integerValue];
+                if( nTodayOverCnt > 0 ) {
+                    if( todayCnt > nTodayOverCnt ) {
+                        [self.btn_ToDayPills setTitle:[NSString stringWithFormat:@"%ld", todayCnt - nTodayOverCnt] forState:0];
+                    } else {
+                        [self.btn_ToDayPills setTitle:@"0" forState:0];
+                    }
+                } else {
+                    [self.btn_ToDayPills setTitle:[NSString stringWithFormat:@"%ld", todayCnt] forState:0];
+                }
+                
+                
                 if( lastDate != nil ) {
                     self.lb_MedicationTime.hidden = false;
 
@@ -842,15 +880,20 @@ static BOOL isFWUpdating = false;
 }
 
 - (IBAction)goShowMedi:(id)sender {
+    self.lc_BarLeading.constant = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+
     [self updateMedicationList];
     
     self.btn_MainMedi.selected = true;
     self.btn_MainDevice.selected = false;
 
-    self.btn_MainMedi.backgroundColor = [UIColor linkColor];
-    [self.btn_MainMedi setTitleColor:[UIColor whiteColor] forState:0];
+//    self.btn_MainMedi.backgroundColor = [UIColor linkColor];
+    [self.btn_MainMedi setTitleColor:[UIColor linkColor] forState:0];
     
-    self.btn_MainDevice.backgroundColor = [UIColor whiteColor];
+//    self.btn_MainDevice.backgroundColor = [UIColor whiteColor];
     [self.btn_MainDevice setTitleColor:[UIColor lightGrayColor] forState:0];
 
     self.stv_MainMedi.hidden = false;
@@ -862,15 +905,20 @@ static BOOL isFWUpdating = false;
 }
 
 - (IBAction)goShowDevice:(id)sender {
+    self.lc_BarLeading.constant = self.view.bounds.size.width / 2;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+
     [self updateMedicationList];
     
     self.btn_MainMedi.selected = false;
     self.btn_MainDevice.selected = true;
     
-    self.btn_MainDevice.backgroundColor = [UIColor linkColor];
-    [self.btn_MainDevice setTitleColor:[UIColor whiteColor] forState:0];
+//    self.btn_MainDevice.backgroundColor = [UIColor linkColor];
+    [self.btn_MainDevice setTitleColor:[UIColor linkColor] forState:0];
     
-    self.btn_MainMedi.backgroundColor = [UIColor whiteColor];
+//    self.btn_MainMedi.backgroundColor = [UIColor whiteColor];
     [self.btn_MainMedi setTitleColor:[UIColor lightGrayColor] forState:0];
     
     self.stv_MainMedi.hidden = true;
@@ -1636,6 +1684,7 @@ static BOOL isFWUpdating = false;
         case 2:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
             str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[2])];
+            [self updateMedicationList];
             break;
     }
 //    NSLog(@"%@", str_StatusInfo);
@@ -1753,7 +1802,7 @@ static BOOL isFWUpdating = false;
         
         if( kCryptoMode ) {
             md = (dispenser_manuf_data_t *)[Util decrypt:manufData];
-            md_tilt = (dispenser_tilt_data_t_v2 *)[Util decrypt:[manufData mutableCopy]];
+//            md_tilt = (dispenser_tilt_data_t_v2 *)[Util decrypt:[manufData mutableCopy]];
         }
 
         
@@ -1835,7 +1884,7 @@ static BOOL isFWUpdating = false;
 //                        [currentMacAddr appendString:@":"];
 //                    }
 //                }
-                if( self->tiltCnt < md_tilt->info_count ) {
+                if( self->tiltCnt < md_tilt->info_count ) { //43766 < 43550
 //                    NSLog(@"md_tilt->body_identifier : %c", md_tilt->body_identifier);
 //                    NSLog(@"md_tilt->body_identifier : %@", @(md_tilt->body_identifier));
 //                    NSLog(@"md_tilt->body_identifier : %d", md_tilt->body_identifier);
@@ -1893,9 +1942,9 @@ static BOOL isFWUpdating = false;
                 if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
                     NSLog(@"뚜껑 열렸다 닫힘");
                     __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
-                    [vc_Separat setSendMsgBlock:^(NSInteger idx) {
+                    [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
                         [vc_Separat dismissViewControllerAnimated:true completion:^{
-                            [self sendReport:idx];
+                            [self sendReport:idx cnt:cnt];
                             [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
                         }];
                     }];
@@ -1938,10 +1987,17 @@ static BOOL isFWUpdating = false;
 
 //            NSLog(@"connection macAddr : %@", currentMacAddr);
             self.lb_Battery.text = [NSString stringWithFormat:@"%ld%%", [@(md->bat) integerValue]];
+            
             [[NSUserDefaults standardUserDefaults] setObject:@(md->bat) forKey:@"battery"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
 
-//            [weakSelf.vc_Medication updateInfo:md];
+            NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+            NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+            NSString *key = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+            [[NSUserDefaults standardUserDefaults] setObject:@(md->count) forKey:key];
+            
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            //            [weakSelf.vc_Medication updateInfo:md];
 //            [weakSelf.vc_Device updateInfo:md];
 
 //            [self updateInfo:md];
@@ -1949,7 +2005,8 @@ static BOOL isFWUpdating = false;
             
 //            NSLog(@"count : %@", @(md->count));
             
-            [self.btn_TotalPills setTitle:[NSString stringWithFormat:@"%u%@", md->count, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
+            [self updateCountLabel:[@(md->count) integerValue]];
+//            [self.btn_TotalPills setTitle:[NSString stringWithFormat:@"%u%@", md->count, NSLocalizedString(@"", nil)] forState:UIControlStateNormal];
 
 //            BOOL isInitDevice = [[NSUserDefaults standardUserDefaults] boolForKey:@"isInitDevice"];
 //            if( isInitDevice != true && md->count > 0 ) {
@@ -2308,9 +2365,9 @@ static BOOL isFWUpdating = false;
     NSDictionary *dic = self.arM_BottleAtt[indexPath.row];
     NSString *type = dic[@"type"];
     if( [type isEqualToString:@"open"] ) {
-        cell.lb_Msg.text = NSLocalizedString(@"Bottle opened", nil);
+        cell.lb_Msg.text = NSLocalizedString(@"Bottle detached", nil);
     } else {
-        cell.lb_Msg.text = NSLocalizedString(@"Bottle closed", nil);
+        cell.lb_Msg.text = NSLocalizedString(@"Bottle attached", nil);
     }
     
     NSString *regTime = dic[@"time"];
@@ -2438,12 +2495,7 @@ static BOOL isFWUpdating = false;
     NSLog(@"updateFocusIfNeeded");
 }
 
-- (void)sendReport:(NSInteger)idx {
-    if( idx == 1 ) {
-        //2알이 나온 경우 이므로 pills taken from bottle에서 1알 빼기
-        
-    }
-    
+- (void)sendReport:(NSInteger)idx cnt:(NSInteger)cnt {
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     NSString *str_NowDate = [Util getDateString:[NSDate date] withTimeZone:nil];
@@ -2454,11 +2506,40 @@ static BOOL isFWUpdating = false;
     [dicM_Params setObject:[NSString stringWithFormat:@"%ld", idx] forKey:@"report_type"];
     [dicM_Params setObject:str_NowDate forKey:@"datetime"];
 
+    if( idx == 1 ) {
+        //여러알이 나온 경우 이므로 pills taken from bottle에서 빼기
+        [dicM_Params setObject:[NSString stringWithFormat:@"%ld", cnt] forKey:@"pill_count"];
+        
+        NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+        NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+        NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+        NSInteger overCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key] integerValue];
+        overCnt += cnt;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@(overCnt) forKey:key];
+        
+        
+        //오늘 복약
+        key = [NSString stringWithFormat:@"today_%@_%@", email, deviceName];
+        NSDictionary *dic_TodayOver = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        NSString *str_Today = [dateFormatter stringFromDate:[NSDate date]];
+        NSInteger nTodayOverCnt = [dic_TodayOver[str_Today] integerValue];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@{str_Today:@(nTodayOverCnt += cnt)} forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/device/attach/report" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
         if( error != nil ) {
             return;
         }
         
+        [self updateMedicationList];
+
         NSLog(@"%@", resulte);
         NSLog(@"%@", error);
         NSLog(@"%d", msgCode);
@@ -2583,14 +2664,25 @@ static BOOL isFWUpdating = false;
     cell.v_Circle.layer.borderWidth = 1;
     
     NSString *status = nil;
-    if( [dic[@"status_info"] integerValue] == 7 ) {
-        status = NSLocalizedString(@"Bottle closed", nil);
-    } else if( [dic[@"status_info"] integerValue] == 8 ) {
-        status = NSLocalizedString(@"Bottle opened", nil);
+    if( [dic[@"body_info"] integerValue] == 4 ) {
+        status = NSLocalizedString(@"Bottle detached", nil);
         cell.v_Circle.backgroundColor = [UIColor whiteColor];
         cell.v_Circle.layer.borderColor = [UIColor linkColor].CGColor;
         cell.v_Circle.layer.borderWidth = 1;
+    } else if( [dic[@"body_info"] integerValue] == 5 ) {
+        status = NSLocalizedString(@"Bottle attached", nil);
+    } else {
+        status = @"";
     }
+
+//    if( [dic[@"status_info"] integerValue] == 7 ) {
+//        status = NSLocalizedString(@"Bottle closed", nil);
+//    } else if( [dic[@"status_info"] integerValue] == 8 ) {
+//        status = NSLocalizedString(@"Bottle opened", nil);
+//        cell.v_Circle.backgroundColor = [UIColor whiteColor];
+//        cell.v_Circle.layer.borderColor = [UIColor linkColor].CGColor;
+//        cell.v_Circle.layer.borderWidth = 1;
+//    }
     cell.lb_Status.text = status;
     return cell;
 }

@@ -65,7 +65,7 @@
 "Medication Schedule" = "복약 일정";
 "Drug info" = "약품정보 확인";
 "Medication Status" = "복약 여부";
-"Medication Tracer" = "복약 내역";
+"Today’s Medication" = "복약 내역";
 "Minute(s) later" = "분 전";
 "Hour(s) later" = "시간 전";
 "Day(s) later" = "일 전";
@@ -318,14 +318,16 @@
 "Device Status" = "약통 상태";
 "DEVICE INFO" = "디바이스 정보";
 "Device Info" = "디바이스 정보";
-"Bottle Attached" = "약통 부착";
+"Bottle Attachment" = "약통 부착";
 "New Bottle >" = "새 약통 >";
 "Bottle Record" = "약통 기록";
 "Medication Record" = "복약 기록";
-"Bottle closed" = "약통 닫힘";
-"Bottle opened" = "약통 열림";
+"Bottle attached" = "약통 닫힘";
+"Bottle detached" = "약통 열림";
 "CHECK FIRMWARE VERSION" = "펌웨어 버전 체크";
 "UNPAIR" = "해제";
 "Last Synced" = "마지막 동기화";
 "Reminder Troubleshooting" = "미리알림 문제해결";
 "Yes, Completed" = "확인";
+
+"Number of pills" = "수량입력";

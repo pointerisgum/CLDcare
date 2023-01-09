@@ -622,7 +622,7 @@ static Util *shared = nil;
 
 + (void)topRound:(UIView *)view {
     CAShapeLayer * maskLayer = [CAShapeLayer layer];
-    maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: view.bounds byRoundingCorners: UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii: (CGSize){10.0, 10.}].CGPath;
+    maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(view.bounds.origin.x, view.bounds.origin.y, [Util keyWindow].bounds.size.width, view.bounds.size.height) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii: (CGSize){10.0, 10.0}].CGPath;
     view.layer.mask = maskLayer;
 }
 

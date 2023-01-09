@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^SendMsgBlock)(NSInteger);
+typedef void (^SendMsgBlock)(NSInteger, NSInteger);
 typedef void (^ShowSetUpBlock)(void);
 
 @interface SeparatViewController : UIViewController

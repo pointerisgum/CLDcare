@@ -46,6 +46,9 @@
             }
             [MDMediSetUpData sharedData].totalCount = self.arM[29];
             [_picker selectRow:29 inComponent:0 animated:false];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[MDMediSetUpData sharedData].totalCount forKey:@"PillInBottleCount"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         } break;
         case STEP3: {
             _lb_Contents.text = NSLocalizedString(@"Do you need to take this medication every day?", nil);
@@ -178,6 +181,16 @@
                 }];
                 return;
             }
+            
+            //새로운 약통일 경우 약통 카운트 초기화를 위해 오버 카운트로 등록해 줌
+            NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+            NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+            NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+            NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+            NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
+            [[NSUserDefaults standardUserDefaults] setObject:@(nNowCnt) forKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             MediSetUpViewController *vc = (MediSetUpViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpViewController"];
             vc.step = STEP2;
             [self.navigationController pushViewController:vc animated:true];
@@ -245,6 +258,8 @@
         } break;
         case STEP2: {
             [MDMediSetUpData sharedData].totalCount = self.arM[row];
+            [[NSUserDefaults standardUserDefaults] setObject:[MDMediSetUpData sharedData].totalCount forKey:@"PillInBottleCount"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         } break;
         case STEP3: {
             [MDMediSetUpData sharedData].isEveryDay = self.arM[row];

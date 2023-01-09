@@ -144,6 +144,7 @@
 		1881E3692704155D005AE92C /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E3682704155D005AE92C /* HistoryViewController.m */; };
 		1885CB4128E4445D001717C5 /* 0502.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1885CB4028E4445D001717C5 /* 0502.zip */; };
 		189DA31729111AFA009B2E0E /* 0604.zip in Resources */ = {isa = PBXBuildFile; fileRef = 189DA31629111AFA009B2E0E /* 0604.zip */; };
+		189F3D54296C06D900E31706 /* UITextField+M.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F3D53296C06D900E31706 /* UITextField+M.swift */; };
 		18A1995528DD932200464377 /* 0602.zip in Resources */ = {isa = PBXBuildFile; fileRef = 18A1995428DD932200464377 /* 0602.zip */; };
 		18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */; };
 		18B682CA27F1A66000B66617 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18B682CC27F1A66100B66617 /* Localizable.strings */; };
@@ -442,6 +443,7 @@
 		1885CB4028E4445D001717C5 /* 0502.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0502.zip; sourceTree = "<group>"; };
 		1891EDD6291396BA009A035B /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		189DA31629111AFA009B2E0E /* 0604.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0604.zip; sourceTree = "<group>"; };
+		189F3D53296C06D900E31706 /* UITextField+M.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+M.swift"; sourceTree = "<group>"; };
 		18A1995428DD932200464377 /* 0602.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0602.zip; sourceTree = "<group>"; };
 		18B091D528C36AD4001790F5 /* FrimwareCheckPopupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrimwareCheckPopupViewController.h; sourceTree = "<group>"; };
 		18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrimwareCheckPopupViewController.m; sourceTree = "<group>"; };
@@ -1025,6 +1027,7 @@
 				1881E2E52704143F005AE92C /* UIColor+HexString.h */,
 				1881E2E72704143F005AE92C /* UIColor+HexString.m */,
 				183DA8F72947FE2700C59328 /* Localizable.swift */,
+				189F3D53296C06D900E31706 /* UITextField+M.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1435,6 +1438,7 @@
 				1881E3462704143F005AE92C /* UIImage+GIF.m in Sources */,
 				1881E2FF2704143F005AE92C /* NSData+CommonCrypto.m in Sources */,
 				1881E3142704143F005AE92C /* ConnectedDeviceListViewController.m in Sources */,
+				189F3D54296C06D900E31706 /* UITextField+M.swift in Sources */,
 				187E05152935BA1F00DC875F /* MediAlarmViewController.m in Sources */,
 				18C62344286AC9F900B6D532 /* AFURLConnectionOperation.m in Sources */,
 				1881E31D2704143F005AE92C /* SurveyRadioViewController.m in Sources */,
@@ -1689,8 +1693,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
@@ -1713,10 +1717,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.12;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = CLD_Dev;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CLDcare/CLDcare-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1733,8 +1737,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
@@ -1757,10 +1761,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.12;
+				MARKETING_VERSION = 1.1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = CLD_Dis;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "CLDcare/CLDcare-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

@@ -531,7 +531,7 @@ Please push one applicable button below.</string>
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvQ-dP-cig">
-                                                                <rect key="frame" x="15" y="21" width="6" height="6"/>
+                                                                <rect key="frame" x="15" y="23.5" width="6" height="6"/>
                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="6" id="aCx-hU-vpv"/>
@@ -544,8 +544,8 @@ Please push one applicable button below.</string>
                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New medicine Bottle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-DR-kYq">
-                                                                <rect key="frame" x="29" y="15" width="282" height="18"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New medicine Bottle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-DR-kYq">
+                                                                <rect key="frame" x="29" y="15" width="282" height="23"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -562,7 +562,7 @@ Please push one applicable button below.</string>
                                                             <constraint firstItem="QDH-Np-gSg" firstAttribute="centerX" secondItem="WPh-Gj-qz7" secondAttribute="centerX" id="bDP-pi-JRI"/>
                                                             <constraint firstItem="cvQ-dP-cig" firstAttribute="centerY" secondItem="u1J-DR-kYq" secondAttribute="centerY" id="lmC-EF-31R"/>
                                                             <constraint firstAttribute="bottom" secondItem="QDH-Np-gSg" secondAttribute="bottom" constant="15" id="nQ3-mN-obc"/>
-                                                            <constraint firstItem="QDH-Np-gSg" firstAttribute="top" secondItem="u1J-DR-kYq" secondAttribute="bottom" constant="10" id="pQL-OT-Vqx"/>
+                                                            <constraint firstItem="QDH-Np-gSg" firstAttribute="top" secondItem="u1J-DR-kYq" secondAttribute="bottom" constant="5" id="pQL-OT-Vqx"/>
                                                             <constraint firstItem="u1J-DR-kYq" firstAttribute="top" secondItem="WPh-Gj-qz7" secondAttribute="top" constant="15" id="v0Y-cw-jnM"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
@@ -630,7 +630,7 @@ Please push one applicable button below.</string>
                                                                                 </connections>
                                                                             </button>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CgW-8T-abS">
-                                                                                <rect key="frame" x="15" y="32.5" width="6" height="6"/>
+                                                                                <rect key="frame" x="15" y="30" width="6" height="6"/>
                                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="6" id="8l5-av-Yh5"/>
@@ -644,7 +644,7 @@ Please push one applicable button below.</string>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More than one tablet dispensed in error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svx-zx-9hV">
-                                                                                <rect key="frame" x="29" y="10" width="282" height="51"/>
+                                                                                <rect key="frame" x="29" y="10" width="282" height="46"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -652,6 +652,31 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="More than one tablet dispensed in error"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수량 입력" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ga5-ZZ-2eR">
+                                                                                <rect key="frame" x="29" y="67.5" width="52.5" height="17"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Number of pills"/>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                            </label>
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AGk-Pm-eH2">
+                                                                                <rect key="frame" x="89.5" y="59" width="60" height="34"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="60" id="mzh-yP-1fz"/>
+                                                                                </constraints>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                                                        <integer key="value" value="1"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
+                                                                                <connections>
+                                                                                    <outlet property="delegate" destination="gdo-rK-nCJ" id="MD4-wU-m4k"/>
+                                                                                </connections>
+                                                                            </textField>
                                                                         </subviews>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
@@ -660,15 +685,19 @@ Please push one applicable button below.</string>
                                                                             <constraint firstItem="CgW-8T-abS" firstAttribute="leading" secondItem="S0f-wG-vSU" secondAttribute="leading" constant="15" id="3dS-5V-L4R"/>
                                                                             <constraint firstItem="Svx-zx-9hV" firstAttribute="leading" secondItem="CgW-8T-abS" secondAttribute="trailing" constant="8" id="8eJ-M5-dHH"/>
                                                                             <constraint firstItem="Svx-zx-9hV" firstAttribute="top" secondItem="S0f-wG-vSU" secondAttribute="top" constant="10" id="Eav-3R-S6J"/>
-                                                                            <constraint firstItem="xBl-wg-doi" firstAttribute="top" secondItem="Svx-zx-9hV" secondAttribute="bottom" id="LhN-5x-phv"/>
+                                                                            <constraint firstItem="xBl-wg-doi" firstAttribute="top" secondItem="Svx-zx-9hV" secondAttribute="bottom" constant="5" id="LhN-5x-phv"/>
                                                                             <constraint firstAttribute="trailing" secondItem="xBl-wg-doi" secondAttribute="trailing" constant="15" id="U1t-6X-ht8"/>
                                                                             <constraint firstItem="CgW-8T-abS" firstAttribute="centerY" secondItem="Svx-zx-9hV" secondAttribute="centerY" id="Yqu-bz-BDi"/>
+                                                                            <constraint firstItem="ga5-ZZ-2eR" firstAttribute="centerY" secondItem="xBl-wg-doi" secondAttribute="centerY" id="ksu-sR-dCc"/>
+                                                                            <constraint firstItem="ga5-ZZ-2eR" firstAttribute="leading" secondItem="Svx-zx-9hV" secondAttribute="leading" id="rWi-aC-gHR"/>
+                                                                            <constraint firstItem="AGk-Pm-eH2" firstAttribute="centerY" secondItem="xBl-wg-doi" secondAttribute="centerY" id="s0f-Lv-FlY"/>
+                                                                            <constraint firstItem="AGk-Pm-eH2" firstAttribute="leading" secondItem="ga5-ZZ-2eR" secondAttribute="trailing" constant="8" id="ujK-sA-Zhg"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8o-sl-4SD">
                                                                         <rect key="frame" x="0.0" y="106" width="326" height="106"/>
                                                                         <subviews>
-                                                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xnn-yL-ZEb">
+                                                                            <button opaque="NO" tag="2" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xnn-yL-ZEb">
                                                                                 <rect key="frame" x="261" y="61" width="50" height="30"/>
                                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                                 <constraints>
@@ -692,7 +721,7 @@ Please push one applicable button below.</string>
                                                                                 </connections>
                                                                             </button>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GEd-lH-VAa">
-                                                                                <rect key="frame" x="15" y="32.5" width="6" height="6"/>
+                                                                                <rect key="frame" x="15" y="30" width="6" height="6"/>
                                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="6" id="QNh-dL-5uS"/>
@@ -705,8 +734,8 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tablet stuck and removed device to unblock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-dU-Cc5">
-                                                                                <rect key="frame" x="29" y="10" width="282" height="51"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tablet stuck and removed device to unblock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7s-dU-Cc5">
+                                                                                <rect key="frame" x="29" y="10" width="282" height="46"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -721,7 +750,7 @@ Please push one applicable button below.</string>
                                                                             <constraint firstAttribute="trailing" secondItem="S7s-dU-Cc5" secondAttribute="trailing" constant="15" id="WHa-IH-zgi"/>
                                                                             <constraint firstAttribute="trailing" secondItem="Xnn-yL-ZEb" secondAttribute="trailing" constant="15" id="b0L-68-Gbw"/>
                                                                             <constraint firstItem="GEd-lH-VAa" firstAttribute="centerY" secondItem="S7s-dU-Cc5" secondAttribute="centerY" id="lYR-Ng-Zb3"/>
-                                                                            <constraint firstItem="Xnn-yL-ZEb" firstAttribute="top" secondItem="S7s-dU-Cc5" secondAttribute="bottom" id="tAM-Kc-xOL"/>
+                                                                            <constraint firstItem="Xnn-yL-ZEb" firstAttribute="top" secondItem="S7s-dU-Cc5" secondAttribute="bottom" constant="5" id="tAM-Kc-xOL"/>
                                                                             <constraint firstAttribute="bottom" secondItem="Xnn-yL-ZEb" secondAttribute="bottom" constant="15" id="vaE-Fn-pog"/>
                                                                             <constraint firstItem="S7s-dU-Cc5" firstAttribute="leading" secondItem="GEd-lH-VAa" secondAttribute="trailing" constant="8" id="wZ5-gJ-Bfv"/>
                                                                             <constraint firstItem="GEd-lH-VAa" firstAttribute="leading" secondItem="z8o-sl-4SD" secondAttribute="leading" constant="15" id="zHq-Xf-dhK"/>
@@ -730,7 +759,7 @@ Please push one applicable button below.</string>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4t2-be-BTJ">
                                                                         <rect key="frame" x="0.0" y="212" width="326" height="106"/>
                                                                         <subviews>
-                                                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ch-EY-snr">
+                                                                            <button opaque="NO" tag="3" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ch-EY-snr">
                                                                                 <rect key="frame" x="261" y="61" width="50" height="30"/>
                                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                                 <constraints>
@@ -754,7 +783,7 @@ Please push one applicable button below.</string>
                                                                                 </connections>
                                                                             </button>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vaM-yS-2lg">
-                                                                                <rect key="frame" x="15" y="32.5" width="6" height="6"/>
+                                                                                <rect key="frame" x="15" y="30" width="6" height="6"/>
                                                                                 <color key="backgroundColor" systemColor="linkColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="6" id="TlJ-kn-0tl"/>
@@ -767,8 +796,8 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Removed from bottle in error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98X-XA-K0t">
-                                                                                <rect key="frame" x="29" y="10" width="282" height="51"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Removed from bottle in error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98X-XA-K0t">
+                                                                                <rect key="frame" x="29" y="10" width="282" height="46"/>
                                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -781,7 +810,7 @@ Please push one applicable button below.</string>
                                                                         <constraints>
                                                                             <constraint firstItem="98X-XA-K0t" firstAttribute="leading" secondItem="vaM-yS-2lg" secondAttribute="trailing" constant="8" id="1gW-78-9yV"/>
                                                                             <constraint firstItem="vaM-yS-2lg" firstAttribute="centerY" secondItem="98X-XA-K0t" secondAttribute="centerY" id="HNd-Ht-jW9"/>
-                                                                            <constraint firstItem="8ch-EY-snr" firstAttribute="top" secondItem="98X-XA-K0t" secondAttribute="bottom" id="RDq-YY-IUr"/>
+                                                                            <constraint firstItem="8ch-EY-snr" firstAttribute="top" secondItem="98X-XA-K0t" secondAttribute="bottom" constant="5" id="RDq-YY-IUr"/>
                                                                             <constraint firstItem="vaM-yS-2lg" firstAttribute="leading" secondItem="4t2-be-BTJ" secondAttribute="leading" constant="15" id="bxz-Il-jqA"/>
                                                                             <constraint firstAttribute="bottom" secondItem="8ch-EY-snr" secondAttribute="bottom" constant="15" id="cvj-jR-RnZ"/>
                                                                             <constraint firstAttribute="trailing" secondItem="8ch-EY-snr" secondAttribute="trailing" constant="15" id="eoJ-iS-n95"/>
@@ -859,6 +888,9 @@ Please push one applicable button below.</string>
                             <constraint firstItem="cdY-8d-tFI" firstAttribute="centerY" secondItem="dCB-7J-G5k" secondAttribute="centerY" id="zDR-ZK-n08"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tf_Count" destination="AGk-Pm-eH2" id="8af-gM-mzn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cdn-tw-4Ze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -321,15 +321,17 @@
             NSLog(@"%@", resulte);
             NSLog(@"%u", msgCode);
 
-//            if( msgCode == ALREADY_REGIST ) {
-//                [Util makeToastWindow:NSLocalizedString(@"The device is already registered", nil)];
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
-//                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
-//                [[NSUserDefaults standardUserDefaults] synchronize];
-//                return;
-//            }
+#if DEBUG == false
+            if( msgCode == ALREADY_REGIST ) {
+                [Util makeToastWindow:NSLocalizedString(@"The device is already registered", nil)];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"serialNo"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                return;
+            }
+#endif
             
             if( self.centralManager != nil && self.currentDevice != nil ) {
                 if (self.hud == nil) {

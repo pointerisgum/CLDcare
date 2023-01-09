@@ -36,6 +36,13 @@
         [_picker setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     }
     
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:00"];
+//    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    NSString *str_Today = [dateFormatter stringFromDate:[NSDate date]];
+    NSDate *date = [dateFormatter dateFromString:str_Today];
+    _picker.date = date;
     _selectedDate = _picker.date;
     
     switch(_alarmSetUp) {
