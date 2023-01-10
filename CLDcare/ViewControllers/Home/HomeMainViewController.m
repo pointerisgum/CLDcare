@@ -617,8 +617,20 @@ static BOOL isFWUpdating = false;
                             continue;
                         }
                         self.str_ToDayMedication = resulte[@"today_medication"];
-                        NDMedication *item = [[NDMedication alloc] initWithTime:[date timeIntervalSince1970] withType:code withMsg:msg];
-                        [self.items addObject:item];
+                        
+                        BOOL isDuplicate = false;
+                        for( NDMedication *obj in self.items ) {
+                            if( obj.time == [date timeIntervalSince1970] ) {
+                                isDuplicate = true;
+                            }
+                        }
+                        
+                        if( isDuplicate == false ) {
+                            NDMedication *item = [[NDMedication alloc] initWithTime:[date timeIntervalSince1970] withType:code withMsg:msg];
+                            [self.items addObject:item];
+                        } else {
+                            NSLog(@"중복");
+                        }
                     }
                 }
             }
@@ -2285,8 +2297,8 @@ static BOOL isFWUpdating = false;
         NSArray *sortArray = [_items sortedArrayUsingDescriptors:@[sortDescriptor]];
         _items = [NSMutableArray arrayWithArray:sortArray];
         
-        if( _cv_List.bounds.size.width < 110 * _items.count ) {
-            _cv_List.contentOffset = CGPointMake((110 * _items.count) - self.view.bounds.size.width + 20, 0);
+        if( _cv_List.bounds.size.width < 130 * _items.count ) {
+            _cv_List.contentOffset = CGPointMake((130 * _items.count) - self.view.bounds.size.width + 20, 0);
         }
         return _items.count;
     }
@@ -2398,7 +2410,7 @@ static BOOL isFWUpdating = false;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(110, 150);
+    return CGSizeMake(130, 150);
 }
 
 
