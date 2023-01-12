@@ -34,6 +34,7 @@
 #import "MDMediSetUpData.h"
 #import "MediRecordCell.h"
 #import "DeviceInfoViewController.h"
+#import "ResetPopUpViewController.h"
 @import UserNotifications;
 
 static BOOL isFWUpdating = false;
@@ -1406,6 +1407,48 @@ static BOOL isFWUpdating = false;
     }
 }
 
+- (IBAction)goTest2:(id)sender {
+//    ResetPopUpViewController * vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPopUpViewController"];
+//    [self presentViewController:vc animated:true completion:nil];
+//    [vc setResetDoneBlock:^{
+//        NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
+//        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+//
+//                }];
+//        }
+//    }];
+//    return;
+    
+#if DEBUG
+    UIViewController *topController = [Util keyWindow].rootViewController;
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+
+    if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
+        NSLog(@"뚜껑 열렸다 닫힘");
+        __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
+        [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
+            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                [self sendReport:idx cnt:cnt];
+                [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
+            }];
+        }];
+        [vc_Separat setShowSetUpBlock:^{
+            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+                navi.modalPresentationStyle = UIModalPresentationFullScreen;
+                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
+                vc.step = STEP1;
+                [self presentViewController:navi animated:true completion:nil];
+            }];
+        }];
+        [self presentViewController:vc_Separat animated:true completion:nil];
+    }
+#endif
+}
+
 - (NDHistory *)makeHistoryData:(NSDate *)date withIdx:(NSInteger)idx {
     NSCalendar *cal = [NSCalendar currentCalendar];
     [cal setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
@@ -1751,29 +1794,39 @@ static BOOL isFWUpdating = false;
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"LastDeviceName"];
     if( deviceName.length <= 0 ) { return; }
     
-    NSString *msg = [NSString stringWithFormat:@"%@\n%@ -> %@ⓘ -> %@\n%@",
-                     NSLocalizedString(@"Pairing failed.", nil),
-                     NSLocalizedString(@"Settings -> Bluetooth", nil),
-                     deviceName,
-                     NSLocalizedString(@"Forget This Device", nil),
-                     NSLocalizedString(@"Do you want to go to Settings?", nil)];
-    
-    [UIAlertController showAlertInViewController:self
-                                       withTitle:@""
-                                         message:msg
-                               cancelButtonTitle:NSLocalizedString(@"No", nil)
-                          destructiveButtonTitle:nil
-                               otherButtonTitles:@[NSLocalizedString(@"Yes", nil)]
-                                        tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
-        if( buttonIndex == 2 ) {
-            NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
-            if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
-                        
-                    }];
-            }
+    ResetPopUpViewController * vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPopUpViewController"];
+    [self presentViewController:vc animated:true completion:nil];
+    [vc setResetDoneBlock:^{
+        NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+                    
+                }];
         }
     }];
+//    NSString *msg = [NSString stringWithFormat:@"%@\n%@ -> %@ⓘ -> %@\n%@",
+//                     NSLocalizedString(@"Pairing failed.", nil),
+//                     NSLocalizedString(@"Settings -> Bluetooth", nil),
+//                     deviceName,
+//                     NSLocalizedString(@"Forget This Device", nil),
+//                     NSLocalizedString(@"Do you want to go to Settings?", nil)];
+//
+//    [UIAlertController showAlertInViewController:self
+//                                       withTitle:@""
+//                                         message:msg
+//                               cancelButtonTitle:NSLocalizedString(@"No", nil)
+//                          destructiveButtonTitle:nil
+//                               otherButtonTitles:@[NSLocalizedString(@"Yes", nil)]
+//                                        tapBlock:^(UIAlertController *controller, UIAlertAction *action, NSInteger buttonIndex){
+//        if( buttonIndex == 2 ) {
+//            NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
+//            if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+//
+//                    }];
+//            }
+//        }
+//    }];
 }
 
 #pragma mark - CBCentralManagerDelegate

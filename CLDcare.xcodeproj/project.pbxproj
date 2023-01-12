@@ -147,6 +147,7 @@
 		189F3D54296C06D900E31706 /* UITextField+M.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F3D53296C06D900E31706 /* UITextField+M.swift */; };
 		18A1995528DD932200464377 /* 0602.zip in Resources */ = {isa = PBXBuildFile; fileRef = 18A1995428DD932200464377 /* 0602.zip */; };
 		18B091D728C36AD4001790F5 /* FrimwareCheckPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */; };
+		18B2FEFA296EE3C6001FF5DB /* ResetPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B2FEF9296EE3C6001FF5DB /* ResetPopUpViewController.m */; };
 		18B682CA27F1A66000B66617 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18B682CC27F1A66100B66617 /* Localizable.strings */; };
 		18C62340286AC9F900B6D532 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6232F286AC9F900B6D532 /* AFImageRequestOperation.m */; };
 		18C62341286AC9F900B6D532 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C62330286AC9F900B6D532 /* AFPropertyListRequestOperation.m */; };
@@ -447,6 +448,8 @@
 		18A1995428DD932200464377 /* 0602.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0602.zip; sourceTree = "<group>"; };
 		18B091D528C36AD4001790F5 /* FrimwareCheckPopupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrimwareCheckPopupViewController.h; sourceTree = "<group>"; };
 		18B091D628C36AD4001790F5 /* FrimwareCheckPopupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrimwareCheckPopupViewController.m; sourceTree = "<group>"; };
+		18B2FEF8296EE3C6001FF5DB /* ResetPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResetPopUpViewController.h; sourceTree = "<group>"; };
+		18B2FEF9296EE3C6001FF5DB /* ResetPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResetPopUpViewController.m; sourceTree = "<group>"; };
 		18B682CB27F1A66100B66617 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18B682CE27F1A66C00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		18B682CF27F1A66D00B66617 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1003,6 +1006,8 @@
 				1881E2D92704143F005AE92C /* UIColor+CALayer.h */,
 				1881E2DA2704143F005AE92C /* BaseViewController.h */,
 				1881E2DB2704143F005AE92C /* NSDictionary+JSONValueParsing.h */,
+				18B2FEF8296EE3C6001FF5DB /* ResetPopUpViewController.h */,
+				18B2FEF9296EE3C6001FF5DB /* ResetPopUpViewController.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1486,6 +1491,7 @@
 				18C62348286AC9F900B6D532 /* AFJSONRequestOperation.m in Sources */,
 				1881E3522704143F005AE92C /* BaseViewController.m in Sources */,
 				187B1DE22704114800CDB291 /* SceneDelegate.m in Sources */,
+				18B2FEFA296EE3C6001FF5DB /* ResetPopUpViewController.m in Sources */,
 				1881E32A2704143F005AE92C /* SBJsonStreamParser.m in Sources */,
 				1881E3212704143F005AE92C /* ClausePopUpViewController.m in Sources */,
 				1881E3322704143F005AE92C /* SBJsonStreamWriterAccumulator.m in Sources */,
@@ -1717,7 +1723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.13;
+				MARKETING_VERSION = 1.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1761,7 +1767,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.13;
+				MARKETING_VERSION = 1.1.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
