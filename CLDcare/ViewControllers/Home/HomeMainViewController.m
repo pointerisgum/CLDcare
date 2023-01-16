@@ -139,8 +139,8 @@ static BOOL isFWUpdating = false;
 @property (weak, nonatomic) IBOutlet UICollectionView *cv_Device;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatusSub;
-@property (nonatomic, assign) NSInteger oldBodyCnt;
-
+//@property (nonatomic, assign) NSInteger oldBodyCnt;
+@property (nonatomic, assign) BOOL isSeparatShow;
 @end
 
 @implementation HomeMainViewController
@@ -149,7 +149,7 @@ static BOOL isFWUpdating = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.oldBodyCnt = -1;
+//    self.oldBodyCnt = -1;
     
     self.stv_MainMedi.hidden = false;
     self.stv_MainDevice.hidden = true;
@@ -962,7 +962,7 @@ static BOOL isFWUpdating = false;
     
 #ifdef DEBUG //펌웨어 업데이트 테스트 코드
     [[NSUserDefaults standardUserDefaults] setObject:@"0401" forKey:@"FWVersion"];
-    [[NSUserDefaults standardUserDefaults] setObject:@"0604" forKey:@"NewFWVersion"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"0610" forKey:@"NewFWVersion"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 #endif
 
@@ -1013,7 +1013,7 @@ static BOOL isFWUpdating = false;
     
 //#ifdef DEBUG //펌웨어 업데이트 테스트 코드
 //    [[NSUserDefaults standardUserDefaults] setObject:@"0401" forKey:@"FWVersion"];
-//    [[NSUserDefaults standardUserDefaults] setObject:@"0604" forKey:@"NewFWVersion"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"0610" forKey:@"NewFWVersion"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
 //#endif
 //
@@ -1286,7 +1286,7 @@ static BOOL isFWUpdating = false;
 
 #ifdef DEBUG //펌웨어 업데이트 테스트 코드
             //파일로 번들에 갖고 있을 경우
-            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0604" withExtension:@"zip" subdirectory:@""];
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0610" withExtension:@"zip" subdirectory:@""];
             DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
             NSLog(@"%@", firmware);
 #else
@@ -1724,7 +1724,7 @@ static BOOL isFWUpdating = false;
 
 //    NSString *str_StatusInfo = [NSString stringWithFormat:@"%@,%@,%@", @(md_tilt->info_identifier[0]),@(md_tilt->info_identifier[1]),@(md_tilt->info_identifier[2])];
     
-    
+    NSInteger infoCount = [@(md_tilt->info_count) integerValue];
     NSString *str_DoseDate = @"";
     NSString *str_StatusInfo = @"";
     switch (idx) {
@@ -1735,18 +1735,26 @@ static BOOL isFWUpdating = false;
         case 1:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime2)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
             str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[1])];
+            infoCount -= 1;
             break;
         case 2:
             str_DoseDate = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md_tilt->epochtime3)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
             str_StatusInfo = [NSString stringWithFormat:@"%@", @(md_tilt->info_identifier[2])];
+            infoCount -= 2;
             [self updateMedicationList];
             break;
+    }
+    
+    if( infoCount <= 0 ) {
+        //이전 데이터가 없는 경우 스킵
+        [self updateMedicationList];
+        return;
     }
 //    NSLog(@"%@", str_StatusInfo);
 //    NSArray *ar_StatusInfo = @[@(md_tilt->info_identifier[0]), @(md_tilt->info_identifier[1]), @(md_tilt->info_identifier[2])];
     NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
     [dicM_Params setObject:email forKey:@"mem_email"];
-    [dicM_Params setObject:@(md_tilt->info_count) forKey:@"information_idx"];   //디바이스 정보 인덱스
+    [dicM_Params setObject:@(infoCount) forKey:@"information_idx"];   //디바이스 정보 인덱스
 //    [dicM_Params setObject:@(self->count) forKey:@"dose_count"];                //토출갯수
     [dicM_Params setObject:str_StatusInfo forKey:@"status_info"];                     //커맨드 값
 //    [dicM_Params setObject:@(ir) forKey:@"ir_value"];                           //기울기 값
@@ -1757,6 +1765,8 @@ static BOOL isFWUpdating = false;
     [dicM_Params setObject:@(md_tilt->body_identifier) forKey:@"body_info"];
     [dicM_Params setObject:str_BodyDate forKey:@"datetime_body"];
 
+    NSLog(@"tilt params : %@", dicM_Params);
+    
     [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/update/dispenerinfo" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
         [self.hud hideAnimated:true];
         self.hud = nil;
@@ -1829,6 +1839,34 @@ static BOOL isFWUpdating = false;
 //    }];
 }
 
+- (void)showSeparat {
+    UIViewController *topController = [Util keyWindow].rootViewController;
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+
+    if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
+        NSLog(@"뚜껑 열렸다 닫힘");
+        __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
+        [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
+            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                [self sendReport:idx cnt:cnt];
+                [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
+            }];
+        }];
+        [vc_Separat setShowSetUpBlock:^{
+            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+                navi.modalPresentationStyle = UIModalPresentationFullScreen;
+                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
+                vc.step = STEP1;
+                [self presentViewController:navi animated:true completion:nil];
+            }];
+        }];
+        [self presentViewController:vc_Separat animated:true completion:nil];
+    }
+}
+    
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     if( central.state == CBManagerStatePoweredOn ) {
@@ -1986,48 +2024,20 @@ static BOOL isFWUpdating = false;
             self.lb_DeviceStatus.text = NSLocalizedString(@"Last Synced", nil);
             self.lb_DeviceStatusSub.text = now;
             
-            //몸통이 분리 되었다 다시 끼워졌을때 알람 팝업 띄우기
-            //md->body_count가 홀수는 체결, 짝수는 분리
-            //올드카운트와 현재 body_count가 다르고 홀수인 경우 팝업 노출
-            if( self.oldBodyCnt <= 0 ) {
-                self.oldBodyCnt = [@(md->body_count) integerValue];
-            }
-            
-            if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] &&
-               [@(md->body_count) integerValue] % 2 == 1 &&
-               self.oldBodyCnt != [@(md->body_count) integerValue] ) {
-                
-                self.oldBodyCnt = [@(md->body_count) integerValue];
-
-                UIViewController *topController = [Util keyWindow].rootViewController;
-                while (topController.presentedViewController) {
-                    topController = topController.presentedViewController;
-                }
-
-                if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
-                    NSLog(@"뚜껑 열렸다 닫힘");
-                    __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
-                    [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
-                        [vc_Separat dismissViewControllerAnimated:true completion:^{
-                            [self sendReport:idx cnt:cnt];
-                            [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
-                        }];
-                    }];
-                    [vc_Separat setShowSetUpBlock:^{
-                        [vc_Separat dismissViewControllerAnimated:true completion:^{
-                            UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
-                            navi.modalPresentationStyle = UIModalPresentationFullScreen;
-                            MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
-                            vc.step = STEP1;
-                            [self presentViewController:navi animated:true completion:nil];
-                        }];
-                    }];
-                    [self presentViewController:vc_Separat animated:true completion:nil];
-                }
-            }
             
             if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] ) {
-                self.oldBodyCnt = [@(md->body_count) integerValue];
+                //몸통이 분리 되었다 다시 끼워졌을때 알람 팝업 띄우기
+                //body_count의 첫번째 bit가 0이면 연결, 1이면 분리
+                if( md->body_count >> 15 == 0x00 ) {
+                    //연결
+                    if( self.isSeparatShow == true ) {
+                        self.isSeparatShow = false;
+                        [self showSeparat];
+                    }
+                } else {
+                    //분리
+                    self.isSeparatShow = true;
+                }
             }
             
 //            //펌웨어 체크
