@@ -139,7 +139,7 @@ static BOOL isFWUpdating = false;
 @property (weak, nonatomic) IBOutlet UICollectionView *cv_Device;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatus;
 @property (weak, nonatomic) IBOutlet UILabel *lb_DeviceStatusSub;
-//@property (nonatomic, assign) NSInteger oldBodyCnt;
+@property (nonatomic, assign) NSInteger oldBodyCnt;
 @property (nonatomic, assign) BOOL isSeparatShow;
 @end
 
@@ -149,7 +149,7 @@ static BOOL isFWUpdating = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.oldBodyCnt = -1;
+    self.oldBodyCnt = -1;
     
     self.stv_MainMedi.hidden = false;
     self.stv_MainDevice.hidden = true;
@@ -2024,19 +2024,67 @@ static BOOL isFWUpdating = false;
             self.lb_DeviceStatus.text = NSLocalizedString(@"Last Synced", nil);
             self.lb_DeviceStatusSub.text = now;
             
-            
-            if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] ) {
+            NSInteger fwVer = [[[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"] integerValue];
+            if( fwVer < 103 ) {
+                //구버전 대응
                 //몸통이 분리 되었다 다시 끼워졌을때 알람 팝업 띄우기
-                //body_count의 첫번째 bit가 0이면 연결, 1이면 분리
-                if( md->body_count >> 15 == 0x00 ) {
-                    //연결
-                    if( self.isSeparatShow == true ) {
-                        self.isSeparatShow = false;
-                        [self showSeparat];
+                //md->body_count가 홀수는 체결, 짝수는 분리
+                //올드카운트와 현재 body_count가 다르고 홀수인 경우 팝업 노출
+                if( self.oldBodyCnt <= 0 ) {
+                    self.oldBodyCnt = [@(md->body_count) integerValue];
+                }
+                
+                if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] &&
+                   [@(md->body_count) integerValue] % 2 == 1 &&
+                   self.oldBodyCnt != [@(md->body_count) integerValue] ) {
+                    
+                    self.oldBodyCnt = [@(md->body_count) integerValue];
+
+                    UIViewController *topController = [Util keyWindow].rootViewController;
+                    while (topController.presentedViewController) {
+                        topController = topController.presentedViewController;
                     }
-                } else {
-                    //분리
-                    self.isSeparatShow = true;
+
+                    if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
+                        NSLog(@"뚜껑 열렸다 닫힘");
+                        __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
+                        [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
+                            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                                [self sendReport:idx cnt:cnt];
+                                [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
+                            }];
+                        }];
+                        [vc_Separat setShowSetUpBlock:^{
+                            [vc_Separat dismissViewControllerAnimated:true completion:^{
+                                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+                                navi.modalPresentationStyle = UIModalPresentationFullScreen;
+                                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
+                                vc.step = STEP1;
+                                [self presentViewController:navi animated:true completion:nil];
+                            }];
+                        }];
+                        [self presentViewController:vc_Separat animated:true completion:nil];
+                    }
+                }
+                
+                if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] ) {
+                    self.oldBodyCnt = [@(md->body_count) integerValue];
+                }
+            } else {
+                if( [currentLastMacAddr isEqualToString:[ar_MacAddr lastObject]] ) {
+                    //몸통이 분리 되었다 다시 끼워졌을때 알람 팝업 띄우기
+                    //body_count의 첫번째 bit가 0이면 연결, 1이면 분리
+                    NSLog(@"md->body_count >> 15 : %d", md->body_count >> 15);
+                    if( md->body_count >> 15 == 0x00 ) {
+                        //연결
+                        if( self.isSeparatShow == true ) {
+                            self.isSeparatShow = false;
+                            [self showSeparat];
+                        }
+                    } else {
+                        //분리
+                        self.isSeparatShow = true;
+                    }
                 }
             }
             
