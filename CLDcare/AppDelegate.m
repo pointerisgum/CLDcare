@@ -23,7 +23,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+        
     BOOL Init = ![[NSUserDefaults standardUserDefaults] boolForKey:@"Init"];
     if( Init ) {
 //            if( 1 ) {

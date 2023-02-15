@@ -96,7 +96,7 @@
 
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/select/caregiverinfo" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
-                [Util showAlert:NSLocalizedString(@"Invalid ID or password", nil) withVc:self];
+//                [Util showAlert:NSLocalizedString(@"Invalid ID or password", nil) withVc:self];
                 return;
             }
             

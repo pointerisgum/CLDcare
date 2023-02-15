@@ -115,7 +115,7 @@
             md = (dispenser_manuf_data_t *)[Util decrypt:manufData];
         }
 
-        if( md->device_last_name != 0xff || md->pairing != 0xff || md->epochtime_cover != 0xffffffff ) {
+        if( md->device_last_name != 0xff || md->pairing != 0xff || md->epochtime_body != 0xffffffff ) {
             return;
         }
 

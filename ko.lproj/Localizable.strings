@@ -221,6 +221,7 @@
 
 
 "Device Information" = "디바이스 정보";
+"Firmware Update" = "펌웨어 업데이트";
 "Firmware information" = "펌웨어 정보";
 "This is the latest version." = "최신버전 입니다.";
 "Firmware Update" = "펌웨어 업데이트";
@@ -240,7 +241,7 @@
 "Firmware Update Date" = "펌웨어 업데이트 일자";
 
 "Your Firmware is Up To Date" = "최신버전입니다.";
-"New Firmware Version Available" = "새 펌웨어 버전";
+"New Firmware Version is Available" = "새 펌웨어 버전";
 
 "Firmware needs to be updated" = "새 버전의 펌웨어로 업데이트가 필요합니다";
 "Download and Install" = "다운로드 및 설치";
@@ -315,7 +316,7 @@
 
 
 "Medication Setup" = "약통 설정";
-"Device Status" = "약통 상태";
+"Data Status" = "약통 상태";
 "DEVICE INFO" = "디바이스 정보";
 "Device Info" = "디바이스 정보";
 "Bottle Attachment" = "약통 부착";

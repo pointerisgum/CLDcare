@@ -652,15 +652,16 @@ Please push one applicable button below.</string>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="More than one tablet dispensed in error"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ga5-ZZ-2eR">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of pills incorrectly dispensed" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ga5-ZZ-2eR">
                                                                                 <rect key="frame" x="28.999999999999993" y="61.666666666666679" width="122.33333333333331" height="28.666666666666664"/>
-                                                                                <string key="text">Number of pills
-incorrectly dispensed</string>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="122.33" id="m99-sl-9nS"/>
+                                                                                </constraints>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <userDefinedRuntimeAttributes>
-                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Number of pills\nincorrectly dispensed"/>
+                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Number of pills incorrectly dispensed"/>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </label>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AGk-Pm-eH2">

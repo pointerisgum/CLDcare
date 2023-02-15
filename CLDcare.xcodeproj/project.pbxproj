@@ -10,7 +10,7 @@
 		179FFF5AF784C8FF892D9FC8 /* Pods_CLDcare_CLDcareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707F8328DBB625484F88CDD5 /* Pods_CLDcare_CLDcareUITests.framework */; };
 		1821E0EF29347BA500B53ABD /* SeparatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1821E0EE29347BA500B53ABD /* SeparatViewController.m */; };
 		1829988E28F8F180004B7161 /* 0603.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1829988D28F8F180004B7161 /* 0603.zip */; };
-		182CB5BD29750FA600EC350D /* 0610.zip in Resources */ = {isa = PBXBuildFile; fileRef = 182CB5BC29750FA600EC350D /* 0610.zip */; };
+		182CB5BD29750FA600EC350D /* 0613.zip in Resources */ = {isa = PBXBuildFile; fileRef = 182CB5BC29750FA600EC350D /* 0613.zip */; };
 		183B18E428DC8B8900BCED2B /* FWUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */; };
 		183DA8F82947FE2700C59328 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DA8F72947FE2700C59328 /* Localizable.swift */; };
 		183DA8FB294807E400C59328 /* MediRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 183DA8F9294807E400C59328 /* MediRecordCell.m */; };
@@ -21,6 +21,7 @@
 		1843BC09293495D70035534A /* MDMediSetUpData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843BC08293495D70035534A /* MDMediSetUpData.m */; };
 		184F514027191E0D009695C2 /* JoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F513F27191E0D009695C2 /* JoinViewController.m */; };
 		184F5143271C0E24009695C2 /* ListCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F5142271C0E24009695C2 /* ListCVCell.m */; };
+		1867DC172982856800F8A3DE /* 0614.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1867DC162982856800F8A3DE /* 0614.zip */; };
 		186BC4F22883CEFA009F88EF /* 0402.zip in Resources */ = {isa = PBXBuildFile; fileRef = 186BC4F12883CEFA009F88EF /* 0402.zip */; };
 		186BC4F928853A51009F88EF /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4F828853A51009F88EF /* Test.swift */; };
 		186BC4FB28853C89009F88EF /* Test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4FA28853C89009F88EF /* Test2.swift */; };
@@ -190,7 +191,7 @@
 		1821E0ED29347BA500B53ABD /* SeparatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeparatViewController.h; sourceTree = "<group>"; };
 		1821E0EE29347BA500B53ABD /* SeparatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeparatViewController.m; sourceTree = "<group>"; };
 		1829988D28F8F180004B7161 /* 0603.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0603.zip; sourceTree = "<group>"; };
-		182CB5BC29750FA600EC350D /* 0610.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0610.zip; sourceTree = "<group>"; };
+		182CB5BC29750FA600EC350D /* 0613.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0613.zip; sourceTree = "<group>"; };
 		183B18E228DC8B8900BCED2B /* FWUpdateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FWUpdateViewController.h; sourceTree = "<group>"; };
 		183B18E328DC8B8900BCED2B /* FWUpdateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FWUpdateViewController.m; sourceTree = "<group>"; };
 		183DA8F72947FE2700C59328 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -209,6 +210,7 @@
 		184F513F27191E0D009695C2 /* JoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinViewController.m; sourceTree = "<group>"; };
 		184F5141271C0E24009695C2 /* ListCVCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListCVCell.h; sourceTree = "<group>"; };
 		184F5142271C0E24009695C2 /* ListCVCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListCVCell.m; sourceTree = "<group>"; };
+		1867DC162982856800F8A3DE /* 0614.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0614.zip; sourceTree = "<group>"; };
 		186BC4F12883CEFA009F88EF /* 0402.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0402.zip; sourceTree = "<group>"; };
 		186BC4F3288537CB009F88EF /* CLDcare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLDcare-Bridging-Header.h"; sourceTree = "<group>"; };
 		186BC4F6288538B6009F88EF /* AESTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESTemp.swift; sourceTree = "<group>"; };
@@ -566,7 +568,8 @@
 			isa = PBXGroup;
 			children = (
 				183F139728DC3F46006EF623 /* downloading.json */,
-				182CB5BC29750FA600EC350D /* 0610.zip */,
+				1867DC162982856800F8A3DE /* 0614.zip */,
+				182CB5BC29750FA600EC350D /* 0613.zip */,
 				189DA31629111AFA009B2E0E /* 0604.zip */,
 				1829988D28F8F180004B7161 /* 0603.zip */,
 				18A1995428DD932200464377 /* 0602.zip */,
@@ -656,9 +659,9 @@
 		1881E20C2704143E005AE92C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				1881E20F2704143E005AE92C /* UIAlertController+Blocks.h */,
 				1881E20D2704143E005AE92C /* UIAlertController+Blocks.m */,
 				1881E20E2704143E005AE92C /* DeviceManager.h */,
-				1881E20F2704143E005AE92C /* UIAlertController+Blocks.h */,
 				1881E2102704143E005AE92C /* DeviceManager.m */,
 				1881E2112704143E005AE92C /* AES */,
 			);
@@ -831,15 +834,15 @@
 		1881E24E2704143E005AE92C /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				1881E2572704143E005AE92C /* ble_packet.h */,
 				1881E24F2704143E005AE92C /* ComTimer.h */,
+				1881E2532704143E005AE92C /* ComTimer.m */,
 				1881E2502704143E005AE92C /* UIAlertController+Message.m */,
 				1881E2512704143E005AE92C /* ScanPeripheral.h */,
 				1881E2522704143E005AE92C /* adv_data.h */,
-				1881E2532704143E005AE92C /* ComTimer.m */,
 				1881E2542704143E005AE92C /* ScanPeripheral.m */,
 				1881E2552704143E005AE92C /* UIAlertController+Message.h */,
 				1881E2562704143E005AE92C /* ScanPeripheralDelegate.h */,
-				1881E2572704143E005AE92C /* ble_packet.h */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1252,8 +1255,9 @@
 				1881E20B2704142A005AE92C /* bell.mp3 in Resources */,
 				18A1995528DD932200464377 /* 0602.zip in Resources */,
 				1829988E28F8F180004B7161 /* 0603.zip in Resources */,
+				1867DC172982856800F8A3DE /* 0614.zip in Resources */,
 				1881E20A2704142A005AE92C /* Clause.plist in Resources */,
-				182CB5BD29750FA600EC350D /* 0610.zip in Resources */,
+				182CB5BD29750FA600EC350D /* 0613.zip in Resources */,
 				1881E30E2704143F005AE92C /* SurveryAccView.xib in Resources */,
 				18B682CA27F1A66000B66617 /* Localizable.strings in Resources */,
 				1881E33E2704143F005AE92C /* LICENSE in Resources */,
@@ -1705,7 +1709,7 @@
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;
@@ -1749,7 +1753,7 @@
 				CODE_SIGN_ENTITLEMENTS = CLDcare/CLDcare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 42SP8B42Y8;
 				GCC_PREFIX_HEADER = CLDcare/PrefixHeader.pch;

@@ -16,17 +16,21 @@
 //    uint32_t epochtime3;
 //} dispenser_manuf_data_t;
 
+
+//epochtime_cover 캡 열린 시간
+//epochtime_body 몸통이 분리 된 시간
+
 typedef struct {
     uint16_t company_identifier;//0,1
     uint8_t device_last_name;   //2
     uint8_t pairing;            //3
-    uint32_t epochtime_cover;   //4,5,6,7
+    uint32_t epochtime_body;   //4,5,6,7
     uint16_t count;             //8,9
     uint16_t info_count;        //10,11
     uint8_t  bat;               //12
-    uint32_t epochtime1;
-    uint32_t epochtime2;
-    uint32_t epochtime3;
+    uint32_t epochtime1;        //최근 복약시간
+    uint32_t epochtime2;        //최근 -1 복약시간
+    uint32_t epochtime3;        //최근 -2 복약시간
     uint16_t cover_count;
     uint16_t body_count;
 } dispenser_manuf_data_t;
@@ -64,9 +68,9 @@ typedef struct {
     uint32_t epochtime1;
     uint32_t epochtime2;
     uint32_t epochtime3;
-    uint32_t reserved;
-    int16_t info_ir2;               //199 -> 201
-    int16_t info_ir3;               //202 -> 199
+    uint32_t epochtime_cover;              //datetime_cover 뚜껑 열림
+//    int16_t info_ir2;               //199 -> 201
+//    int16_t info_ir3;               //202 -> 199
 } dispenser_tilt_data_t_v2;
 
 

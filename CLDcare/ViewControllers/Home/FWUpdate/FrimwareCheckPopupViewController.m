@@ -34,11 +34,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _lb_TitleFix.text = NSLocalizedString(@"Device Information", nil);
+    _lb_TitleFix.text = NSLocalizedString(@"Firmware Update", nil);
     
     _lb_DeviceInfoTitleFix.text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Device ID", nil)];
     _lb_FirmwareInfoTitleFix.text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Current Firmware Version", nil)];
-    _lb_NewFirmwareVerFix.text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"New Firmware Version Available", nil)];
+    _lb_NewFirmwareVerFix.text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"New Firmware Version is Available", nil)];
     _lb_FirmwareUpdateDateFix.text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Firmware Update Date", nil)];
 
     _lb_NeedUpdate.text = NSLocalizedString(@"Firmware needs to be updated", nil);

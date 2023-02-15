@@ -108,6 +108,8 @@
                 [self.navigationController popViewControllerAnimated:true];
             }
         }];
+    } else {
+        [self.navigationController popViewControllerAnimated:true];
     }
 }
 

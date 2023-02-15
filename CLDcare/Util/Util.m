@@ -602,6 +602,8 @@ static Util *shared = nil;
         i += 2;
     }
     NSLog(@"contryCode : %@", ascii);
+    [[NSUserDefaults standardUserDefaults] setObject:ascii forKey:@"ContryCode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return ascii;
 }
 
@@ -650,7 +652,8 @@ static Util *shared = nil;
     NSLog(@"펌웨어 다운로드 시작");
     dispatch_queue_t queue = dispatch_get_global_queue(0,0);
     dispatch_async(queue, ^{
-        NSString *stringURL = [NSString stringWithFormat:@"http://15.164.79.24/downloads/firmware/dfu/firmware/version/%@.zip", fileName];
+        NSString *contryCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"ContryCode"];
+        NSString *stringURL = [NSString stringWithFormat:@"http://15.164.79.24/downloads/firmware/dfu/firmware/version/%@/%@_%@.zip", contryCode, contryCode, fileName];
         
         NSURL  *url = [NSURL URLWithString:stringURL];
         NSData *urlData = [NSData dataWithContentsOfURL:url];
