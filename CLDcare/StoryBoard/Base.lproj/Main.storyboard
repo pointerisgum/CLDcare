@@ -516,26 +516,15 @@
                                                             <constraint firstItem="OLK-pE-szy" firstAttribute="top" secondItem="1r0-wl-eGv" secondAttribute="top" id="pL7-7T-RVV"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKA-WS-TTz">
-                                                        <rect key="frame" x="50.333333333333343" y="10.666666666666664" width="274.66666666666663" height="35"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <connections>
-                                                            <action selector="goTest2:" destination="Xuu-iG-wXo" eventType="touchUpInside" id="Wri-V9-SKU"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="1r0-wl-eGv" firstAttribute="leading" secondItem="0f0-t8-oH0" secondAttribute="trailing" id="2sl-d8-dgp"/>
-                                                    <constraint firstItem="MKA-WS-TTz" firstAttribute="bottom" secondItem="zT9-Zw-IhB" secondAttribute="bottom" id="Mhw-S5-1pK"/>
                                                     <constraint firstAttribute="height" constant="56" id="Q7h-U1-3DW"/>
-                                                    <constraint firstItem="MKA-WS-TTz" firstAttribute="leading" secondItem="zT9-Zw-IhB" secondAttribute="leading" id="Reb-qL-O8k"/>
                                                     <constraint firstAttribute="trailing" secondItem="1r0-wl-eGv" secondAttribute="trailing" constant="24" id="Uyc-xj-UYw"/>
                                                     <constraint firstItem="1r0-wl-eGv" firstAttribute="centerY" secondItem="61w-Ql-pKT" secondAttribute="centerY" id="VQU-Ox-m99"/>
                                                     <constraint firstItem="0f0-t8-oH0" firstAttribute="top" secondItem="61w-Ql-pKT" secondAttribute="top" id="d7H-vE-9fk"/>
                                                     <constraint firstItem="zT9-Zw-IhB" firstAttribute="centerX" secondItem="61w-Ql-pKT" secondAttribute="centerX" id="inW-s4-PIs"/>
-                                                    <constraint firstItem="MKA-WS-TTz" firstAttribute="top" secondItem="zT9-Zw-IhB" secondAttribute="top" id="kys-qd-VUe"/>
-                                                    <constraint firstItem="MKA-WS-TTz" firstAttribute="trailing" secondItem="zT9-Zw-IhB" secondAttribute="trailing" id="nzk-bv-SVS"/>
                                                     <constraint firstItem="0f0-t8-oH0" firstAttribute="leading" secondItem="61w-Ql-pKT" secondAttribute="leading" id="pW1-cQ-mzu"/>
                                                     <constraint firstAttribute="bottom" secondItem="0f0-t8-oH0" secondAttribute="bottom" id="tfs-Le-q43"/>
                                                     <constraint firstItem="zT9-Zw-IhB" firstAttribute="centerY" secondItem="61w-Ql-pKT" secondAttribute="centerY" id="yrP-Ky-JHf"/>
@@ -1934,6 +1923,7 @@
                         <outlet property="lc_BarLeading" destination="51O-bM-0db" id="URZ-4f-HDQ"/>
                         <outlet property="stv_MainDevice" destination="6Py-pa-6cq" id="NJP-1M-mVw"/>
                         <outlet property="stv_MainMedi" destination="YFh-pm-MVn" id="hKo-xL-uTu"/>
+                        <outlet property="stv_Test" destination="0f0-t8-oH0" id="BBJ-Dj-Mlp"/>
                         <outlet property="tbv_DeviceRecord" destination="Ill-Yd-NUy" id="J44-yw-Rem"/>
                         <outlet property="tbv_MediRecord" destination="7f9-de-pBS" id="Prx-Fs-yB8"/>
                         <outlet property="tbv_MediSchedule" destination="d7l-7J-WeJ" id="A48-HZ-Xaw"/>
@@ -6633,12 +6623,12 @@ Open the Device Cap.</string>
         <scene sceneID="MYA-i1-pQ4">
             <objects>
                 <viewController storyboardIdentifier="FWUpdateViewController" modalPresentationStyle="fullScreen" id="4NI-Bv-17l" customClass="FWUpdateViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aGh-6B-Cch">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="aGh-6B-Cch">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BhS-3i-gLH">
-                                <rect key="frame" x="0.0" y="47" width="375" height="731"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BhS-3i-gLH">
+                                <rect key="frame" x="0.0" y="47" width="375" height="825"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rqx-W3-C1u">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -6687,14 +6677,14 @@ Open the Device Cap.</string>
                                             <constraint firstAttribute="height" constant="15" id="qWZ-gk-tsv"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4j-Bx-NNS">
-                                        <rect key="frame" x="0.0" y="155" width="375" height="185"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4j-Bx-NNS">
+                                        <rect key="frame" x="0.0" y="155" width="375" height="229"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8tz-yW-hRo">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tz-yW-hRo">
                                                 <rect key="frame" x="15" y="0.0" width="345" height="229"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m72-Es-5Kb">
-                                                        <rect key="frame" x="8" y="0.0" width="329" height="185"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m72-Es-5Kb">
+                                                        <rect key="frame" x="8" y="0.0" width="329" height="229"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRt-Zt-vEA" userLabel="Spacer">
                                                                 <rect key="frame" x="0.0" y="0.0" width="329" height="15"/>
@@ -6703,8 +6693,8 @@ Open the Device Cap.</string>
                                                                     <constraint firstAttribute="height" constant="15" id="ibP-Vp-uSV"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WIU-9y-9iO">
-                                                                <rect key="frame" x="0.0" y="15" width="329" height="16"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIU-9y-9iO">
+                                                                <rect key="frame" x="0.0" y="15" width="329" height="60"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGx-et-jxd">
                                                                         <rect key="frame" x="0.0" y="0.0" width="329" height="60"/>
@@ -6726,15 +6716,15 @@ Open the Device Cap.</string>
                                                                     <constraint firstItem="eGx-et-jxd" firstAttribute="top" secondItem="WIU-9y-9iO" secondAttribute="top" id="t6y-vb-qIU"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NvG-dK-MdB" userLabel="Spacer">
-                                                                <rect key="frame" x="0.0" y="31" width="329" height="10"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NvG-dK-MdB" userLabel="Spacer">
+                                                                <rect key="frame" x="0.0" y="75" width="329" height="10"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="KCb-hk-iYh"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RN-sTV">
-                                                                <rect key="frame" x="0.0" y="41" width="329" height="26"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RN-sTV">
+                                                                <rect key="frame" x="0.0" y="85" width="329" height="26"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="파일명 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ed8-EA-MKt">
                                                                         <rect key="frame" x="0.0" y="0.0" width="44.333333333333336" height="26"/>
@@ -6761,8 +6751,8 @@ Open the Device Cap.</string>
                                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kB9-5S-SiX" secondAttribute="trailing" id="tcP-Yv-iSR"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJa-KK-yFJ">
-                                                                <rect key="frame" x="0.0" y="67" width="329" height="26"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJa-KK-yFJ">
+                                                                <rect key="frame" x="0.0" y="111" width="329" height="26"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사이즈 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fq-70-gdI">
                                                                         <rect key="frame" x="0.0" y="0.0" width="44.333333333333336" height="26"/>
@@ -6789,8 +6779,8 @@ Open the Device Cap.</string>
                                                                     <constraint firstItem="ln3-y6-Iyo" firstAttribute="top" secondItem="hJa-KK-yFJ" secondAttribute="top" id="san-fB-MBi"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d72-E7-y0Q">
-                                                                <rect key="frame" x="0.0" y="93" width="329" height="26"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d72-E7-y0Q">
+                                                                <rect key="frame" x="0.0" y="137" width="329" height="26"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상태 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fE2-s1-Yx5">
                                                                         <rect key="frame" x="0.0" y="0.0" width="32.333333333333336" height="26"/>
@@ -6817,15 +6807,15 @@ Open the Device Cap.</string>
                                                                     <constraint firstItem="EHG-H5-zeI" firstAttribute="leading" secondItem="fE2-s1-Yx5" secondAttribute="trailing" constant="4" id="vNQ-Ig-igU"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uo0-KE-NX1" userLabel="Spacer">
-                                                                <rect key="frame" x="0.0" y="119" width="329" height="4"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uo0-KE-NX1" userLabel="Spacer">
+                                                                <rect key="frame" x="0.0" y="163" width="329" height="4"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="4" id="4ur-3E-gVS"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-F8-3ZE">
-                                                                <rect key="frame" x="0.0" y="123" width="329" height="47"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c5c-F8-3ZE">
+                                                                <rect key="frame" x="0.0" y="167" width="329" height="47"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rws-ED-92B">
                                                                         <rect key="frame" x="0.0" y="0.0" width="32.333333333333336" height="17"/>
@@ -6853,8 +6843,8 @@ Open the Device Cap.</string>
                                                                     <constraint firstItem="STp-qP-CdN" firstAttribute="leading" secondItem="rws-ED-92B" secondAttribute="trailing" constant="4" id="zLc-4i-3Rj"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqx-ve-nvl" userLabel="Spacer">
-                                                                <rect key="frame" x="0.0" y="170" width="329" height="15"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uqx-ve-nvl" userLabel="Spacer">
+                                                                <rect key="frame" x="0.0" y="214" width="329" height="15"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="15" id="Gx5-lP-Xwg"/>
@@ -6880,8 +6870,8 @@ Open the Device Cap.</string>
                                             <constraint firstItem="8tz-yW-hRo" firstAttribute="top" secondItem="Y4j-Bx-NNS" secondAttribute="top" id="ZJI-6O-lXU"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Btt-tk-nhv">
-                                        <rect key="frame" x="0.0" y="340" width="375" height="80"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btt-tk-nhv">
+                                        <rect key="frame" x="0.0" y="384" width="375" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apk-nC-hix">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -6901,15 +6891,15 @@ Open the Device Cap.</string>
                                             <constraint firstAttribute="trailing" secondItem="apk-nC-hix" secondAttribute="trailing" id="q1O-eh-oEL"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pcu-1N-WBi" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="420" width="375" height="25"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pcu-1N-WBi" userLabel="Spacer">
+                                        <rect key="frame" x="0.0" y="464" width="375" height="25"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="Joz-IM-Nzx"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ka4-YI-cmA">
-                                        <rect key="frame" x="0.0" y="445" width="375" height="80"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ka4-YI-cmA">
+                                        <rect key="frame" x="0.0" y="489" width="375" height="80"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_device3" translatesAutoresizingMaskIntoConstraints="NO" id="dj3-t4-s7b">
                                                 <rect key="frame" x="22.333333333333343" y="0.0" width="330.66666666666663" height="80"/>
@@ -6926,15 +6916,15 @@ Open the Device Cap.</string>
                                             <constraint firstAttribute="bottom" secondItem="dj3-t4-s7b" secondAttribute="bottom" id="Q43-1D-m7s"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Oq-Lt-4UU" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="525" width="375" height="25"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Oq-Lt-4UU" userLabel="Spacer">
+                                        <rect key="frame" x="0.0" y="569" width="375" height="25"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="s2C-mK-mLE"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TP8-zA-iif">
-                                        <rect key="frame" x="0.0" y="550" width="375" height="91"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TP8-zA-iif">
+                                        <rect key="frame" x="0.0" y="594" width="375" height="91"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="670-s8-WJc">
                                                 <rect key="frame" x="146.33333333333334" y="8" width="82.666666666666657" height="18"/>
@@ -6975,8 +6965,8 @@ Open the Device Cap.</string>
                                             <constraint firstItem="670-s8-WJc" firstAttribute="centerX" secondItem="TP8-zA-iif" secondAttribute="centerX" id="zhJ-dk-krz"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="imz-Y3-avX">
-                                        <rect key="frame" x="0.0" y="641" width="375" height="90"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imz-Y3-avX">
+                                        <rect key="frame" x="0.0" y="685" width="375" height="90"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mzi-bI-Qxd">
                                                 <rect key="frame" x="10" y="20" width="355" height="50"/>
@@ -7008,7 +6998,7 @@ Open the Device Cap.</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-h1-Qc2">
-                                        <rect key="frame" x="0.0" y="731" width="375" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="775" width="375" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>

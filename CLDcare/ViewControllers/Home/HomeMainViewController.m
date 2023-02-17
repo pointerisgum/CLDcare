@@ -144,6 +144,7 @@ static BOOL isFWUpdating = false;
 @property (nonatomic, assign) BOOL fwCheck;
 @property (nonatomic, assign) BOOL isCoverOpen;
 @property (nonatomic, assign) BOOL isBodyOpen;
+@property (weak, nonatomic) IBOutlet UIStackView *stv_Test;
 @end
 
 @implementation HomeMainViewController
@@ -151,6 +152,10 @@ static BOOL isFWUpdating = false;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+#if DEBUG
+    self.stv_Test.hidden = false;
+#endif
     
     self.fwCheck = true;
     self.oldBodyCnt = -1;
@@ -1542,47 +1547,47 @@ static BOOL isFWUpdating = false;
     }
 }
 
-- (IBAction)goTest2:(id)sender {
-//    ResetPopUpViewController * vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPopUpViewController"];
-//    [self presentViewController:vc animated:true completion:nil];
-//    [vc setResetDoneBlock:^{
-//        NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
-//        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+//- (IBAction)goTest2:(id)sender {
+////    ResetPopUpViewController * vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPopUpViewController"];
+////    [self presentViewController:vc animated:true completion:nil];
+////    [vc setResetDoneBlock:^{
+////        NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
+////        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+////                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:settingsUrl] options:@{} completionHandler:^(BOOL success) {
+////
+////                }];
+////        }
+////    }];
+////    return;
 //
-//                }];
-//        }
-//    }];
-//    return;
-    
-#if DEBUG
-    UIViewController *topController = [Util keyWindow].rootViewController;
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
-    }
-
-    if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
-        NSLog(@"뚜껑 열렸다 닫힘");
-        __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
-        [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
-            [vc_Separat dismissViewControllerAnimated:true completion:^{
-                [self sendReport:idx cnt:cnt];
-                [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
-            }];
-        }];
-        [vc_Separat setShowSetUpBlock:^{
-            [vc_Separat dismissViewControllerAnimated:true completion:^{
-                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
-                navi.modalPresentationStyle = UIModalPresentationFullScreen;
-                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
-                vc.step = STEP1;
-                [self presentViewController:navi animated:true completion:nil];
-            }];
-        }];
-        [self presentViewController:vc_Separat animated:true completion:nil];
-    }
-#endif
-}
+//#if DEBUG
+//    UIViewController *topController = [Util keyWindow].rootViewController;
+//    while (topController.presentedViewController) {
+//        topController = topController.presentedViewController;
+//    }
+//
+//    if( [topController isKindOfClass:[SeparatViewController class]] == false ) {
+//        NSLog(@"뚜껑 열렸다 닫힘");
+//        __weak SeparatViewController *vc_Separat = (SeparatViewController *)[[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"SeparatViewController"];
+//        [vc_Separat setSendMsgBlock:^(NSInteger idx, NSInteger cnt) {
+//            [vc_Separat dismissViewControllerAnimated:true completion:^{
+//                [self sendReport:idx cnt:cnt];
+//                [self.view makeToast:NSLocalizedString(@"Thanks for your report.", nil)];
+//            }];
+//        }];
+//        [vc_Separat setShowSetUpBlock:^{
+//            [vc_Separat dismissViewControllerAnimated:true completion:^{
+//                UINavigationController *navi = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpNavi"];
+//                navi.modalPresentationStyle = UIModalPresentationFullScreen;
+//                MediSetUpViewController *vc = (MediSetUpViewController *)navi.viewControllers.firstObject;
+//                vc.step = STEP1;
+//                [self presentViewController:navi animated:true completion:nil];
+//            }];
+//        }];
+//        [self presentViewController:vc_Separat animated:true completion:nil];
+//    }
+//#endif
+//}
 
 - (NDHistory *)makeHistoryData:(NSDate *)date withIdx:(NSInteger)idx {
     NSCalendar *cal = [NSCalendar currentCalendar];
@@ -2148,7 +2153,7 @@ static BOOL isFWUpdating = false;
 //        }
 
         NSString *str_BodyDate_test = [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md->epochtime_body)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-//        NSLog(@"str_BodyDate_test : %@", str_BodyDate_test);
+        NSLog(@"md->epochtime_body : %@", str_BodyDate_test);
         //1665753943
         NSString *currentLastMacAddr = [NSString stringWithFormat:@"%02x", (unsigned int) md->device_last_name];
         NSArray *ar_MacAddr = [macAddr componentsSeparatedByString:@":"];
@@ -2177,7 +2182,7 @@ static BOOL isFWUpdating = false;
         if( nCoverCount >= 32768 ) {
             nCoverCount -= 32768;
         }
-        NSLog(@"@(md->cover_count) : %ld", nCoverCount);
+//        NSLog(@"@(md->cover_count) : %ld", nCoverCount);
         NSLog(@"@(md->body_count) : %ld", nBodyCount);
 //#ifdef DEBUG
 //#else
@@ -2297,12 +2302,14 @@ static BOOL isFWUpdating = false;
 
                     NSString *bodyKey = [NSString stringWithFormat:@"%@_%@_OldBodyStatus", email, deviceName];
                     NSString *coverKey = [NSString stringWithFormat:@"%@_%@_OldCoverStatus", email, deviceName];
+                    NSString *bodyCountKey = [NSString stringWithFormat:@"%@_%@_OldBodyCount", email, deviceName];
                     NSString *oldBodyOpen = [[NSUserDefaults standardUserDefaults] stringForKey:bodyKey];
                     NSString *oldCoverOpen = [[NSUserDefaults standardUserDefaults] stringForKey:coverKey];
+                    NSInteger nOldBodyCount = [[[NSUserDefaults standardUserDefaults] stringForKey:bodyCountKey] integerValue];
 
                     if( md->body_count >> 15 == 0x00 ) {
                         //연결
-                        NSLog(@"바디 연결됨");
+//                        NSLog(@"바디 연결됨");
                         self.isBodyOpen = true;
                         if( self.isSeparatShow == true ) {
                             self.isSeparatShow = false;
@@ -2316,9 +2323,18 @@ static BOOL isFWUpdating = false;
                             [self sendStatus:@"body" withData: md];
                             return;
                         }
+                        
+                        if( (nOldBodyCount > 0) && (nBodyCount > nOldBodyCount) ) {
+                            //앱을 끈 상태에서 변화가 있을 경우
+                            NSLog(@"앱을 껐을때 변화가 있음");
+                            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", nBodyCount] forKey:bodyCountKey];
+                            [self sendStatus:@"body" withData: md];
+                            return;
+                        }
+
                     } else {
                         //분리
-                        NSLog(@"바디 분리됨");
+//                        NSLog(@"바디 분리됨");
                         self.isSeparatShow = true;
                         self.isBodyOpen = false;
                         
@@ -2329,10 +2345,18 @@ static BOOL isFWUpdating = false;
                             [self sendStatus:@"body" withData: md];
                             return;
                         }
+                        
+                        if( (nOldBodyCount > 0) && (nBodyCount > nOldBodyCount) ) {
+                            //앱을 끈 상태에서 변화가 있을 경우
+                            NSLog(@"앱을 껐을때 변화가 있음");
+                            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", nBodyCount] forKey:bodyCountKey];
+                            [self sendStatus:@"body" withData: md];
+                            return;
+                        }
                     }
                     
                     if( md->cover_count >> 15 == 0x00 ) {
-                        NSLog(@"캡 열림");
+//                        NSLog(@"캡 열림");
                         self.isCoverOpen = true;
                         
                         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:coverKey];
@@ -2344,7 +2368,7 @@ static BOOL isFWUpdating = false;
                         }
 
                     } else {
-                        NSLog(@"캡 닫힘");
+//                        NSLog(@"캡 닫힘");
                         self.isCoverOpen = false;
                         
                         [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:coverKey];
@@ -2357,6 +2381,10 @@ static BOOL isFWUpdating = false;
                     }
                 }
             }
+            
+            NSString *bodyCountKey = [NSString stringWithFormat:@"%@_%@_OldBodyCount", email, deviceName];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%ld", nBodyCount] forKey:bodyCountKey];
+
             
 //            //펌웨어 체크
 //            NSString *str_NewFWVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewFWVersion"];
@@ -2590,6 +2618,7 @@ static BOOL isFWUpdating = false;
                             }
                         } else {
                             if( [resulte[@"reset_time"] isEqualToString:@"Y"] || isTimeSycing == true ) {
+                                NSLog(@"시간 동기화");
                                 [self timeSync:^(BOOL isSuccess) {
                                     
                                 }];

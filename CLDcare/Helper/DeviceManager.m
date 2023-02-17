@@ -276,10 +276,8 @@
     
     BOOL success = NO, fail = NO;
     
-    if (send_cmd == rcv->cmd)
-    {
-        switch (send_cmd)
-        {
+    if (send_cmd == rcv->cmd) {
+        switch (send_cmd) {
             case ncmd_take_time:
                 NSLog(@"ncmd_take_time");
                 success = YES;
