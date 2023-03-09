@@ -13,6 +13,7 @@
 #import "ComTimer.h"
 #import "NDHistory.h"
 #import "CLDcare-Swift.h"
+#import "HomeMainViewController.h"
 
 #define def_command_timeout 5
 
@@ -30,6 +31,7 @@
 @property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) MBProgressHUD* hud;
 @property (strong, nonatomic) NSArray *ar_List;
+//@property (assign, nonatomic) BOOL isStart;
 @end
 
 @implementation DeviceManager
@@ -120,15 +122,26 @@
 
 - (void)getSerial {
     __weak typeof(self) weakSelf = self;
-
+//    if( _isStart == true ) {
+//        return;
+//    }
+    
     connectBlock = ^() {
         
 //        ble_serial_data_t *sd;
         [weakSelf sendPacket:ncmd_serial_data data:NULL length:0];
+//        self->_isStart = false;
     };
     
     //    [self showHUD:@"Connecting" mode:MBProgressHUDModeDeterminate];
     [_centralManager connectPeripheral:_device.peripheral options:@{CBConnectPeripheralOptionNotifyOnConnectionKey:@YES}];
+//    _isStart = true;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        if( self.isStart ) {
+//            self.isStart = false;
+//            [HomeMainViewController showWarningPopUp];
+//        }
+//    });
 }
 
 - (void)resetCount {

@@ -47,6 +47,9 @@
     }
     [Util saveAlarm:arM_Alarms];
 
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"initDevice"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [self dismissViewControllerAnimated:true completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:@{@"isNew":@(true)}];
     }];

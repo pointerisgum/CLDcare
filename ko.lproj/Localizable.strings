@@ -225,7 +225,9 @@
 "Firmware information" = "펌웨어 정보";
 "This is the latest version." = "최신버전 입니다.";
 "Firmware Update" = "펌웨어 업데이트";
-
+"Firmware" = "펌웨어";
+"Search" = "검색";
+"Search Device" = "디바이스 검색";
 
 "Total Pills Taken" = "총 복약 개수";
 "Pills Taken Today" = "당일 복약 개수";
@@ -247,7 +249,7 @@
 "Download and Install" = "다운로드 및 설치";
 "Entering the Firmware Update Mode.\nPlace Your Device Next to Coledy App and Wait.\n\n\nPreparing Update..." = "펌웨어 업데이트 모드에 진입합니다\n디바이스를 놓고 잠시 기다려주세요\n\n\n페어링 중...";
 "Downloading Firmware..." = "펌웨어 다운로드 중...";
-
+"Download Firmware" = "펌웨어 다운로드";
 
 
 
@@ -332,3 +334,8 @@
 "Yes, Completed" = "확인";
 
 "Number of pills\nincorrectly dispensed" = "수량입력";
+
+
+//"NSBluetoothAlwaysUsageDescription" = "Access Bluetooth to navigate the medicine cabinet. It is not used for any other purpose.";
+//"UIRequiredDeviceCapabilities" = "000";
+//"NSBluetoothPeripheralUsageDescription" = "999";

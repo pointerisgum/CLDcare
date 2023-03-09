@@ -10,7 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeMainViewController : UIViewController
-
++ (BOOL)getPairStatus;
++ (void)showWarningPopUp;
 @end
 
 NS_ASSUME_NONNULL_END

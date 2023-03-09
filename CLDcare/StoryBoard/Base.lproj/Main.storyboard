@@ -3821,7 +3821,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                         <rect key="frame" x="0.0" y="50" width="375" height="632"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vXU-lU-st8">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="710"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="754"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDv-et-o1G" userLabel="Header">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -4099,8 +4099,64 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                             <constraint firstAttribute="height" constant="56" id="wAX-id-Apb"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zj-Jx-Tvh" userLabel="Header">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsh-pA-kgW" userLabel="Header">
                                                         <rect key="frame" x="0.0" y="356" width="375" height="44"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="모든 디바이스 검색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QU5-PA-fhN">
+                                                                <rect key="frame" x="24.000000000000007" y="19" width="104.66666666666669" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <color key="textColor" red="0.5450980392" green="0.5450980392" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Search Device"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="QU5-PA-fhN" secondAttribute="bottom" constant="8" id="WhR-sB-tos"/>
+                                                            <constraint firstAttribute="height" constant="44" id="X5f-2l-xxz"/>
+                                                            <constraint firstItem="QU5-PA-fhN" firstAttribute="leading" secondItem="gsh-pA-kgW" secondAttribute="leading" constant="24" id="pOO-Hl-RS6"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9UA-da-aa6">
+                                                        <rect key="frame" x="0.0" y="400" width="375" height="56"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZ4-iM-Iu0">
+                                                                <rect key="frame" x="0.0" y="55" width="375" height="1"/>
+                                                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1" id="VoN-m8-UDx"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-9g-199">
+                                                                <rect key="frame" x="24" y="0.0" width="351" height="55"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <state key="normal" title="검색">
+                                                                    <color key="titleColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Search"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="goFirmwareUpdate:" destination="lHL-bL-Ysd" eventType="touchUpInside" id="ve3-bj-wqu"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="xZ4-iM-Iu0" firstAttribute="top" secondItem="OJ0-9g-199" secondAttribute="bottom" id="7KA-NL-rIk"/>
+                                                            <constraint firstItem="OJ0-9g-199" firstAttribute="leading" secondItem="9UA-da-aa6" secondAttribute="leading" constant="24" id="H0Z-eh-UAf"/>
+                                                            <constraint firstItem="xZ4-iM-Iu0" firstAttribute="leading" secondItem="9UA-da-aa6" secondAttribute="leading" id="Inc-PD-49M"/>
+                                                            <constraint firstAttribute="trailing" secondItem="xZ4-iM-Iu0" secondAttribute="trailing" id="XeF-6Y-DfM"/>
+                                                            <constraint firstAttribute="trailing" secondItem="OJ0-9g-199" secondAttribute="trailing" id="ZA5-Lq-kL0"/>
+                                                            <constraint firstAttribute="bottom" secondItem="xZ4-iM-Iu0" secondAttribute="bottom" id="erZ-bD-dhR"/>
+                                                            <constraint firstAttribute="height" constant="56" id="gzr-Bc-FVI"/>
+                                                            <constraint firstItem="OJ0-9g-199" firstAttribute="top" secondItem="9UA-da-aa6" secondAttribute="top" id="vMy-CI-fO1"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zj-Jx-Tvh" userLabel="Header">
+                                                        <rect key="frame" x="0.0" y="456" width="375" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="앱 정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMa-Og-mRb">
                                                                 <rect key="frame" x="24.000000000000004" y="19" width="40.333333333333343" height="17"/>
@@ -4117,7 +4173,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r3z-k0-0Jo">
-                                                        <rect key="frame" x="0.0" y="400" width="375" height="56"/>
+                                                        <rect key="frame" x="0.0" y="500" width="375" height="56"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNl-bO-zz6">
                                                                 <rect key="frame" x="0.0" y="55" width="375" height="1"/>
@@ -4149,8 +4205,8 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                             <constraint firstAttribute="trailing" secondItem="rNl-bO-zz6" secondAttribute="trailing" id="waA-uc-FWB"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCQ-tc-txZ">
-                                                        <rect key="frame" x="0.0" y="456" width="375" height="56"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCQ-tc-txZ">
+                                                        <rect key="frame" x="0.0" y="556" width="375" height="56"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36q-fZ-zxw">
                                                                 <rect key="frame" x="0.0" y="55" width="375" height="1"/>
@@ -4186,7 +4242,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olW-OK-9hR">
-                                                        <rect key="frame" x="0.0" y="512" width="375" height="56"/>
+                                                        <rect key="frame" x="0.0" y="556" width="375" height="56"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="14E-sn-HhF">
                                                                 <rect key="frame" x="0.0" y="55" width="375" height="1"/>
@@ -4219,7 +4275,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FLq-cK-eOa">
-                                                        <rect key="frame" x="0.0" y="512" width="375" height="56"/>
+                                                        <rect key="frame" x="0.0" y="556" width="375" height="56"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWm-ok-aqj">
                                                                 <rect key="frame" x="0.0" y="55" width="375" height="1"/>
@@ -4252,7 +4308,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AOn-VN-kpq">
-                                                        <rect key="frame" x="0.0" y="568" width="375" height="56"/>
+                                                        <rect key="frame" x="0.0" y="612" width="375" height="56"/>
                                                         <subviews>
                                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1z-OC-wC9">
                                                                 <rect key="frame" x="24" y="0.0" width="56" height="55"/>
@@ -4336,7 +4392,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ioi-vP-OdR">
-                                                        <rect key="frame" x="0.0" y="624" width="375" height="56"/>
+                                                        <rect key="frame" x="0.0" y="668" width="375" height="56"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PSn-2j-mxv">
                                                                 <rect key="frame" x="231" y="0.0" width="120" height="56"/>
@@ -4362,7 +4418,7 @@ Unpair this device if you don’t want the Coledy app to download new data from 
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJf-38-Yl3" userLabel="Header">
-                                                        <rect key="frame" x="0.0" y="680" width="375" height="30"/>
+                                                        <rect key="frame" x="0.0" y="724" width="375" height="30"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="bqa-Er-MJ8"/>
@@ -6502,6 +6558,9 @@ Open the Device Cap.</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Download Firmware"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fM-81-JAP">
                                                         <rect key="frame" x="275" y="0.0" width="60" height="40"/>
@@ -6552,13 +6611,11 @@ Open the Device Cap.</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="syV-vj-Qzn" userLabel="UIView">
                                                 <rect key="frame" x="0.0" y="180" width="335" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hx9-Nc-UQE">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="펌웨어 다운로드 중..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hx9-Nc-UQE">
                                                         <rect key="frame" x="8" y="0.0" width="319" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="5WX-pc-RE1"/>
                                                         </constraints>
-                                                        <string key="text">펌웨어 다운로드 중...
-</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>

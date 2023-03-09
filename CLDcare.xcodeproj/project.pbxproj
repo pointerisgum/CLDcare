@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		179FFF5AF784C8FF892D9FC8 /* Pods_CLDcare_CLDcareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707F8328DBB625484F88CDD5 /* Pods_CLDcare_CLDcareUITests.framework */; };
+		180F462729A762DA003108D6 /* 0100.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462129A762DA003108D6 /* 0100.zip */; };
+		180F462829A762DA003108D6 /* 0101.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462229A762DA003108D6 /* 0101.zip */; };
+		180F462929A762DA003108D6 /* 0103.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462329A762DA003108D6 /* 0103.zip */; };
+		180F462A29A762DA003108D6 /* 0102.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462429A762DA003108D6 /* 0102.zip */; };
+		180F462B29A762DA003108D6 /* 0105.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462529A762DA003108D6 /* 0105.zip */; };
+		180F462C29A762DA003108D6 /* 0104.zip in Resources */ = {isa = PBXBuildFile; fileRef = 180F462629A762DA003108D6 /* 0104.zip */; };
 		1821E0EF29347BA500B53ABD /* SeparatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1821E0EE29347BA500B53ABD /* SeparatViewController.m */; };
 		1829988E28F8F180004B7161 /* 0603.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1829988D28F8F180004B7161 /* 0603.zip */; };
 		182CB5BD29750FA600EC350D /* 0613.zip in Resources */ = {isa = PBXBuildFile; fileRef = 182CB5BC29750FA600EC350D /* 0613.zip */; };
@@ -21,6 +27,7 @@
 		1843BC09293495D70035534A /* MDMediSetUpData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1843BC08293495D70035534A /* MDMediSetUpData.m */; };
 		184F514027191E0D009695C2 /* JoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F513F27191E0D009695C2 /* JoinViewController.m */; };
 		184F5143271C0E24009695C2 /* ListCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184F5142271C0E24009695C2 /* ListCVCell.m */; };
+		185BA44529B8428100B77733 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 185BA44429B8428100B77733 /* Device.m */; };
 		1867DC172982856800F8A3DE /* 0614.zip in Resources */ = {isa = PBXBuildFile; fileRef = 1867DC162982856800F8A3DE /* 0614.zip */; };
 		186BC4F22883CEFA009F88EF /* 0402.zip in Resources */ = {isa = PBXBuildFile; fileRef = 186BC4F12883CEFA009F88EF /* 0402.zip */; };
 		186BC4F928853A51009F88EF /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186BC4F828853A51009F88EF /* Test.swift */; };
@@ -188,6 +195,12 @@
 
 /* Begin PBXFileReference section */
 		14D3B962A769EA3CFCE3B94F /* Pods-CLDcare-CLDcareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLDcare-CLDcareUITests.release.xcconfig"; path = "Target Support Files/Pods-CLDcare-CLDcareUITests/Pods-CLDcare-CLDcareUITests.release.xcconfig"; sourceTree = "<group>"; };
+		180F462129A762DA003108D6 /* 0100.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0100.zip; sourceTree = "<group>"; };
+		180F462229A762DA003108D6 /* 0101.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0101.zip; sourceTree = "<group>"; };
+		180F462329A762DA003108D6 /* 0103.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0103.zip; sourceTree = "<group>"; };
+		180F462429A762DA003108D6 /* 0102.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0102.zip; sourceTree = "<group>"; };
+		180F462529A762DA003108D6 /* 0105.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0105.zip; sourceTree = "<group>"; };
+		180F462629A762DA003108D6 /* 0104.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0104.zip; sourceTree = "<group>"; };
 		1821E0ED29347BA500B53ABD /* SeparatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeparatViewController.h; sourceTree = "<group>"; };
 		1821E0EE29347BA500B53ABD /* SeparatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeparatViewController.m; sourceTree = "<group>"; };
 		1829988D28F8F180004B7161 /* 0603.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0603.zip; sourceTree = "<group>"; };
@@ -210,6 +223,8 @@
 		184F513F27191E0D009695C2 /* JoinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinViewController.m; sourceTree = "<group>"; };
 		184F5141271C0E24009695C2 /* ListCVCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListCVCell.h; sourceTree = "<group>"; };
 		184F5142271C0E24009695C2 /* ListCVCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListCVCell.m; sourceTree = "<group>"; };
+		185BA44329B8428100B77733 /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		185BA44429B8428100B77733 /* Device.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		1867DC162982856800F8A3DE /* 0614.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0614.zip; sourceTree = "<group>"; };
 		186BC4F12883CEFA009F88EF /* 0402.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 0402.zip; sourceTree = "<group>"; };
 		186BC4F3288537CB009F88EF /* CLDcare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLDcare-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -526,6 +541,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180F462029A762DA003108D6 /* fw */ = {
+			isa = PBXGroup;
+			children = (
+				180F462129A762DA003108D6 /* 0100.zip */,
+				180F462229A762DA003108D6 /* 0101.zip */,
+				180F462329A762DA003108D6 /* 0103.zip */,
+				180F462429A762DA003108D6 /* 0102.zip */,
+				180F462529A762DA003108D6 /* 0105.zip */,
+				180F462629A762DA003108D6 /* 0104.zip */,
+			);
+			path = fw;
+			sourceTree = SOURCE_ROOT;
+		};
 		183F139028DC2F7D006EF623 /* FWUpdate */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				183F139728DC3F46006EF623 /* downloading.json */,
+				180F462029A762DA003108D6 /* fw */,
 				1867DC162982856800F8A3DE /* 0614.zip */,
 				182CB5BC29750FA600EC350D /* 0613.zip */,
 				189DA31629111AFA009B2E0E /* 0604.zip */,
@@ -579,6 +608,8 @@
 				1881E20027041330005AE92C /* GoogleService-Info.plist */,
 				1881E3662704145E005AE92C /* PrefixHeader.pch */,
 				1881E203270413D6005AE92C /* Define.h */,
+				185BA44329B8428100B77733 /* Device.h */,
+				185BA44429B8428100B77733 /* Device.m */,
 				187B1DDD2704114800CDB291 /* AppDelegate.h */,
 				187B1DDE2704114800CDB291 /* AppDelegate.m */,
 				187B1DE02704114800CDB291 /* SceneDelegate.h */,
@@ -787,14 +818,14 @@
 			children = (
 				1881E23A2704143E005AE92C /* Cells */,
 				1881E23D2704143E005AE92C /* SurveryAccView.xib */,
+				1881E2442704143E005AE92C /* MoreViewController.h */,
+				1881E2402704143E005AE92C /* MoreViewController.m */,
 				1881E2412704143E005AE92C /* AlarmDetailViewController.h */,
 				1881E2392704143E005AE92C /* AlarmDetailViewController.m */,
 				1881E23E2704143E005AE92C /* FeedBackViewController.h */,
 				1881E2432704143E005AE92C /* FeedBackViewController.m */,
 				1881E23F2704143E005AE92C /* SurveryAccView.h */,
 				1881E2422704143E005AE92C /* SurveryAccView.m */,
-				1881E2442704143E005AE92C /* MoreViewController.h */,
-				1881E2402704143E005AE92C /* MoreViewController.m */,
 				18F2AA5E277AD6690091373E /* AdditionViewController.h */,
 				18F2AA5F277AD6690091373E /* AdditionViewController.m */,
 			);
@@ -1243,10 +1274,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1881E35A2704143F005AE92C /* Survey.storyboard in Resources */,
+				180F462C29A762DA003108D6 /* 0104.zip in Resources */,
 				187B1DED2704114900CDB291 /* LaunchScreen.storyboard in Resources */,
 				1881E20127041330005AE92C /* GoogleService-Info.plist in Resources */,
 				189DA31729111AFA009B2E0E /* 0604.zip in Resources */,
 				1881E33F2704143F005AE92C /* README.md in Resources */,
+				180F462829A762DA003108D6 /* 0101.zip in Resources */,
 				1881E3592704143F005AE92C /* PopUp.storyboard in Resources */,
 				1885CB4128E4445D001717C5 /* 0502.zip in Resources */,
 				1881E3572704143F005AE92C /* Main.storyboard in Resources */,
@@ -1259,10 +1292,14 @@
 				1881E20A2704142A005AE92C /* Clause.plist in Resources */,
 				182CB5BD29750FA600EC350D /* 0613.zip in Resources */,
 				1881E30E2704143F005AE92C /* SurveryAccView.xib in Resources */,
+				180F462A29A762DA003108D6 /* 0102.zip in Resources */,
 				18B682CA27F1A66000B66617 /* Localizable.strings in Resources */,
+				180F462729A762DA003108D6 /* 0100.zip in Resources */,
 				1881E33E2704143F005AE92C /* LICENSE in Resources */,
 				1881E3562704143F005AE92C /* Intro.storyboard in Resources */,
+				180F462B29A762DA003108D6 /* 0105.zip in Resources */,
 				1881E2092704142A005AE92C /* tickle.mp3 in Resources */,
+				180F462929A762DA003108D6 /* 0103.zip in Resources */,
 				1881E3582704143F005AE92C /* Login.storyboard in Resources */,
 				186BC4F22883CEFA009F88EF /* 0402.zip in Resources */,
 			);
@@ -1506,6 +1543,7 @@
 				18C62343286AC9F900B6D532 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1881E34D2704143F005AE92C /* UIImageView+WebCache.m in Sources */,
 				1881E3052704143F005AE92C /* CalendarViewController.m in Sources */,
+				185BA44529B8428100B77733 /* Device.m in Sources */,
 				18C62340286AC9F900B6D532 /* AFImageRequestOperation.m in Sources */,
 				1881E3612704143F005AE92C /* NDSurvey.m in Sources */,
 				1881E31F2704143F005AE92C /* SurveyBaseViewController.m in Sources */,
@@ -1717,8 +1755,8 @@
 				INFOPLIST_FILE = CLDcare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Coledy Care";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "약통 탐색을 위해 블루투스에 접근 합니다. 이 외의 용도로는 사용되지 않습니다.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "CLDcare use bletooth";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Access Bluetooth to navigate the medicine cabinet. It is not used for any other purpose.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Access Bluetooth to navigate the medicine cabinet. It is not used for any other purpose.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1731,7 +1769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.16;
+				MARKETING_VERSION = 1.1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1761,8 +1799,8 @@
 				INFOPLIST_FILE = CLDcare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Coledy Care";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "약통 탐색을 위해 블루투스에 접근 합니다. 이 외의 용도로는 사용되지 않습니다.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "CLDcare use bletooth";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Access Bluetooth to navigate the medicine cabinet. It is not used for any other purpose.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Access Bluetooth to navigate the medicine cabinet. It is not used for any other purpose.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1775,7 +1813,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.16;
+				MARKETING_VERSION = 1.1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CLD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

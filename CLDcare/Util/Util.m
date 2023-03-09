@@ -676,6 +676,24 @@ static Util *shared = nil;
 }
 
 + (void)deleteData {
+    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"oldName"];
+    
+    NSString *mac = [[NSUserDefaults standardUserDefaults] objectForKey:@"mac"];
+    [[NSUserDefaults standardUserDefaults] setObject:mac forKey:@"oldMac"];
+
+    NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"battery"] integerValue];
+    [[NSUserDefaults standardUserDefaults] setObject:@(nBattery) forKey:@"oldBattery"];
+
+    NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
+    [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"oldSerialNo"];
+
+    NSString *serialChar = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialChar"];
+    [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"oldSerialChar"];
+
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"D" forKey:@"pair"];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mac"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"battery"];

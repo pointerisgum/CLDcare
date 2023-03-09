@@ -8,6 +8,7 @@
 #import "MoreViewController.h"
 #import "ClauseDetailViewController.h"
 #import "PopUpViewController.h"
+#import "SearchDeviceViewController.h"
 @import UserNotifications;
 
 @interface MoreViewController ()
@@ -316,6 +317,13 @@
             
         }];
     }
+}
+
+- (IBAction)goFirmwareUpdate:(id)sender {
+    SearchDeviceViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchDeviceViewController"];
+    vc.allMode = true;
+    [self.navigationController pushViewController:vc animated:true];
+
 }
 
 //회원탈퇴

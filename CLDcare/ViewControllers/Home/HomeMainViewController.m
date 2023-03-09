@@ -8,6 +8,7 @@
 #import "HomeMainViewController.h"
 #import <Corebluetooth/CoreBluetooth.h>
 //#import "ScanPeripheral.h"
+#import "Device.h"
 #import "HistoryViewController.h"
 #import "adv_data.h"
 #import "DeviceManager.h"
@@ -38,12 +39,13 @@
 @import UserNotifications;
 
 static BOOL isFWUpdating = false;
+static BOOL isPairing = false;
 
 @interface HomeMainViewController () <CBCentralManagerDelegate, ScanPeripheralDelegate, DFUProgressDelegate, DFUServiceDelegate> {
     int tiltCnt;
     bool isTilt;
     int count;
-
+    
     NSInteger         current_count;
     NSData*           deviceMac;
     NSString*         deviceName;
@@ -374,6 +376,8 @@ static BOOL isFWUpdating = false;
             [dicM_Params setObject:[[MDMediSetUpData sharedData].isEveryDay isEqualToString:NSLocalizedString(@"Yes", nil)] ? @"Y" : @"N" forKey:@"medication_regularly"];  //매일 복용 하는지
         }
 
+        [dicM_Params setObject:[Util getDateString:[NSDate date] withTimeZone:nil] forKey:@"datetime"];
+
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/device" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
                 [self.view makeToastCenter:NSLocalizedString(@"An error occurred during device registration", nil)];
@@ -382,10 +386,19 @@ static BOOL isFWUpdating = false;
 
 //            [[MDMediSetUpData sharedData] reset];
             
+            [[NSUserDefaults standardUserDefaults] setObject:@"C" forKey:@"pair"];
             [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
             [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
             [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+
+//            //새로운 약통일 경우 약통 카운트 초기화를 위해 오버 카운트로 등록해 줌
+//            NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+//            NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+//            NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+//            NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+//            NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
+//            [[NSUserDefaults standardUserDefaults] setObject:@(nNowCnt) forKey:key];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
 
 //            if( isNew ) {
 //                if( self.centralManager != nil && self.currentDevice != nil ) {
@@ -487,6 +500,7 @@ static BOOL isFWUpdating = false;
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
     if( deviceName.length > 0 && email.length > 0 ) {
+//    if( IS_CONNECTED ) {
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 //        NSString *dateString = [format stringFromDate:[NSDate date]];
@@ -495,6 +509,9 @@ static BOOL isFWUpdating = false;
         [dicM_Params setObject:email forKey:@"mem_email"];
 //        [dicM_Params setObject:dateString forKey:@"pairing_datetime"];
         [dicM_Params setObject:deviceName forKey:@"device_id"];
+
+        [dicM_Params setObject:[Device getModelName] forKey:@"phone_model"];
+        [dicM_Params setObject:@"apple" forKey:@"phone_brand"];
 
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"members/select/caregiverinfo" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
@@ -782,10 +799,12 @@ static BOOL isFWUpdating = false;
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
 //                NSDate *now = [NSDate date];
-                NSDate *now = [NSDate dateWithTimeInterval:10.0 sinceDate:[NSDate date]];
+                NSDate *now = [NSDate dateWithTimeInterval:60.0 sinceDate:[NSDate date]];
                 NSDate *date = [dateFormatter dateFromString:dateString];
                 NSComparisonResult result = [now compare:date];
                 if( result == NSOrderedAscending) {
+                    NSLog(@"타임오버 : %@", dateString);
+                    NSLog(@"현재시간 : %@", now);
                     continue;
                 }
                 
@@ -1134,8 +1153,8 @@ static BOOL isFWUpdating = false;
     }
     
 #ifdef DEBUG //펌웨어 업데이트 테스트 코드
-    [[NSUserDefaults standardUserDefaults] setObject:@"0101" forKey:@"FWVersion"];
-    [[NSUserDefaults standardUserDefaults] setObject:@"0614" forKey:@"NewFWVersion"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"0000" forKey:@"FWVersion"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"0104" forKey:@"NewFWVersion"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 #endif
 
@@ -1425,7 +1444,7 @@ static BOOL isFWUpdating = false;
 
 #ifdef DEBUG //펌웨어 업데이트 테스트 코드
             //파일로 번들에 갖고 있을 경우
-            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0614" withExtension:@"zip" subdirectory:@""];
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"0104" withExtension:@"zip" subdirectory:@""];
             DFUFirmware *firmware = [[DFUFirmware alloc] initWithUrlToZipFile:url];
             NSLog(@"%@", firmware);
 #else
@@ -1949,12 +1968,13 @@ static BOOL isFWUpdating = false;
 //    _startUART = false;
 //}
 
-- (void)showWarningPopUp {
++ (void)showWarningPopUp {
     NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"LastDeviceName"];
     if( deviceName.length <= 0 ) { return; }
     
     ResetPopUpViewController * vc = [[UIStoryboard storyboardWithName:@"PopUp" bundle:nil] instantiateViewControllerWithIdentifier:@"ResetPopUpViewController"];
-    [self presentViewController:vc animated:true completion:nil];
+    UIViewController *topController = [Util keyWindow].rootViewController;
+    [topController presentViewController:vc animated:true completion:nil];
     [vc setResetDoneBlock:^{
         NSString *settingsUrl= @"App-Prefs:root=Bluetooth";
         if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
@@ -2074,6 +2094,13 @@ static BOOL isFWUpdating = false;
     }];
 }
 
+- (void)setPairStatus:(BOOL)status {
+    isPairing = status;
+}
+
++ (BOOL)getPairStatus {
+    return isPairing;
+}
 
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
@@ -2090,6 +2117,8 @@ static BOOL isFWUpdating = false;
     __weak typeof(self) weakSelf = self;
 
 //    NSLog(@"RSSI : %@", peripheral.name);
+    
+//    NSLog(@"IS_CONNECTED : %d", IS_CONNECTED);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if( self.isFWUpdating == true ) {
@@ -2121,6 +2150,13 @@ static BOOL isFWUpdating = false;
         
 //        NSLog(@"%@", [NSString stringWithFormat:@"%02x", (unsigned int) md->device_last_name]);
         
+        if( md->pairing == 0x01 ) {
+            isPairing = true;
+        } else {
+            isPairing = false;
+        }
+        
+
         if( IS_CONNECTED == false ) {
             [self.btn_TotalPills setTitle:@"-" forState:UIControlStateNormal];
             [self.btn_ToDayPills setTitle:@"-" forState:UIControlStateNormal];
@@ -2169,7 +2205,7 @@ static BOOL isFWUpdating = false;
                 if( IS_CONNECTED ) {
                     [Util deleteData];
                     [self disconnect];
-                    [self showWarningPopUp];
+                    [HomeMainViewController showWarningPopUp];
                 }
             }
         }
@@ -2237,6 +2273,20 @@ static BOOL isFWUpdating = false;
                 weakSelf.currentDevice = [ScanPeripheral initWithPeripheral:peripheral];
             }
 
+            BOOL isInitDevice = [[NSUserDefaults standardUserDefaults] boolForKey:@"initDevice"];
+            if( isInitDevice == true ) {
+                NSLog(@"디바이스 초기화 // md->count : %@", @(md->count));
+                [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"initDevice"];
+                
+                NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+                NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+                NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+//                NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+//                NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
+                [[NSUserDefaults standardUserDefaults] setObject:@(md->count) forKey:key];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
             //last synced
             NSDateFormatter *format = [[NSDateFormatter alloc] init];
             [format setDateFormat:@"yyyy-MM-dd a h:mm"];
@@ -2625,6 +2675,8 @@ static BOOL isFWUpdating = false;
                             }
                         }
 
+                        NSLog(@"복약시 현재시간([NSDate date]) : %@", [Util getDateString:[NSDate date] withTimeZone:nil]);
+                        NSLog(@"복약시 기록된 시간(epochtime1) : %@", [Util getDateString:[NSDate dateWithTimeIntervalSince1970:(md->epochtime1)] withTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]]);
                         //[self.vc_Medication updateStatus];
 
                         dispenser_manuf_data_t* md_tmp = (dispenser_manuf_data_t *)manufData.bytes;
@@ -2728,6 +2780,15 @@ static BOOL isFWUpdating = false;
         return _items.count;
     }
     
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time"
+                                                 ascending:YES];
+    NSArray *sortArray = [_arM_BottleAtt sortedArrayUsingDescriptors:@[sortDescriptor]];
+    _arM_BottleAtt = [NSMutableArray arrayWithArray:sortArray];
+    
+    if( _cv_Device.bounds.size.width < 130 * _arM_BottleAtt.count ) {
+        _cv_Device.contentOffset = CGPointMake((130 * _arM_BottleAtt.count) - self.view.bounds.size.width + 20, 0);
+    }
     return _arM_BottleAtt.count;
 }
  
@@ -2999,6 +3060,12 @@ static BOOL isFWUpdating = false;
         }
         return _arM_MediRecordList.count;
     }
+
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
+                                                 ascending:false];
+    NSArray *sortArray = [_arM_DeviceRecordList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    _arM_DeviceRecordList = [NSMutableArray arrayWithArray:sortArray];
     return _arM_DeviceRecordList.count;
 }
 

@@ -915,17 +915,34 @@ Please push one applicable button below.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gUP-Vh-fe1">
-                                        <rect key="frame" x="24" y="150.66666666666666" width="327" height="510.66666666666674"/>
+                                        <rect key="frame" x="24" y="142.66666666666669" width="327" height="526.66666666666652"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p2p-g6-ZHa" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="24" width="327" height="14"/>
+                                                <rect key="frame" x="0.0" y="24" width="327" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rD0-qj-JyQ">
+                                                        <rect key="frame" x="252" y="0.0" width="75" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="75" id="RTk-Kz-Tw2"/>
+                                                        </constraints>
+                                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="close"/>
+                                                        <connections>
+                                                            <action selector="goDismiss:" destination="nAU-T8-TqH" eventType="touchUpInside" id="goL-Pi-bkk"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="14" id="4Im-Vf-VH1"/>
+                                                    <constraint firstAttribute="height" constant="30" id="4Im-Vf-VH1"/>
+                                                    <constraint firstAttribute="bottom" secondItem="rD0-qj-JyQ" secondAttribute="bottom" id="KDj-IM-Z4a"/>
+                                                    <constraint firstAttribute="trailing" secondItem="rD0-qj-JyQ" secondAttribute="trailing" id="THU-MP-X7D"/>
+                                                    <constraint firstItem="rD0-qj-JyQ" firstAttribute="top" secondItem="p2p-g6-ZHa" secondAttribute="top" id="cwq-13-oU8"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2T-FQ-ZJM">
-                                                <rect key="frame" x="0.0" y="38" width="327" height="374.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="54" width="327" height="374.66666666666669"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Setting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPS-p1-0UL">
                                                         <rect key="frame" x="20" y="0.0" width="60" height="17"/>
@@ -1026,25 +1043,28 @@ Please push one applicable button below.</string>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pdC-wJ-x9x" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="412.66666666666674" width="327" height="30"/>
+                                                <rect key="frame" x="0.0" y="428.66666666666674" width="327" height="30"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="ftO-Jw-lCm"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yVt-68-XHg">
-                                                <rect key="frame" x="0.0" y="442.66666666666674" width="327" height="44"/>
+                                                <rect key="frame" x="0.0" y="458.66666666666674" width="327" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RCo-oj-UHC">
                                                         <rect key="frame" x="16" y="0.0" width="143.66666666666666" height="44"/>
                                                         <color key="backgroundColor" red="0.91372549020000005" green="0.92549019610000005" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <state key="normal" title="취소">
+                                                        <state key="normal" title="닫기">
                                                             <color key="titleColor" red="0.41960784309999999" green="0.41960784309999999" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="No"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="Close"/>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="goDismiss:" destination="nAU-T8-TqH" eventType="touchUpInside" id="Eqj-9f-R4w"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lDn-bX-h3b">
                                                         <rect key="frame" x="167.66666666666663" y="0.0" width="143.33333333333337" height="44"/>

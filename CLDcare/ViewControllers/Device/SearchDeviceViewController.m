@@ -14,6 +14,7 @@
 #import "MDMediSetUpData.h"
 #import "MediSetUpViewController.h"
 @import CoreBluetooth;
+#import "HomeMainViewController.h"
 
 @interface SearchDeviceViewController () <CBCentralManagerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -27,6 +28,7 @@
 //@property (weak, nonatomic) IBOutlet UIButton *btn_SearchDevice;
 @property (weak, nonatomic) IBOutlet UILabel *lb_Title;
 @property (weak, nonatomic) IBOutlet UILabel *lb_ResultFix;
+@property (assign, nonatomic) BOOL once;
 @end
 
 @implementation SearchDeviceViewController
@@ -115,8 +117,10 @@
             md = (dispenser_manuf_data_t *)[Util decrypt:manufData];
         }
 
-        if( md->device_last_name != 0xff || md->pairing != 0xff || md->epochtime_body != 0xffffffff ) {
-            return;
+        if( self.allMode == false ) {
+            if( md->device_last_name != 0xff || md->pairing != 0xff || md->epochtime_body != 0xffffffff ) {
+                return;
+            }
         }
 
         ScanPeripheral* obj =  [ScanPeripheral initWithPeripheral:peripheral];
@@ -160,6 +164,7 @@
     [_centralManager scanForPeripheralsWithServices:@[[ScanPeripheral uartServiceUUID]] options:options];
 
     NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"serialNo"];
+//    if( IS_CONNECTED == false ) {
     if( serialNo == nil || serialNo.length <= 0 ) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self connectSerial:true];
@@ -210,9 +215,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    
-    ScanPeripheral* device = _items[indexPath.row];
 
+    if( [HomeMainViewController getPairStatus] == false &&
+       [[[NSUserDefaults standardUserDefaults] objectForKey:@"pair"] isEqualToString:@"D"] ) {
+        if( self.once == false ) {
+            self.once = true;
+            [HomeMainViewController showWarningPopUp];
+            return;
+        }
+    }
+
+    ScanPeripheral* device = _items[indexPath.row];
+    
     if( device.peripheral.name == nil ) { return; }
     if( device.macAddr == nil ) { return; }
 
@@ -306,10 +320,8 @@
             [dicM_Params setObject:[[MDMediSetUpData sharedData].isEveryDay isEqualToString:NSLocalizedString(@"Yes", nil)] ? @"Y" : @"N" forKey:@"medication_regularly"];  //매일 복용 하는지
         }
 
-        
-        
+        [dicM_Params setObject:[Util getDateString:[NSDate date] withTimeZone:nil] forKey:@"datetime"];
 
-        
         [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/device" param:dicM_Params withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
             if( error != nil ) {
                 [self.view makeToastCenter:NSLocalizedString(@"An error occurred during device registration", nil)];
@@ -347,12 +359,22 @@
                         [self.hud hideAnimated:true];
                         self.hud = nil;
                         
+                        [[NSUserDefaults standardUserDefaults] setObject:@"C" forKey:@"pair"];
                         [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
             //            [[NSUserDefaults standardUserDefaults] setObject:[self.currentDevice.peripheral.identifier UUIDString] forKey:@"mac"];
                         [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
                         [[NSUserDefaults standardUserDefaults] setObject:device.peripheral.name forKey:@"name"];
                         [[NSUserDefaults standardUserDefaults] setObject:@(device.battery) forKey:@"battery"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
+                        
+//                        //새로운 약통일 경우 약통 카운트 초기화를 위해 오버 카운트로 등록해 줌
+//                        NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+//                        NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+//                        NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+//                        NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+//                        NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
+//                        [[NSUserDefaults standardUserDefaults] setObject:@(nNowCnt) forKey:key];
+//                        [[NSUserDefaults standardUserDefaults] synchronize];
 
                         [self.navigationController popToRootViewControllerAnimated:true];
                     });

@@ -177,19 +177,50 @@
             }
             if( [[MDMediSetUpData sharedData].isNew isEqualToString:NSLocalizedString(@"No", nil)] ) {
                 [self dismissViewControllerAnimated:true completion:^{
+
+                    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"oldName"];
+                    if( name.length > 0 ) {
+                        [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"name"];
+                    }
+                    
+                    NSString *mac = [[NSUserDefaults standardUserDefaults] objectForKey:@"oldMac"];
+                    if( mac.length > 0 ) {
+                        [[NSUserDefaults standardUserDefaults] setObject:mac forKey:@"mac"];
+                    }
+
+                    NSInteger nBattery = [[[NSUserDefaults standardUserDefaults] objectForKey:@"oldBattery"] integerValue];
+                    if( nBattery > 0 ) {
+                        [[NSUserDefaults standardUserDefaults] setObject:@(nBattery) forKey:@"battery"];
+                    }
+
+                    NSString *serialNo = [[NSUserDefaults standardUserDefaults] objectForKey:@"oldSerialNo"];
+                    if( serialNo.length > 0 ) {
+                        [[NSUserDefaults standardUserDefaults] setObject:serialNo forKey:@"serialNo"];
+                    }
+
+                    NSString *serialChar = [[NSUserDefaults standardUserDefaults] objectForKey:@"oldSerialChar"];
+                    if( serialChar.length > 0 ) {
+                        [[NSUserDefaults standardUserDefaults] setObject:serialChar forKey:@"serialChar"];
+                    }
+
+                    
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+
+                    
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"MediSetUpFinish" object:@{@"isNew":@(false)}];
                 }];
                 return;
             }
             
-            //새로운 약통일 경우 약통 카운트 초기화를 위해 오버 카운트로 등록해 줌
-            NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
-            NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
-            NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
-            NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
-            NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
-            [[NSUserDefaults standardUserDefaults] setObject:@(nNowCnt) forKey:key];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+//            //새로운 약통일 경우 약통 카운트 초기화를 위해 오버 카운트로 등록해 줌
+//            NSString *deviceName = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+//            NSString *email = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"];
+//            NSString *key = [NSString stringWithFormat:@"total_%@_%@", email, deviceName];
+//            NSString *key2 = [NSString stringWithFormat:@"nowCount_%@_%@", email, deviceName];
+//            NSInteger nNowCnt = [[[NSUserDefaults standardUserDefaults] objectForKey:key2] integerValue];
+//            [[NSUserDefaults standardUserDefaults] setObject:@(nNowCnt) forKey:key];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
             
             MediSetUpViewController *vc = (MediSetUpViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MediSetUpViewController"];
             vc.step = STEP2;

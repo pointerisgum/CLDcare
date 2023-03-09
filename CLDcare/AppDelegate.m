@@ -44,6 +44,13 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 
+    NSString *pairStatus = [[NSUserDefaults standardUserDefaults] objectForKey:@"pair"];
+    if( pairStatus == nil || pairStatus == 0 ) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"pair"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    
     NSString *str_FWUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWUpdateDate"];
     if( str_FWUpdateDate == nil || str_FWUpdateDate.length <= 0 ) {
         //펌웨어 업데이트 일자

@@ -22,11 +22,11 @@
 }
 
 - (IBAction)goDone:(id)sender {
-    [self dismissViewControllerAnimated:true completion:^{
+//    [self dismissViewControllerAnimated:true completion:^{
         if( self.resetDoneBlock ) {
             self.resetDoneBlock();
         }
-    }];
+//    }];
 }
 
 @end

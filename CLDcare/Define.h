@@ -27,8 +27,8 @@ Stuff; \
 _Pragma("clang diagnostic pop") \
 } while (0)
 
-//#define kBaseUrl            @"http://15.164.79.24/api/v1/"  //개발
-#define kBaseUrl            @"http://3.35.53.100/api/v1/"  //개발
+#define kBaseUrl            @"http://15.164.79.24/api/v1/"  //운영
+//#define kBaseUrl            @"http://3.35.53.100/api/v1/"  //개발
 //#define kBaseUrl             @"https://coledycred.com/api/v1/"  //상용
 #define kPushUrl            @"http://54.180.211.74/api/v1/"  //푸시 URL
 
