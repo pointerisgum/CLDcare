@@ -147,6 +147,8 @@ static BOOL isPairing = false;
 @property (nonatomic, assign) BOOL isCoverOpen;
 @property (nonatomic, assign) BOOL isBodyOpen;
 @property (weak, nonatomic) IBOutlet UIStackView *stv_Test;
+@property (weak, nonatomic) IBOutlet UIView *v_ListBorder;
+@property (weak, nonatomic) IBOutlet UIView *v_DeviceBorder;
 @end
 
 @implementation HomeMainViewController
@@ -155,6 +157,14 @@ static BOOL isPairing = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.v_ListBorder.layer.cornerRadius = 8;
+    self.v_ListBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.v_ListBorder.layer.borderWidth = 1;
+    
+    self.v_DeviceBorder.layer.cornerRadius = 8;
+    self.v_DeviceBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.v_DeviceBorder.layer.borderWidth = 1;
+
 #if DEBUG
     self.stv_Test.hidden = false;
 #endif
@@ -2775,7 +2785,7 @@ static BOOL isPairing = false;
         _items = [NSMutableArray arrayWithArray:sortArray];
         
         if( _cv_List.bounds.size.width < 130 * _items.count ) {
-            _cv_List.contentOffset = CGPointMake((130 * _items.count) - self.view.bounds.size.width + 20, 0);
+            _cv_List.contentOffset = CGPointMake((130 * _items.count) - self.view.bounds.size.width + 40, 0);
         }
         return _items.count;
     }
@@ -2787,7 +2797,7 @@ static BOOL isPairing = false;
     _arM_BottleAtt = [NSMutableArray arrayWithArray:sortArray];
     
     if( _cv_Device.bounds.size.width < 130 * _arM_BottleAtt.count ) {
-        _cv_Device.contentOffset = CGPointMake((130 * _arM_BottleAtt.count) - self.view.bounds.size.width + 20, 0);
+        _cv_Device.contentOffset = CGPointMake((130 * _arM_BottleAtt.count) - self.view.bounds.size.width + 40, 0);
     }
     return _arM_BottleAtt.count;
 }
