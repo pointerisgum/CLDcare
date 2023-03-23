@@ -297,7 +297,7 @@
 //        [format setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
         NSString *dateString = [format stringFromDate:[NSDate date]];
 
-        NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
+        __block NSMutableDictionary *dicM_Params = [NSMutableDictionary dictionary];
         [dicM_Params setObject:email forKey:@"mem_email"];
         [dicM_Params setObject:dateString forKey:@"pairing_datetime"];
         [dicM_Params setObject:device.peripheral.name forKey:@"device_id"];
@@ -305,7 +305,12 @@
 //        [dicM_Params setObject:[self getMacAddr:device.peripheral.name] forKey:@"mac_address"];
 //        [dicM_Params setObject:[self.currentDevice.peripheral.identifier UUIDString] forKey:@"mac_address"];
         [dicM_Params setObject:[Util convertSerialNo] forKey:@"serial_num"];
-        [dicM_Params setObject:@"" forKey:@"fw_num"];
+        
+        NSString *fwVer = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"];
+        if( fwVer == nil ) {
+            fwVer = @"";
+        }
+        [dicM_Params setObject:fwVer forKey:@"fw_num"];
 
         if( [MDMediSetUpData sharedData].dayTakeCount != nil ) {
             [dicM_Params setObject:[MDMediSetUpData sharedData].dayTakeCount forKey:@"device_medication_per_day"];  //하루 복용 횟수
@@ -359,6 +364,8 @@
                         [self.hud hideAnimated:true];
                         self.hud = nil;
                         
+                        [[NSUserDefaults standardUserDefaults] setObject:dicM_Params forKey:@"deviceInfo"];
+
                         [[NSUserDefaults standardUserDefaults] setObject:@"C" forKey:@"pair"];
                         [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
             //            [[NSUserDefaults standardUserDefaults] setObject:[self.currentDevice.peripheral.identifier UUIDString] forKey:@"mac"];

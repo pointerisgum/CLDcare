@@ -371,7 +371,11 @@ static BOOL isPairing = false;
         [dicM_Params setObject:device.peripheral.name forKey:@"device_id"];
         [dicM_Params setObject:macAddr forKey:@"mac_address"];
         [dicM_Params setObject:[Util convertSerialNo] forKey:@"serial_num"];
-        [dicM_Params setObject:@"" forKey:@"fw_num"];
+        NSString *fwVer = [[NSUserDefaults standardUserDefaults] objectForKey:@"FWVersion"];
+        if( fwVer == nil ) {
+            fwVer = @"";
+        }
+        [dicM_Params setObject:fwVer forKey:@"fw_num"];
 
         if( [MDMediSetUpData sharedData].dayTakeCount != nil ) {
             [dicM_Params setObject:[MDMediSetUpData sharedData].dayTakeCount forKey:@"device_medication_per_day"];  //하루 복용 횟수
@@ -396,6 +400,8 @@ static BOOL isPairing = false;
 
 //            [[MDMediSetUpData sharedData] reset];
             
+            [[NSUserDefaults standardUserDefaults] setObject:dicM_Params forKey:@"deviceInfo"];
+
             [[NSUserDefaults standardUserDefaults] setObject:@"C" forKey:@"pair"];
             [[NSUserDefaults standardUserDefaults] setObject:macAddr forKey:@"mac"];
             [[NSUserDefaults standardUserDefaults] setObject:[device.peripheral.identifier UUIDString] forKey:@"ble_uuid"];
@@ -2967,6 +2973,20 @@ static BOOL isPairing = false;
                     NSLog(@"타임 싱크 완료");
                 }
             }];
+            
+            //펌웨어 업데이트 후 정보갱신
+            NSDictionary *dic_Temp = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceInfo"];
+            if( dic_Temp != nil ) {
+                NSMutableDictionary *dicM = [NSMutableDictionary dictionaryWithDictionary:dic_Temp];
+                dicM[@"fw_num"] = str_NewFWVersion;
+                
+                [[WebAPI sharedData] callAsyncWebAPIBlock:@"auth/device" param:dicM withMethod:@"POST" withBlock:^(id resulte, NSError *error, AFMsgCode msgCode) {
+                    if( error != nil ) {
+                        [self.view makeToastCenter:NSLocalizedString(@"An error occurred during device registration", nil)];
+                        return;
+                    }
+                }];
+            }
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
